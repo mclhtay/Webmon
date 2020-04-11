@@ -1,0 +1,249 @@
+body {
+  background: url("https://thewallpaper.co//wp-content/uploads/2016/10/pokemon-pikachu-hd-wallpaper-background-hd-wallpapers-high-definition-desktop-wallpapers-for-windows-apple-mac-tablet-download-free-2560x1440.jpg")
+    no-repeat center center fixed;
+  text-align: center;
+  background-size: cover;
+}
+
+.poke-font {
+  /* font-family: "Press Start 2P", bold; */
+  font-family: "Cute Font", cursive;
+  color: #fad61d;
+  -webkit-text-stroke: 1px blue;
+  /* font-weight: bold; */
+  font-size: 20rem;
+}
+@media screen and (max-width: 924px) {
+  .poke-font {
+    font-family: "Cute Font", cursive;
+    color: #fad61d;
+    -webkit-text-stroke: 1px blue;
+
+    font-size: 10rem;
+  }
+}
+.pokemon {
+  color: #fad61d;
+  -webkit-text-stroke: 1px blue;
+}
+.styled-font {
+  font-family: "Cute Font", cursive;
+}
+input {
+  font-size: 2.5rem;
+}
+h1.styled-font {
+  font-size: 8rem;
+}
+h3 {
+  font-size: 4.5rem;
+}
+h4.styled-font {
+  font-size: 3rem;
+}
+.home-container {
+  margin: 2% auto;
+  border-radius: 4%;
+  background: white;
+  max-height: 100%;
+  box-shadow: 2px sandybrown;
+  display: inline-block;
+}
+.nav {
+  display: flex;
+  justify-content: center;
+}
+.home-redi {
+  /* position: absolute; */
+  /* margin-top: 1%; */
+  /* top: auto;
+  right: 0;
+  left: 0; */
+  text-align: center;
+}
+.home-redi ul {
+  margin: auto;
+}
+.btn {
+  margin: 0 5px;
+  width: 200px;
+}
+form h3 {
+  padding: 2%;
+}
+form input {
+  display: block;
+  margin: 5px auto;
+}
+.home-button {
+  margin: 10px 0;
+}
+.home-button:hover {
+  cursor: pointer;
+}
+.btn-primary {
+  width: 150px;
+  background: #5a7ce2;
+  background: linear-gradient(
+    135deg,
+    #5a7ce2 0%,
+    #8283e8 50%,
+    #5c5de8 51%,
+    #565bd8 71%,
+    #575cdb 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5a7ce2', endColorstr='#575cdb',GradientType=1 );
+  background-size: 400% 400%;
+  animation: AnimationName 3s ease infinite;
+  animation: AnimationName 3s ease infinite;
+  border: medium none;
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 31%;
+  }
+  50% {
+    background-position: 100% 70%;
+  }
+  100% {
+    background-position: 0% 31%;
+  }
+}
+
+/* NavBar styles */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: right;
+}
+
+li span {
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}
+
+/* initialize component */
+.initialize-comp {
+  position: relative;
+}
+.blind {
+  display: none;
+}
+.come-in {
+  animation: fade-in-bottom 0.5s ease-in;
+}
+
+@keyframes fade-in-bottom {
+  from {
+    opacity: 0;
+    bottom: -30px;
+  }
+  to {
+    opacity: 1;
+    bottom: 0px;
+  }
+}
+.initialize-nickname {
+  display: inline;
+  margin: 2%;
+}
+.initialize-gender {
+  position: relative;
+  display: block;
+  height: 600px;
+  width: 500px;
+}
+.come-in-left {
+  position: absolute;
+  left: 0;
+  animation: fade-in-left 1.5s ease-in;
+}
+.come-in-right {
+  position: absolute;
+  right: -100px;
+  animation: fade-in-right 1.5s ease-in;
+}
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    left: -130px;
+  }
+  to {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    right: -230px;
+  }
+  to {
+    opacity: 1;
+    right: -100px;
+  }
+}
+.trainer {
+  display: inline;
+}
+.trainer-sprite1 {
+  width: 300px;
+  height: 500px;
+}
+.trainer:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  width: 300px;
+  height: 500px;
+  cursor: pointer;
+}
+.trainer-sprite2 {
+  width: 300px;
+  height: 450px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+.starter {
+  padding: 2%;
+}
+
+.starter:hover {
+  cursor: pointer;
+  animation: rock infinite 2s ease;
+}
+.selected {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+@keyframes rock {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#starter span {
+  padding: 2%;
+}
