@@ -10,3 +10,10 @@ export const formAction = (newRoute) => (dispatch) => {
     console.log(error);
   }
 };
+
+export const handleViewportChange = (viewport) => (dispatch) => {
+  dispatch({
+    type: "VIEW_PORT_CHANGE",
+    viewport: viewport,
+  });
+};

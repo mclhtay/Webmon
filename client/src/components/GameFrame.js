@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Pokedex from "./Pokedex";
+import { handleViewportChange } from "../actions/utils";
 const GameFrame = ({
-  user: { name },
-  player: { nickname, totalBP, coins, gender, defaultP, pokemons },
+  //   user: { name },
+  player: { nickname, gender, defaultP, pokemons },
+  handleViewportChange,
 }) => {
-  const viewingPort = "main";
   const handleViewPort = (viewportName) => {
-    console.log(viewingPort);
+    handleViewportChange(viewportName);
   };
   const defaultP_stats = pokemons.filter(
     (poke) => poke.pokemon.name === defaultP
@@ -121,7 +122,7 @@ const GameFrame = ({
           </div>
         </div>
       </div>
-      <Pokedex className={viewingPort === "pokedex" ? "" : "blind"} />
+      <Pokedex />
     </div>
   );
 };
@@ -129,6 +130,7 @@ const GameFrame = ({
 GameFrame.propTypes = {
   player: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+  handleViewportChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -136,4 +138,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, {})(GameFrame);
+export default connect(mapStateToProps, { handleViewportChange })(GameFrame);

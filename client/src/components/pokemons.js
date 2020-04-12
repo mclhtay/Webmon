@@ -1,7 +1,8 @@
 export default {
   pokemons: [
     {
-      bulbasaur: {
+      pokemon: {
+        name: "bulbasaur",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
         class: "onroute",
@@ -9,7 +10,8 @@ export default {
       },
     },
     {
-      ivysaur: {
+      pokemon: {
+        name: "ivysaur",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
         class: "gym",
@@ -17,7 +19,8 @@ export default {
       },
     },
     {
-      venusaur: {
+      pokemon: {
+        name: "venusaur",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
         class: "champion",
@@ -25,7 +28,8 @@ export default {
       },
     },
     {
-      charmander: {
+      pokemon: {
+        name: "charmander",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
         class: "onroute",
@@ -33,7 +37,8 @@ export default {
       },
     },
     {
-      charmeleon: {
+      pokemon: {
+        name: "charmeleon",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
         class: "gym",
@@ -41,7 +46,8 @@ export default {
       },
     },
     {
-      charizard: {
+      pokemon: {
+        name: "charizard",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
         class: "champion",
@@ -49,7 +55,8 @@ export default {
       },
     },
     {
-      squirtle: {
+      pokemon: {
+        name: "squirtle",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
         class: "onroute",
@@ -57,7 +64,8 @@ export default {
       },
     },
     {
-      wartortle: {
+      pokemon: {
+        name: "wartortle",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
         class: "gym",
@@ -65,7 +73,8 @@ export default {
       },
     },
     {
-      blastoise: {
+      pokemon: {
+        name: "blastoise",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
         class: "champion",
@@ -73,7 +82,8 @@ export default {
       },
     },
     {
-      pichu: {
+      pokemon: {
+        name: "pichu",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/172.png",
         class: "onroute",
@@ -81,7 +91,8 @@ export default {
       },
     },
     {
-      pikachu: {
+      pokemon: {
+        name: "pikachu",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
         class: "gym",
@@ -89,7 +100,8 @@ export default {
       },
     },
     {
-      eevee: {
+      pokemon: {
+        name: "eevee",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
         class: "onroute",
@@ -97,7 +109,8 @@ export default {
       },
     },
     {
-      mew: {
+      pokemon: {
+        name: "mew",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
         class: "legend",
@@ -105,7 +118,8 @@ export default {
       },
     },
     {
-      mewtwo: {
+      pokemon: {
+        name: "mewtwo",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png",
         class: "legend",
@@ -113,7 +127,8 @@ export default {
       },
     },
     {
-      "charizard-megax": {
+      pokemon: {
+        name: "charizard-megax",
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-x.png",
         class: "rare",
@@ -121,7 +136,8 @@ export default {
       },
     },
     {
-      sylveon: {
+      pokemon: {
+        name: "sylveon",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/700.png",
         class: "rare",
@@ -129,7 +145,8 @@ export default {
       },
     },
     {
-      riolu: {
+      pokemon: {
+        name: "riolu",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/447.png",
         class: "rare",

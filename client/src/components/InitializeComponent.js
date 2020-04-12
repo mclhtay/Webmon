@@ -100,6 +100,7 @@ const InitializeComponent = ({ player: { msg }, username, createPlayer }) => {
         </h4>
         <div
           name="male"
+          title={gender}
           onClick={(e) => submitGender("male")}
           className={nicknameSelected ? "come-in-left trainer" : ""}
         >
@@ -111,6 +112,7 @@ const InitializeComponent = ({ player: { msg }, username, createPlayer }) => {
         </div>
         <div
           name="female"
+          title={gender}
           onClick={(e) => submitGender("female")}
           className={nicknameSelected ? "come-in-right trainer" : ""}
         >

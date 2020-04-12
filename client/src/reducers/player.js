@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
     gender,
     pokemons,
     type,
-    loading,
     totalBP,
     coins,
     defaultP,

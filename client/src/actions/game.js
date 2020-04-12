@@ -63,9 +63,3 @@ export const getPlayer = (username) => async (dispatch) => {
     candies: candies,
   });
 };
-
-export const reroute = () => (dispatch) => {
-  dispatch({
-    type: "PLAYER_FINISHED",
-  });
-};

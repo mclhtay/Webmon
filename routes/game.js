@@ -6,7 +6,7 @@ const Player = require("../models/Player");
 
 router.get("/:name", async (req, res) => {
   const player = await Player.findOne({ username: req.params.name });
-  console.log(player);
+
   if (!player) {
     res.send({
       msg: "No Player",

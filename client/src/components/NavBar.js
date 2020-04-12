@@ -11,8 +11,8 @@ const NavBar = ({ user: { route }, player: { nickname, coins, candies } }) => {
         <i className="navbar-brand" href="#">
           Webmon
         </i>
-        <div>
-          <ul className="navbar-nav mr-auto">
+        <div className="pull-right">
+          <ul className="navbar-nav mr-auto navbar-right">
             <li className="nav-item">
               <i className="nav-link">
                 Welcome {route === "login" && "back"} {nickname}
