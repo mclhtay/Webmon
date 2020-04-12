@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import "./styles.css";
 import spinner from "./spinner.gif";
 import { createPlayer } from "../actions/game";
 import { connect } from "react-redux";
-const InitializeComponent = ({
-  player: { loading },
-  username,
-  createPlayer,
-}) => {
+import PropTypes from "prop-types";
+const InitializeComponent = ({ player: { msg }, username, createPlayer }) => {
   const [initialData, setData] = useState({
     username: username,
     nickname: "",
@@ -65,10 +62,14 @@ const InitializeComponent = ({
     createPlayer(initialData);
   };
 
+  const handleFinish = (e) => {};
+
   return (
     <div className="home-container">
       <h1 className="styled-font">Welcome Trainer</h1>
-      <h3 className="styled-font">Let's get you set up!</h3>
+      <h3 className="styled-font">
+        {msg ? "You're all set!" : "Let's get you set up!"}
+      </h3>
       <div className={nicknameSelected ? "blind" : "come-in initialize-comp"}>
         <form onSubmit={(e) => submitNickname(e)}>
           <h4 className="styled-font">What should we call you?</h4>
@@ -77,6 +78,7 @@ const InitializeComponent = ({
             name="nickname"
             className="styled-font initialize-nickname"
             minLength="3"
+            maxLength="12"
             placeholder="Nickname"
             onChange={changeHandler}
             required
@@ -183,11 +185,29 @@ const InitializeComponent = ({
         </div>
       </div>
       <div className={starterSelected ? "initialize-comp" : "blind"}>
-        <img src={spinner} alt="loading" />
-        <h4 className="styled-font">Hold on, we're creating your profile</h4>
+        {msg ? (
+          <form onSubmit={(e) => handleFinish(e)}>
+            <button className="btn btn-lg btn-primary finish-button">
+              Log in to continue
+            </button>
+          </form>
+        ) : (
+          <Fragment>
+            <img src={spinner} alt="loading" />{" "}
+            <h4 className="styled-font">
+              Hold on, we're creating your profile
+            </h4>
+          </Fragment>
+        )}
       </div>
     </div>
   );
+};
+
+InitializeComponent.propTypes = {
+  player: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired,
+  createPlayer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -23,15 +23,43 @@ const PlayerSchema = new mongoose.Schema({
         },
         level: {
           type: Number,
-          required: true,
+          default: 1,
         },
         exp: {
+          type: Number,
+          default: 0,
+        },
+        bp: {
+          type: Number,
+          required: true,
+        },
+        potential: {
           type: Number,
           required: true,
         },
       },
     },
   ],
+  totalBP: {
+    type: Number,
+    required: true,
+  },
+  coins: {
+    type: Number,
+    required: true,
+  },
+  defaultP: {
+    type: String,
+    required: true,
+  },
+  candies: {
+    type: Number,
+    default: 0,
+  },
+  bagSize: {
+    type: Number,
+    default: 10,
+  },
 });
 
 module.exports = Player = mongoose.model("player", PlayerSchema);

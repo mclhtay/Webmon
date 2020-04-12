@@ -1,39 +1,24 @@
 import axios from "axios";
-import { PLAYER_INITIALIZED, PLAYER_FINISHED } from "./constants";
-
-// export const initialize = (username) => async (dispatch) => {
-//   const res = await axios.get(`/webmon/${username}`);
-//   const { msg, content } = res.data;
-//   if (msg === "No Player") {
-//     dispatch({
-//       type: "PLAYER_NOT_INITIALIZE",
-//     });
-//   } else {
-//     const { nickname, gender, pokemons } = content;
-//     dispatch({
-//       type: PLAYER_INITIALIZED,
-//       nickname: nickname,
-//       gender: gender,
-//       pokemons: pokemons,
-//     });
-//   }
-// };
+import { PLAYER_INITIALIZED } from "./constants";
 
 export const createPlayer = (initialData) => async (dispatch) => {
   const header = {
     "Content-Type": "application/json",
   };
   const res = await axios.post("/webmon", initialData, header);
-  const { msg, nickname, gender, pokemons } = res.data;
+  const {
+    msg,
+    nickname,
+    gender,
+    pokemons,
+    totalBP,
+    coins,
+    defaultP,
+    candies,
+  } = res.data;
   if (msg === "Success") {
-    const updated = await axios.put(`/auth/${initialData.username}`);
-    console.log("hello");
-    dispatch({
-      type: PLAYER_FINISHED,
-      initialized: true,
-    });
+    await axios.put(`/auth/${initialData.username}`);
   }
-  console.log(msg);
   switch (msg) {
     case "Success":
       dispatch({
@@ -41,9 +26,13 @@ export const createPlayer = (initialData) => async (dispatch) => {
         nickname: nickname,
         gender: gender,
         pokemons: pokemons,
+        totalBP: totalBP,
+        coins: coins,
+        defaultP: defaultP,
         loading: false,
+        candies: candies,
+        msg: "Done",
       });
-
       break;
     default:
       dispatch({
@@ -54,11 +43,29 @@ export const createPlayer = (initialData) => async (dispatch) => {
 
 export const getPlayer = (username) => async (dispatch) => {
   const res = await axios.get(`/webmon/${username}`);
-  const { nickname, gender, pokemons } = res.data.content;
+  const {
+    nickname,
+    gender,
+    pokemons,
+    totalBP,
+    coins,
+    defaultP,
+    candies,
+  } = res.data.content;
   dispatch({
     type: "PLAYER_LOADED",
     nickname: nickname,
     gender: gender,
     pokemons: pokemons,
+    totalBP: totalBP,
+    coins: coins,
+    defaultP: defaultP,
+    candies: candies,
+  });
+};
+
+export const reroute = () => (dispatch) => {
+  dispatch({
+    type: "PLAYER_FINISHED",
   });
 };

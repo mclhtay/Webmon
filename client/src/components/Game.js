@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { NavBar } from "./Util";
+import NavBar from "./NavBar";
 import spinner from "./spinner.gif";
 import InitializeComponent from "./InitializeComponent";
 import { getPlayer } from "../actions/game";
+import GameFrame from "./GameFrame";
 const Game = ({
   user: { name, status, route, initialized },
-  player: { nickname, loading },
+  player: { nickname, loading, pokemons },
   getPlayer,
 }) => {
   useEffect(() => {
@@ -27,7 +28,10 @@ const Game = ({
         loading ? (
           <img src={spinner} alt="loading" />
         ) : (
-          <NavBar name={nickname} route={route} />
+          <div>
+            <NavBar />
+            <GameFrame />
+          </div>
         )
       ) : (
         <InitializeComponent username={name} />

@@ -78,9 +78,6 @@ form input {
 .home-button {
   margin: 10px 0;
 }
-.home-button:hover {
-  cursor: pointer;
-}
 .btn-primary {
   width: 150px;
   background: #5a7ce2;
@@ -113,7 +110,7 @@ form input {
 
 /* NavBar styles */
 
-ul {
+/* ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -128,6 +125,9 @@ li span {
   display: block;
   padding: 8px;
   background-color: #dddddd;
+} */
+#signout-btn {
+  text-align: right;
 }
 
 /* initialize component */
@@ -243,7 +243,114 @@ li span {
     transform: rotate(0deg);
   }
 }
-
+.finish-button {
+  width: 300px;
+}
+#game-frame {
+  margin: 2% auto;
+  border-radius: 4%;
+  background: white;
+  max-height: 100%;
+  box-shadow: 2px sandybrown;
+}
 #starter span {
   padding: 2%;
 }
+#player-sprite {
+  padding: 2%;
+}
+
+#defaultSprite {
+  transform: scale(2);
+  padding: 2%;
+}
+
+#left-pane p {
+  font-size: 2rem;
+}
+#defaultp {
+  color: #f2a51a;
+}
+#exp {
+  color: #00bcd4;
+}
+#bp {
+  color: #ffbcbc;
+}
+
+#right-pane {
+  background-image: url("https://cdn.vox-cdn.com/thumbor/IKt535q8LMnJDddmLL74TBtzv88=/0x266:1024x949/1280x854/cdn.vox-cdn.com/uploads/chorus_image/image/48942277/N3DS_PokemonSuperMysteryDungeon_MainIllustration_png_jpgcopy.0.0.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 40rem;
+  margin: auto;
+}
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#right-pane p {
+  font-size: 4rem;
+  color: #cee397;
+}
+
+.banner {
+  background-size: cover;
+  background-position: center;
+  height: 5rem;
+  margin: auto;
+  border-radius: 10%;
+}
+.banner-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#pokedex {
+  background-image: url("https://pm1.narvii.com/6600/04aed016a28689572b3bca5077c35609085c66e6_hq.jpg");
+}
+#leaderboard {
+  background-image: url("https://venturebeat.com/wp-content/uploads/2013/10/mewtwos.jpg?w=1200&strip=all");
+}
+#pokecenter {
+  background-image: url("https://cdna.artstation.com/p/assets/images/images/004/158/902/4k/scott-zenteno-pokecenter.jpg?1480927479");
+}
+.banner span {
+  font-family: "Cute Font", cursive;
+  font-size: 4rem;
+  font-weight: bolder;
+  vertical-align: middle;
+  line-height: 5rem;
+}
+.opened {
+  color: yellow;
+}
+.opened:hover {
+  cursor: pointer;
+}
+#onroute {
+  background-image: url("https://i.pinimg.com/originals/50/e7/0f/50e70f33f5409f4ebb0fdc40414f4cda.png");
+}
+#gym {
+  background-image: url("https://imgix.bustle.com/inverse/34/a4/5a/28/2226/4671/9de2/fdc8442576bf/swordshieldgymchallengeartworkpng.png");
+}
+#champion {
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3b8f8ca3-3176-4d5f-8a78-784a7149f6ed/d75tbrr-07532452-4df2-470d-8eec-5e073c89154f.png/v1/fill/w_1192,h_670,q_70,strp/champion_pokemon_trainers__updated_art__by_saintnaruto_d75tbrr-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY4IiwicGF0aCI6IlwvZlwvM2I4ZjhjYTMtMzE3Ni00ZDVmLThhNzgtNzg0YTcxNDlmNmVkXC9kNzV0YnJyLTA3NTMyNDUyLTRkZjItNDcwZC04ZWVjLTVlMDczYzg5MTU0Zi5wbmciLCJ3aWR0aCI6Ijw9MTM2NiJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.4YEBwEO8LlhvFQO8UjTb6wNXOeIqmED5u9lZ2d3yjE8");
+}
+#legend {
+  background-image: url("https://i.pinimg.com/originals/c8/61/a2/c861a21325303a83815c6e2652b00bc1.png");
+}
+
+#event-mega-charizard {
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/903/706/550/pokemon-mega-charizard-x-pokemon-wallpaper-preview.jpg");
+}
+
+/*poke dex component */

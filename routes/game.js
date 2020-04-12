@@ -6,6 +6,7 @@ const Player = require("../models/Player");
 
 router.get("/:name", async (req, res) => {
   const player = await Player.findOne({ username: req.params.name });
+  console.log(player);
   if (!player) {
     res.send({
       msg: "No Player",
@@ -20,6 +21,7 @@ router.get("/:name", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { username, nickname, gender, starter } = req.body;
+  const randomPotential = Math.floor(Math.random() * 6) + 5;
   try {
     const player = new Player({
       username: username,
@@ -29,11 +31,14 @@ router.post("/", async (req, res) => {
         {
           pokemon: {
             name: starter,
-            level: 5,
-            exp: 10,
+            bp: randomPotential,
+            potential: randomPotential,
           },
         },
       ],
+      totalBP: randomPotential,
+      coins: 500,
+      defaultP: starter,
     });
     await player.save();
     res.send({
@@ -41,6 +46,9 @@ router.post("/", async (req, res) => {
       nickname: player.nickname,
       gender: player.gender,
       pokemons: player.pokemons,
+      totalBP: player.totalBP,
+      coins: player.coins,
+      candies: player.candies,
     });
   } catch (error) {
     console.log(error);

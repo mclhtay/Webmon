@@ -4,7 +4,6 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   ROUTE_CHANGE,
-  PLAYER_FINISHED,
 } from "../actions/constants";
 
 const initialState = {
@@ -22,6 +21,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         route: route,
+        status: "",
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
@@ -43,11 +43,6 @@ export default function (state = initialState, action) {
         name: name,
         status: "success",
         route: "login",
-        initialized: initialized,
-      };
-    case PLAYER_FINISHED:
-      return {
-        ...state,
         initialized: initialized,
       };
     case "postMessage":
