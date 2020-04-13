@@ -132,7 +132,18 @@ export default {
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-x.png",
         class: "rare",
+        roll: "yes",
         potential: [80, 125],
+      },
+    },
+    {
+      pokemon: {
+        name: "charizard-megay",
+        sprite:
+          "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-y.png",
+        class: "rare",
+        roll: "no",
+        potential: [85, 130],
       },
     },
     {
@@ -141,6 +152,7 @@ export default {
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/700.png",
         class: "rare",
+        roll: "yes",
         potential: [25, 37],
       },
     },
@@ -150,6 +162,7 @@ export default {
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/447.png",
         class: "rare",
+        roll: "yes",
         potential: [10, 15],
       },
     },

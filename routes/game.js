@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Player = require("../models/Player");
-
+const Leaderboard = require("../models/Leaderboard");
 // /webmon
 
 router.get("/:name", async (req, res) => {
@@ -55,6 +55,18 @@ router.post("/", async (req, res) => {
     res.send({
       msg: "Error",
     });
+  }
+});
+
+router.get("/leaderboard", async (req, res) => {
+  try {
+    const board = await Leaderboard.find();
+    res.send({
+      msg: "loaded",
+      data: board,
+    });
+  } catch (err) {
+    console.log(err);
   }
 });
 

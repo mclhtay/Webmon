@@ -189,7 +189,7 @@ const InitializeComponent = ({ player: { msg }, username, createPlayer }) => {
       <div className={starterSelected ? "initialize-comp" : "blind"}>
         {msg ? (
           <form onSubmit={(e) => handleFinish(e)}>
-            <button className="btn btn-lg btn-primary finish-button">
+            <button className="btn btn-lg btn-primary finish-button home-button">
               Log in to continue
             </button>
           </form>

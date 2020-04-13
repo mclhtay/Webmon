@@ -63,3 +63,10 @@ export const getPlayer = (username) => async (dispatch) => {
     candies: candies,
   });
 };
+
+export const loadLeaderboard = () => async (dispatch) => {
+  const res = await axios.get("/webmon/learderboard");
+  if (res.data.msg) {
+    console.log(res.data.data);
+  }
+};

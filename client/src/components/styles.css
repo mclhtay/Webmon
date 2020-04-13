@@ -108,25 +108,6 @@ form input {
   }
 }
 
-/* NavBar styles */
-
-/* ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-li {
-  float: right;
-}
-
-li span {
-  display: block;
-  padding: 8px;
-  background-color: #dddddd;
-} */
-
 #signout-btn {
   float: right;
 }
@@ -418,4 +399,33 @@ li span {
 .pokedex-sprite {
   padding: 4%;
   transform: scale(2);
+}
+@media screen and (max-width: 995px) {
+  .pokedex-sprite {
+    transform: scale(1);
+  }
+}
+
+/* leaderboard */
+#leaderboard-modal {
+  background-image: url("https://venturebeat.com/wp-content/uploads/2013/10/mewtwos.jpg?w=1200&strip=all");
+  background-size: cover;
+  /* background-position: center; */
+}
+.leaderboard-foreground {
+  background-color: rgba(0, 140, 186, 0.7);
+}
+.lbcontent {
+  color: #ffffff;
+  font-weight: bolder;
+  font-size: 1.3rem;
+}
+#leaderboard-des {
+  color: #f4e04d;
+}
+ol {
+  list-style-position: inside;
+}
+.special {
+  color: #b80d57;
 }

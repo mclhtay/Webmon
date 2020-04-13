@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Pokedex from "./Pokedex";
+import Leaderboard from "./Leaderboard";
 import { handleViewportChange } from "../actions/utils";
 const GameFrame = ({
   //   user: { name },
@@ -123,6 +124,7 @@ const GameFrame = ({
         </div>
       </div>
       <Pokedex />
+      <Leaderboard />
     </div>
   );
 };

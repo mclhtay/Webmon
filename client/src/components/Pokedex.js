@@ -9,10 +9,21 @@ const Pokedex = ({ viewport: { viewport }, handleViewportChange }) => {
   const changeViewport = () => {
     handleViewportChange("main");
   };
-
+  const dexNav = pokemons.map((poke, index) => (
+    <div
+      key={index}
+      className="col-lg-1 col-md-2 col-sm-3"
+      title={poke.pokemon.name}
+    >
+      <a href={"#" + poke.pokemon.name}>
+        {" "}
+        <img src={poke.pokemon.sprite} alt="nav" height="100px" width="100px" />
+      </a>
+    </div>
+  ));
   const dexEntries = pokemons.map((poke, index) => (
     <div key={index}>
-      <h3 className="styled-font modal-header">
+      <h3 className="styled-font modal-header" id={poke.pokemon.name}>
         {poke.pokemon.name[0].toUpperCase() + poke.pokemon.name.slice(1)}
       </h3>
       <div className="one-sprite">
@@ -45,6 +56,9 @@ const Pokedex = ({ viewport: { viewport }, handleViewportChange }) => {
     <div className={viewport === "pokedex" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content">
         <h2 className="styled-font modal-title">Pokédex</h2>
+        <div className="container">
+          <div className="row">{dexNav}</div>
+        </div>
         <span name="exit" className="close-modal" onClick={changeViewport}>
           &#10008;
         </span>
