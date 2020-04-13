@@ -58,16 +58,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/leaderboard", async (req, res) => {
-  try {
-    const board = await Leaderboard.find();
-    res.send({
-      msg: "loaded",
-      data: board,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 module.exports = router;

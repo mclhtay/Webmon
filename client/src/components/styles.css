@@ -429,3 +429,41 @@ ol {
 .special {
   color: #b80d57;
 }
+
+.leader-container {
+  background-color: #f8eeee;
+  border-radius: 10px;
+}
+.leader-row {
+  padding: 5px;
+}
+.leaders {
+  margin: auto;
+  background-color: white;
+  border-radius: 10px;
+  height: 100px;
+  vertical-align: middle;
+  line-height: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.leader-font {
+  font-size: 1.2rem;
+}
+.leader-pokemon {
+  padding: 0 5%;
+}
+.fit {
+  width: inherit;
+}
+.leader-name {
+  font-size: 3.5rem;
+  font-weight: bolder;
+  color: #511845;
+  padding: 0 5%;
+}
+.leader-bp {
+  font-size: 2.5rem;
+  color: #f0a500;
+}

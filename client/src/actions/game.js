@@ -6,6 +6,7 @@ export const createPlayer = (initialData) => async (dispatch) => {
     "Content-Type": "application/json",
   };
   const res = await axios.post("/webmon", initialData, header);
+
   const {
     msg,
     nickname,
@@ -65,8 +66,11 @@ export const getPlayer = (username) => async (dispatch) => {
 };
 
 export const loadLeaderboard = () => async (dispatch) => {
-  const res = await axios.get("/webmon/learderboard");
+  const res = await axios.get("/leaderboard");
   if (res.data.msg) {
-    console.log(res.data.data);
+    dispatch({
+      type: "LEADERBOARD_LOADED",
+      content: res.data.data,
+    });
   }
 };

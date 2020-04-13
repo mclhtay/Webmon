@@ -3,19 +3,27 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { handleViewportChange } from "../actions/utils";
 import { loadLeaderboard } from "../actions/game";
+import firstIcon from "./first.png";
+import secondIcon from "./second.png";
+import thirdIcon from "./third.png";
 const Leaderboard = ({
   viewport: { viewport },
   handleViewportChange,
   loadLeaderboard,
+
+  leaderboard: { loading, content },
 }) => {
   useEffect(() => {
-    if (loading) {
+    if (loading && viewport === "leaderboard") {
       loadLeaderboard();
     }
   });
 
+  const { first, second, third } = content[0]
+    ? content[0]
+    : { first: "None", second: "None", third: "None" };
   const changeViewport = () => {
-    handleViewportChange("main");
+    handleViewportChange("main", "leaderboard");
   };
 
   const eventPokemonName = "Charizard-megay";
@@ -72,6 +80,107 @@ const Leaderboard = ({
               <img src={eventPokemonSprite} alt="event pokemon" />
             </div>
           </div>
+          <div className="container leader-container">
+            <div id="firstPlace" className="row leader-row">
+              <div className="col-lg-10 leaders">
+                <img
+                  src={firstIcon}
+                  alt="first place"
+                  height="100px"
+                  width="100px"
+                />
+                <div className="fit">
+                  {first === "None" ? (
+                    "No one is here yet"
+                  ) : (
+                    <p className="leader-font">
+                      <span className="leader-name styled-font">
+                        {first.nickname}
+                      </span>
+                      claimed with :
+                      <img
+                        src={
+                          "http://play.pokemonshowdown.com/sprites/ani/" +
+                          first.pokemon +
+                          ".gif"
+                        }
+                        alt="pokemon"
+                      />
+                      <span className="styled-font leader-bp">
+                        BP: {first.BP}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row leader-row" id="secondPlace">
+              <div className="col-lg-10 leaders">
+                <img
+                  src={secondIcon}
+                  alt="second place"
+                  height="100px"
+                  width="100px"
+                />
+                <div className="fit">
+                  {second === "None" ? (
+                    "No one is here yet"
+                  ) : (
+                    <p className="leader-font">
+                      <span className="leader-name styled-font">
+                        {second.nickname}
+                      </span>
+                      claimed with :
+                      <img
+                        src={
+                          "http://play.pokemonshowdown.com/sprites/ani/" +
+                          second.pokemon +
+                          ".gif"
+                        }
+                        alt="pokemon"
+                      />
+                      <span className="styled-font leader-bp">
+                        BP: {second.BP}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row leader-row" id="thirdPlace">
+              <div className="col-lg-10 leaders">
+                <img
+                  src={thirdIcon}
+                  alt="third place"
+                  height="100px"
+                  width="100px"
+                />
+                <div className="fit">
+                  {third === "None" ? (
+                    "No one is here yet"
+                  ) : (
+                    <p className="leader-font">
+                      <span className="leader-name styled-font">
+                        {third.nickname}
+                      </span>
+                      claimed with :
+                      <img
+                        src={
+                          "http://play.pokemonshowdown.com/sprites/ani/" +
+                          third.pokemon +
+                          ".gif"
+                        }
+                        alt="pokemon"
+                      />
+                      <span className="styled-font leader-bp">
+                        BP: {third.BP}
+                      </span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -86,6 +195,7 @@ Leaderboard.propTypes = {
 
 const mapStateToProps = (state) => ({
   viewport: state.viewport,
+  leaderboard: state.leaderboard,
 });
 
 export default connect(mapStateToProps, {

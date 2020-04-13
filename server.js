@@ -9,6 +9,7 @@ app.use(express.json({ extended: false }));
 
 app.use("/auth", require("./routes/auth"));
 app.use("/webmon", require("./routes/game"));
+app.use("/leaderboard", require("./routes/leaderboard"));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {

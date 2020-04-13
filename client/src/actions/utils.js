@@ -11,9 +11,15 @@ export const formAction = (newRoute) => (dispatch) => {
   }
 };
 
-export const handleViewportChange = (viewport) => (dispatch) => {
+export const handleViewportChange = (viewport, specs = "") => (dispatch) => {
   dispatch({
     type: "VIEW_PORT_CHANGE",
     viewport: viewport,
   });
+
+  if (specs === "leaderboard") {
+    dispatch({
+      type: "CLOSE_LEADERBOARD",
+    });
+  }
 };

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const leaderboardSchema = new mongoose.Schema({
+  phase: {
+    type: String,
+    default: "Beta",
+  },
   first: {
     type: Object,
     username: {
@@ -19,6 +23,7 @@ const leaderboardSchema = new mongoose.Schema({
       type: String,
       default: "None",
     },
+    default: "None",
   },
   second: {
     type: Object,
@@ -38,6 +43,7 @@ const leaderboardSchema = new mongoose.Schema({
       type: String,
       default: "None",
     },
+    default: "None",
   },
   third: {
     type: Object,
@@ -57,6 +63,7 @@ const leaderboardSchema = new mongoose.Schema({
       type: String,
       default: "None",
     },
+    default: "None",
   },
 });
 
