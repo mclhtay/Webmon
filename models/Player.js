@@ -60,6 +60,21 @@ const PlayerSchema = new mongoose.Schema({
     type: Number,
     default: 10,
   },
+  gifts: [
+    {
+      gift: {
+        giftType: {
+          type: String,
+        },
+        giftContent: {
+          type: Object,
+        },
+        giftMsg: {
+          type: String,
+        },
+      },
+    },
+  ],
 });
 
 module.exports = Player = mongoose.model("player", PlayerSchema);

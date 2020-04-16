@@ -7,9 +7,13 @@ import { handleViewportChange } from "../actions/utils";
 import Pokecenter from "./Pokecenter";
 import Onroute from "./Onroute";
 import Gym from "./Gym";
+import Champion from "./Champion";
+import Legend from "./Legend";
+import Event from "./Event";
+import Gift from "./Gift";
 const GameFrame = ({
   //   user: { name },
-  player: { nickname, gender, defaultP, pokemons, totalBP },
+  player: { nickname, gender, defaultP, pokemons, totalBP, gifts },
   handleViewportChange,
 }) => {
   const handleViewPort = (viewportName) => {
@@ -17,7 +21,8 @@ const GameFrame = ({
       viewportName === "onroute" ||
       viewportName === "gym" ||
       viewportName === "champion" ||
-      viewportName === "legend"
+      viewportName === "legend" ||
+      viewportName === "event"
     ) {
       handleViewportChange(viewportName, "main");
     } else handleViewportChange(viewportName);
@@ -50,6 +55,13 @@ const GameFrame = ({
             {level * 10 + (level - 1) * 10} <br />
             <span id="bp">BP:</span> {bp}
           </p>
+          <div
+            onClick={(e) => handleViewPort("gift")}
+            className={gifts.length > 0 ? "blink" : "blind"}
+          >
+            <i className="fas fa-gift"></i> You have {gifts.length} new{" "}
+            {gifts && gifts.length > 1 ? "gifts!" : "gift!"}
+          </div>
         </div>
         <div id="right-pane" className="col-lg-9 col-md-12 col-sm-12">
           <div className="container ">
@@ -126,12 +138,30 @@ const GameFrame = ({
                   className="col-lg-2 col-md-2 col-sm-2 banner"
                 >
                   <div className="banner-overlay">
-                    <span>Champion</span>
+                    <span
+                      className={
+                        totalBP >= 1000
+                          ? "opened enable-click"
+                          : "disable-click"
+                      }
+                      onClick={(e) => handleViewPort("champion")}
+                    >
+                      Champion
+                    </span>
                   </div>
                 </div>
                 <div id="legend" className="col-lg-2 col-md-2 col-sm-2 banner">
                   <div className="banner-overlay">
-                    <span>Legendary</span>
+                    <span
+                      className={
+                        totalBP >= 3000
+                          ? "opened enable-click"
+                          : "disable-click"
+                      }
+                      onClick={(e) => handleViewPort("legend")}
+                    >
+                      Legendary
+                    </span>
                   </div>
                 </div>
               </div>
@@ -141,7 +171,10 @@ const GameFrame = ({
                   id="event-mega-charizard"
                   className="col-lg-8 col-md-8 col-sm-8 banner"
                 >
-                  <span className="opened">
+                  <span
+                    className="opened enable-click"
+                    onClick={(e) => handleViewPort("event")}
+                  >
                     Limited Time Mega Charizard X Event
                   </span>
                 </div>
@@ -150,11 +183,15 @@ const GameFrame = ({
           </div>
         </div>
       </div>
+      <Gift />
       <Pokedex />
       <Leaderboard />
       <Pokecenter />
       <Onroute />
       <Gym />
+      <Champion />
+      <Legend />
+      <Event />
     </div>
   );
 };

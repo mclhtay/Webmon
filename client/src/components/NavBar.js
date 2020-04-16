@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const NavBar = ({ user: { route }, player: { nickname, coins, candies } }) => {
+const NavBar = ({
+  user: { route, name },
+  player: { nickname, coins, candies },
+}) => {
   const handleSignout = (e) => {};
 
   return (
@@ -13,6 +16,13 @@ const NavBar = ({ user: { route }, player: { nickname, coins, candies } }) => {
         </i>
         <div className="pull-right">
           <ul className="navbar-nav mr-auto navbar-right">
+            {name === "carter" && (
+              <li className="nav-item">
+                <i className="nav-link">
+                  <button className="btn-sm btn btn-dark">Send Gift</button>
+                </i>
+              </li>
+            )}
             <li className="nav-item">
               <i className="nav-link">
                 Welcome {route === "login" && "back"} {nickname}

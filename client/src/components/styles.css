@@ -353,6 +353,7 @@ form input {
 
 #event-mega-charizard {
   background-image: url("https://c4.wallpaperflare.com/wallpaper/903/706/550/pokemon-mega-charizard-x-pokemon-wallpaper-preview.jpg");
+  background-size: cover;
 }
 
 /*poke dex component */
@@ -511,6 +512,16 @@ ol {
   background-image: url("https://imgix.bustle.com/inverse/34/a4/5a/28/2226/4671/9de2/fdc8442576bf/swordshieldgymchallengeartworkpng.png");
   background-size: cover;
 }
+
+.champion-modal {
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3b8f8ca3-3176-4d5f-8a78-784a7149f6ed/d75tbrr-07532452-4df2-470d-8eec-5e073c89154f.png/v1/fill/w_1192,h_670,q_70,strp/champion_pokemon_trainers__updated_art__by_saintnaruto_d75tbrr-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY4IiwicGF0aCI6IlwvZlwvM2I4ZjhjYTMtMzE3Ni00ZDVmLThhNzgtNzg0YTcxNDlmNmVkXC9kNzV0YnJyLTA3NTMyNDUyLTRkZjItNDcwZC04ZWVjLTVlMDczYzg5MTU0Zi5wbmciLCJ3aWR0aCI6Ijw9MTM2NiJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.4YEBwEO8LlhvFQO8UjTb6wNXOeIqmED5u9lZ2d3yjE8");
+  background-size: cover;
+}
+.legend-modal {
+  background-image: url("https://i.pinimg.com/originals/c8/61/a2/c861a21325303a83815c6e2652b00bc1.png");
+  background-size: cover;
+}
+
 .modal-foreground {
   background-color: white;
 }
@@ -524,7 +535,7 @@ ol {
 .roll-ball-base {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 300px;
 }
 .roll-ball {
   animation: spin 2s linear;
@@ -592,4 +603,31 @@ ol {
 
 .disable-click {
   pointer-events: none;
+}
+
+.blink {
+  animation: blinking 1.2s infinite;
+  cursor: pointer;
+}
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.gift-bg {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  border-radius: 5px;
 }

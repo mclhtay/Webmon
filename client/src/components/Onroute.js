@@ -5,7 +5,7 @@ import { handleViewportChange } from "../actions/utils";
 import pokemonArray from "./pokemons.js";
 import { battleFinish, reduceCoins, catchNewMon } from "../actions/game";
 import onrouteBall from "./balls/onroute.jpg";
-
+import gymBall from "./balls/gym.jpg";
 const Onroute = ({
   user,
   viewport: { viewport, secondary },
@@ -18,8 +18,9 @@ const Onroute = ({
   const [opponent, setOpponent] = useState({
     oname: "pichu",
     obp: 0,
+    orarity: "normal",
   });
-  const { oname, obp } = opponent;
+  const { oname, obp, orarity } = opponent;
   const [reward, setResult] = useState({
     result: "defeat",
     rewardCoins: 0,
@@ -57,6 +58,7 @@ const Onroute = ({
   const onrouteMons = pokemonArray.pokemons.filter(
     (m) => m.pokemon.class === "onroute"
   );
+
   const onrouteMonsSprite = onrouteMons.map((mon, index) => (
     <div className="col-lg-1 ma" key={index}>
       <img
@@ -89,9 +91,12 @@ const Onroute = ({
         onrouteMons[Math.floor(Math.random() * onrouteMons.length)];
       const randomBPMultiplier = Math.floor(Math.random() * 3) + 1;
       const randomBP =
-        Math.floor(Math.random() * randomOpponent.pokemon.potential[0]) +
-        (randomOpponent.pokemon.potential[1] -
-          randomOpponent.pokemon.potential[0]);
+        Math.floor(
+          Math.random() *
+            (randomOpponent.pokemon.potential[1] -
+              randomOpponent.pokemon.potential[0] +
+              1)
+        ) + randomOpponent.pokemon.potential[0];
       setOpponent({
         ...opponent,
         oname: randomOpponent.pokemon.name,
@@ -109,13 +114,32 @@ const Onroute = ({
       const randomOpponent =
         onrouteMons[Math.floor(Math.random() * onrouteMons.length)];
       const randomBP =
-        Math.floor(Math.random() * randomOpponent.pokemon.potential[0]) +
-        (randomOpponent.pokemon.potential[1] -
-          randomOpponent.pokemon.potential[0]);
-      setOpponent({
-        oname: randomOpponent.pokemon.name,
-        obp: randomBP,
-      });
+        Math.floor(
+          Math.random() *
+            (randomOpponent.pokemon.potential[1] -
+              randomOpponent.pokemon.potential[0] +
+              1)
+        ) + randomOpponent.pokemon.potential[0];
+      const potentialRange =
+        randomOpponent.pokemon.potential[1] -
+        randomOpponent.pokemon.potential[0];
+
+      if (
+        (randomBP - randomOpponent.pokemon.potential[0]) / potentialRange >=
+        0.8
+      ) {
+        setOpponent({
+          oname: randomOpponent.pokemon.name,
+          obp: randomBP,
+          orarity: "rare",
+        });
+      } else {
+        setOpponent({
+          oname: randomOpponent.pokemon.name,
+          obp: randomBP,
+          orarity: "normal",
+        });
+      }
     } else if (e.currentTarget.name === "fight") {
       if (bp > obp || Math.floor(Math.random() * (obp - bp)) === 0) {
         setResult({
@@ -191,10 +215,16 @@ const Onroute = ({
                 name="catch"
                 onClick={(e) => handleSecondaryViewport(e)}
                 className="mlr10 btn btn-sm btn-warning home-button"
-                disabled={coins < 200}
+                disabled={coins < 200 || pokemons.length === bagSize}
               >
-                Catch &nbsp;&nbsp;
-                <i className="fas fa-coins" /> 200
+                {pokemons.length === bagSize ? (
+                  "Bag Full"
+                ) : (
+                  <span>
+                    Catch &nbsp;&nbsp;
+                    <i className="fas fa-coins" /> 200
+                  </span>
+                )}
               </button>
             </div>
           </div>
@@ -310,7 +340,7 @@ const Onroute = ({
             <div className="roll-ball-base">
               <img
                 className={rollRevealed ? "blind" : "roll-ball"}
-                src={onrouteBall}
+                src={orarity === "normal" ? onrouteBall : gymBall}
                 alt="pokeball sprite"
                 onClick={(e) => handleRollReveal("None")}
               />

@@ -6,7 +6,8 @@ import pokemonArray from "./pokemons.js";
 import { battleFinish, reduceCoins, catchNewMon } from "../actions/game";
 import onrouteBall from "./balls/onroute.jpg";
 import gymBall from "./balls/gym.jpg";
-const Gym = ({
+
+const Champion = ({
   user,
   viewport: { viewport, secondary },
   player: { coins, defaultP, pokemons, bagSize },
@@ -30,7 +31,7 @@ const Gym = ({
   const { rewardCoins, rewardCandy, result, rewardExp } = reward;
   const [rollRevealed, setRollRevealed] = useState(false);
   useEffect(() => {
-    if (viewport === "gym")
+    if (viewport === "champion")
       battleFinish(user.name, defaultP, rewardExp, rewardCoins, rewardCandy);
   }, [
     defaultP,
@@ -41,8 +42,8 @@ const Gym = ({
     user.name,
     viewport,
   ]);
-
   const defaultStats = pokemons.filter((mon) => mon.pokemon.name === defaultP);
+
   if (!defaultStats[0]) {
     defaultStats[0] = {
       pokemon: {
@@ -55,10 +56,10 @@ const Gym = ({
     };
   }
   const { bp } = defaultStats[0].pokemon;
-  const gymMons = pokemonArray.pokemons.filter(
-    (m) => m.pokemon.class === "gym"
+  const championMons = pokemonArray.pokemons.filter(
+    (m) => m.pokemon.class === "champion"
   );
-  const gymMonSprites = gymMons.map((mon, index) => (
+  const championMonSprites = championMons.map((mon, index) => (
     <div className="col-lg-1 ma" key={index}>
       <img
         height="75px"
@@ -72,7 +73,6 @@ const Gym = ({
       />
     </div>
   ));
-
   const handleViewport = () => {
     setRollRevealed(false);
     setResult({
@@ -85,11 +85,11 @@ const Gym = ({
   };
 
   const handleSecondaryViewport = (e) => {
-    handleViewportChange("gym", e.currentTarget.name);
+    handleViewportChange("champion", e.currentTarget.name);
     if (e.currentTarget.name === "battle") {
       const randomOpponent =
-        gymMons[Math.floor(Math.random() * gymMons.length)];
-      const randomBPMultiplier = Math.floor(Math.random() * 3) + 14;
+        championMons[Math.floor(Math.random() * championMons.length)];
+      const randomBPMultiplier = Math.floor(Math.random() * 3) + 32;
       const randomBP =
         Math.floor(
           Math.random() *
@@ -97,6 +97,7 @@ const Gym = ({
               randomOpponent.pokemon.potential[0] +
               1)
         ) + randomOpponent.pokemon.potential[0];
+
       setOpponent({
         ...opponent,
         oname: randomOpponent.pokemon.name,
@@ -110,9 +111,9 @@ const Gym = ({
       if (e.currentTarget.name === "roll-reset") {
         setRollRevealed(false);
       }
-      reduceCoins(user.name, 400);
+      reduceCoins(user.name, 600);
       const randomOpponent =
-        gymMons[Math.floor(Math.random() * gymMons.length)];
+        championMons[Math.floor(Math.random() * championMons.length)];
       const randomBP =
         Math.floor(
           Math.random() *
@@ -126,7 +127,7 @@ const Gym = ({
 
       if (
         (randomBP - randomOpponent.pokemon.potential[0]) / potentialRange >=
-        0.85
+        0.9
       ) {
         setOpponent({
           oname: randomOpponent.pokemon.name,
@@ -145,9 +146,9 @@ const Gym = ({
         setResult({
           ...reward,
           result: "victory",
-          rewardCoins: Math.floor(Math.random() * 41) + 50,
-          rewardCandy: Math.floor(Math.random() * 100) < 7 ? 1 : 0,
-          rewardExp: bp > obp ? 50 : 50 + (obp - bp),
+          rewardCoins: Math.floor(Math.random() * 101) + 50,
+          rewardCandy: Math.floor(Math.random() * 100) < 10 ? 1 : 0,
+          rewardExp: bp > obp ? 100 : 100 + (obp - bp),
         });
       } else {
         setResult({
@@ -169,21 +170,21 @@ const Gym = ({
   };
   const handleCatch = () => {
     catchNewMon(user.name, oname, obp);
-    handleViewportChange("gym", "postcatch");
+    handleViewportChange("champion", "postcatch");
   };
 
   return (
-    <div className={viewport === "gym" ? "modal-frame come-in" : "blind"}>
-      <div className="modal-content gym-modal">
+    <div className={viewport === "champion" ? "modal-frame come-in" : "blind"}>
+      <div className="modal-content champion-modal">
         <div className="modal-foreground">
-          <h3 className="modal-title styled-font">Gym</h3>
+          <h3 className="modal-title styled-font">Champion</h3>
           <span className="close-modal" onClick={handleViewport} name="exit">
             &#10008;
           </span>
           <div className={secondary === "main" ? "come-in" : "blind"}>
             <p>
-              You can advance to the "Champion" difficulty when your highest BP
-              reaches 1000
+              You can advance to the "Legendary" difficulty when your highest BP
+              reaches 3000
             </p>
             <p>
               You can Battle a random pokémon to gain exp and train your partner
@@ -196,11 +197,11 @@ const Gym = ({
               new pokémon will replace the old one
             </p>
             <h4>Pokémons that appear here: </h4>
-            <div className="row">{gymMonSprites}</div>
+            <div className="row">{championMonSprites}</div>
             <h4>Item drops: </h4>
-            <i className="fas fa-coins" />: 50 - 90
+            <i className="fas fa-coins" />: 100 - 150
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <i className="fas fa-candy-cane" />: 7%
+            <i className="fas fa-candy-cane" />: 10%
             <div>
               <button
                 type="button"
@@ -216,14 +217,14 @@ const Gym = ({
                 name="catch"
                 onClick={(e) => handleSecondaryViewport(e)}
                 className="mlr10 btn btn-sm btn-warning home-button"
-                disabled={coins < 400 || pokemons.length === bagSize}
+                disabled={coins < 600 || pokemons.length === bagSize}
               >
                 {pokemons.length === bagSize ? (
                   "Bag Full"
                 ) : (
                   <span>
                     Catch &nbsp;&nbsp;
-                    <i className="fas fa-coins" /> 400
+                    <i className="fas fa-coins" /> 600
                   </span>
                 )}
               </button>
@@ -397,7 +398,7 @@ const Gym = ({
               name="roll-reset"
               className="btn btn-sm btn-warning mlr10 home-button"
             >
-              Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 400
+              Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 600
             </button>
             <button
               name="main"
@@ -414,7 +415,7 @@ const Gym = ({
   );
 };
 
-Gym.propTypes = {
+Champion.propTypes = {
   battleFinish: PropTypes.func.isRequired,
   reduceCoins: PropTypes.func.isRequired,
   catchNewMon: PropTypes.func.isRequired,
@@ -428,10 +429,9 @@ const mapStateToProps = (state) => ({
   viewport: state.viewport,
   user: state.user,
 });
-
 export default connect(mapStateToProps, {
   battleFinish,
   reduceCoins,
   catchNewMon,
   handleViewportChange,
-})(Gym);
+})(Champion);

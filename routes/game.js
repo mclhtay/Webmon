@@ -79,6 +79,19 @@ router.post("/", async (req, res) => {
       totalBP: randomPotential,
       coins: 500,
       defaultP: starter,
+      gifts: [
+        {
+          gift: {
+            giftType: "Reward",
+            giftContent: {
+              coins: 10000,
+              candies: 10,
+            },
+            giftMsg:
+              "Thank you for registering! Here's your reward for being a beta tester!",
+          },
+        },
+      ],
     });
     await player.save();
     res.send({
@@ -90,6 +103,7 @@ router.post("/", async (req, res) => {
       coins: player.coins,
       candies: player.candies,
       bagSize: player.bagSize,
+      gifts: player.gifts,
     });
   } catch (error) {
     console.log(error);
@@ -319,4 +333,61 @@ router.put("/:username/catch", async (req, res) => {
   }
 });
 
+router.put("/:username/gift", async (req, res) => {
+  const player = await Player.findOne({ username: req.params.username });
+  const { gifts, candies, coins } = player;
+
+  const giftClaimed = gifts.filter((g) => g._id == req.body.id);
+  const { giftType, giftContent } = giftClaimed[0].gift;
+  let content = {};
+  if (giftType === "Reward") {
+    content = await Player.findOneAndUpdate(
+      {
+        username: req.params.username,
+      },
+      {
+        $inc: { candies: giftContent.candies, coins: giftContent.coins },
+        $pull: {
+          gifts: { _id: giftClaimed[0]._id },
+        },
+      },
+      { new: true }
+    );
+  } else if (giftType === "Pokemon") {
+    const pokemon = {
+      name: giftContent.name,
+      potential: giftContent.bp,
+      bp: giftContent.bp,
+      level: 1,
+      exp: 0,
+    };
+    content = await Player.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        $push: {
+          pokemons: {
+            pokemon,
+          },
+        },
+        $pull: {
+          gifts: { _id: giftClaimed[0]._id },
+        },
+        totalBP:
+          player.totalBP > giftContent.bp ? player.totalBP : giftContent.bp,
+      },
+      { new: true }
+    );
+    changeLeaderBoard(
+      req.params.username,
+      player.nickname,
+      giftContent.bp,
+      giftContent.name
+    );
+  }
+  console.log(content.gifts);
+  res.send({
+    msg: "Updated",
+    content: content,
+  });
+});
 module.exports = router;

@@ -17,6 +17,7 @@ export const createPlayer = (initialData) => async (dispatch) => {
     defaultP,
     candies,
     bagSize,
+    gifts,
   } = res.data;
   if (msg === "Success") {
     await axios.put(`/auth/${initialData.username}`);
@@ -34,6 +35,7 @@ export const createPlayer = (initialData) => async (dispatch) => {
         loading: false,
         candies: candies,
         bagSize: bagSize,
+        gifts: gifts,
         msg: "Done",
       });
       break;
@@ -55,6 +57,7 @@ export const getPlayer = (username) => async (dispatch) => {
     defaultP,
     candies,
     bagSize,
+    gifts,
   } = res.data.content;
   dispatch({
     type: "PLAYER_LOADED",
@@ -66,6 +69,7 @@ export const getPlayer = (username) => async (dispatch) => {
     defaultP: defaultP,
     candies: candies,
     bagSize: bagSize,
+    gifts: gifts,
   });
 };
 
@@ -91,6 +95,7 @@ export const bagIncrease = (username) => async (dispatch) => {
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -110,6 +115,7 @@ export const changeDefaultP = (name, newMon) => async (dispatch) => {
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -129,6 +135,7 @@ export const changeCandy = (name, mon) => async (dispatch) => {
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -148,6 +155,7 @@ export const abandonPokemon = (name, mon) => async (dispatch) => {
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -172,6 +180,7 @@ export const battleFinish = (name, mon, expGain, coinGain, candyGain) => async (
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -191,6 +200,7 @@ export const reduceCoins = (name, coinReduction) => async (dispatch) => {
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };
@@ -213,6 +223,27 @@ export const catchNewMon = (name, newMonName, newMonPotential) => async (
       defaultP: content.defaultP,
       candies: content.candies,
       bagSize: content.bagSize,
+      gifts: content.gifts,
+    });
+  }
+};
+
+export const claimGift = (name, giftID) => async (dispatch) => {
+  const body = {
+    id: giftID,
+  };
+  const res = await axios.put(`/webmon/${name}/gift`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+      gifts: content.gifts,
     });
   }
 };

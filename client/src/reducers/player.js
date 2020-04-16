@@ -10,6 +10,7 @@ const initialState = {
   candies: 0,
   msg: "",
   bagSize: 0,
+  gifts: [],
 };
 
 export default function (state = initialState, action) {
@@ -23,6 +24,7 @@ export default function (state = initialState, action) {
     defaultP,
     candies,
     bagSize,
+    gifts,
   } = action;
   switch (type) {
     case PLAYER_INITIALIZED:
@@ -37,6 +39,7 @@ export default function (state = initialState, action) {
         loading: false,
         candies: candies,
         bagSize: bagSize,
+        gifts: gifts,
         msg: "Done",
       };
     case "PLAYER_LOADED":
@@ -51,6 +54,7 @@ export default function (state = initialState, action) {
         loading: false,
         bagSize: bagSize,
         candies: candies,
+        gifts: gifts,
       };
     case "PLAYER_STAT_CHANGE":
       return {
@@ -61,6 +65,7 @@ export default function (state = initialState, action) {
         defaultP: defaultP,
         bagSize: bagSize,
         candies: candies,
+        gifts: gifts,
       };
     case "NICKNAME_ERROR":
       return {
