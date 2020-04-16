@@ -105,6 +105,8 @@ const Leaderboard = ({
                           ".gif"
                         }
                         alt="pokemon"
+                        height="60px"
+                        width="60px"
                       />
                       <span className="styled-font leader-bp">
                         BP: {first.BP}
@@ -138,6 +140,8 @@ const Leaderboard = ({
                           ".gif"
                         }
                         alt="pokemon"
+                        height="60px"
+                        width="60px"
                       />
                       <span className="styled-font leader-bp">
                         BP: {second.BP}
@@ -171,6 +175,8 @@ const Leaderboard = ({
                           ".gif"
                         }
                         alt="pokemon"
+                        height="60px"
+                        width="60px"
                       />
                       <span className="styled-font leader-bp">
                         BP: {third.BP}

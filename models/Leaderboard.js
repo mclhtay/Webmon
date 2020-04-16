@@ -6,64 +6,58 @@ const leaderboardSchema = new mongoose.Schema({
     default: "Beta",
   },
   first: {
-    type: Object,
     username: {
       type: String,
-      default: "None",
+      default: "@GMRed",
     },
     nickname: {
       type: String,
-      default: "None",
+      default: "Red",
     },
     BP: {
       type: Number,
-      default: "0",
+      default: 250,
     },
     pokemon: {
       type: String,
-      default: "None",
+      default: "charizard",
     },
-    default: "None",
   },
   second: {
-    type: Object,
     username: {
       type: String,
-      default: "None",
+      default: "@GMBlue",
     },
     nickname: {
       type: String,
-      default: "None",
+      default: "Blue",
     },
     BP: {
       type: Number,
-      default: "0",
+      default: 240,
     },
     pokemon: {
       type: String,
-      default: "None",
+      default: "blastoise",
     },
-    default: "None",
   },
   third: {
-    type: Object,
     username: {
       type: String,
-      default: "None",
+      default: "@GMYellow",
     },
     nickname: {
       type: String,
-      default: "None",
+      default: "Yellow",
     },
     BP: {
       type: Number,
-      default: "0",
+      default: 200,
     },
     pokemon: {
       type: String,
-      default: "None",
+      default: "pikachu",
     },
-    default: "None",
   },
 });
 

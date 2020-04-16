@@ -130,7 +130,9 @@ form input {
 .come-in {
   animation: fade-in-bottom 0.5s ease-in;
 }
-
+.come-out {
+  animation: fade-out-bottom 0.5s ease-out;
+}
 @keyframes fade-in-bottom {
   from {
     opacity: 0;
@@ -139,6 +141,14 @@ form input {
   to {
     opacity: 1;
     bottom: 0px;
+  }
+}
+@keyframes fade-out-bottom {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 .initialize-nickname {
@@ -267,7 +277,9 @@ form input {
 #bp {
   color: #ffbcbc;
 }
-
+#potential {
+  color: #ffbcbc;
+}
 #right-pane {
   background-image: url("https://cdn.vox-cdn.com/thumbor/IKt535q8LMnJDddmLL74TBtzv88=/0x266:1024x949/1280x854/cdn.vox-cdn.com/uploads/chorus_image/image/48942277/N3DS_PokemonSuperMysteryDungeon_MainIllustration_png_jpgcopy.0.0.jpg");
   background-size: cover;
@@ -466,4 +478,118 @@ ol {
 .leader-bp {
   font-size: 2.5rem;
   color: #f0a500;
+}
+
+/* Pokecenter */
+.defaultP {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.pokecenter-sprite {
+  cursor: pointer;
+}
+.pokecenter-col {
+  padding: 0 5%;
+}
+.pokecenter-left-pane {
+  border: 5px solid #1c6ea4;
+}
+.pokecenter-left-button-div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.pokecenter-left-button-div button.btn {
+  width: inherit;
+}
+
+/* on route */
+.onroute-modal {
+  background-image: url("https://i.pinimg.com/originals/50/e7/0f/50e70f33f5409f4ebb0fdc40414f4cda.png");
+  background-size: cover;
+}
+.gym-modal {
+  background-image: url("https://imgix.bustle.com/inverse/34/a4/5a/28/2226/4671/9de2/fdc8442576bf/swordshieldgymchallengeartworkpng.png");
+  background-size: cover;
+}
+.modal-foreground {
+  background-color: white;
+}
+
+.ma {
+  margin: auto;
+}
+.mlr10 {
+  margin: 10px 10px;
+}
+.roll-ball-base {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+.roll-ball {
+  animation: spin 2s linear;
+  cursor: pointer;
+  transition: all 2s ease;
+  position: absolute;
+  margin: auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    left: 0;
+  }
+  25% {
+    transform: rotate(180deg);
+    left: 13%;
+  }
+  50% {
+    transform: rotate(360deg);
+    left: 26%;
+  }
+  75% {
+    transform: rotate(540deg);
+    left: 39%;
+  }
+  100% {
+    transform: rotate(720deg);
+    left: 50%;
+  }
+}
+
+.come-in-big {
+  transform: scale(2);
+  animation: pop-out 2s;
+  transition: 2s ease;
+}
+@keyframes pop-out {
+  from {
+    opacity: 0;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(2);
+  }
+}
+.roll-name {
+  font-size: 3rem;
+  padding: 4%;
+  color: #f0a500;
+}
+.roll-bp {
+  font-size: 3rem;
+  padding: 4%;
+  color: #b80d57;
+}
+
+.giveMeSomeSpace {
+  padding: 5%;
+}
+
+.enable-click {
+  pointer-events: auto;
+}
+
+.disable-click {
+  pointer-events: none;
 }

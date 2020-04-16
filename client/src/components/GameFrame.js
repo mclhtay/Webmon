@@ -4,13 +4,23 @@ import { connect } from "react-redux";
 import Pokedex from "./Pokedex";
 import Leaderboard from "./Leaderboard";
 import { handleViewportChange } from "../actions/utils";
+import Pokecenter from "./Pokecenter";
+import Onroute from "./Onroute";
+import Gym from "./Gym";
 const GameFrame = ({
   //   user: { name },
-  player: { nickname, gender, defaultP, pokemons },
+  player: { nickname, gender, defaultP, pokemons, totalBP },
   handleViewportChange,
 }) => {
   const handleViewPort = (viewportName) => {
-    handleViewportChange(viewportName);
+    if (
+      viewportName === "onroute" ||
+      viewportName === "gym" ||
+      viewportName === "champion" ||
+      viewportName === "legend"
+    ) {
+      handleViewportChange(viewportName, "main");
+    } else handleViewportChange(viewportName);
   };
   const defaultP_stats = pokemons.filter(
     (poke) => poke.pokemon.name === defaultP
@@ -36,8 +46,8 @@ const GameFrame = ({
             </span>{" "}
             <br />
             <span id="exp">Level: </span>
-            {level} &nbsp;&nbsp; <span id="exp">Exp:</span> {exp}/{level * 10}{" "}
-            <br />
+            {level} &nbsp;&nbsp; <span id="exp">Exp:</span> {exp}/
+            {level * 10 + (level - 1) * 10} <br />
             <span id="bp">BP:</span> {bp}
           </p>
         </div>
@@ -78,7 +88,12 @@ const GameFrame = ({
                   id="pokecenter"
                 >
                   <div className="banner-overlay">
-                    <span className="opened">Poké Center</span>
+                    <span
+                      className="opened"
+                      onClick={(e) => handleViewPort("pokecenter")}
+                    >
+                      Poké Center
+                    </span>
                   </div>
                 </div>
               </div>
@@ -86,12 +101,24 @@ const GameFrame = ({
               <div className="row">
                 <div id="onroute" className="col-lg-2 col-md-2 col-sm-2 banner">
                   <div className="banner-overlay">
-                    <span className="opened">On Route</span>
+                    <span
+                      onClick={(e) => handleViewPort("onroute")}
+                      className="opened"
+                    >
+                      On Route
+                    </span>
                   </div>
                 </div>
                 <div id="gym" className="col-lg-2 col-md-2 col-sm-2 banner">
                   <div className="banner-overlay">
-                    <span>Gym</span>
+                    <span
+                      className={
+                        totalBP >= 200 ? "opened enable-click" : "disable-click"
+                      }
+                      onClick={(e) => handleViewPort("gym")}
+                    >
+                      Gym
+                    </span>
                   </div>
                 </div>
                 <div
@@ -125,6 +152,9 @@ const GameFrame = ({
       </div>
       <Pokedex />
       <Leaderboard />
+      <Pokecenter />
+      <Onroute />
+      <Gym />
     </div>
   );
 };

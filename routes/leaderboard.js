@@ -15,14 +15,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    const leaderboard = new Leaderboard();
-    leaderboard.save();
-    res.send(leaderboard);
-  } catch (err) {
-    console.log(err);
-  }
-});
+// router.post("/", async (req, res) => {
+//   try {
+//     const leaderboard = new Leaderboard();
+//     leaderboard.save();
+//     res.send(leaderboard);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 module.exports = router;

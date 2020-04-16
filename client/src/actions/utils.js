@@ -15,8 +15,8 @@ export const handleViewportChange = (viewport, specs = "") => (dispatch) => {
   dispatch({
     type: "VIEW_PORT_CHANGE",
     viewport: viewport,
+    secondary: specs,
   });
-
   if (specs === "leaderboard") {
     dispatch({
       type: "CLOSE_LEADERBOARD",

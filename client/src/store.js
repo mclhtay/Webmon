@@ -5,9 +5,10 @@ import rootReducer from "./reducers/index";
 
 const initialState = {};
 const middleware = [thunk];
+const composeEnhancers = composeWithDevTools({ trace: true, tracelimit: 25 });
 const store = createStore(
   rootReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeEnhancers(applyMiddleware(...middleware))
 );
 export default store;

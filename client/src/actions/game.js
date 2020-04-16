@@ -16,6 +16,7 @@ export const createPlayer = (initialData) => async (dispatch) => {
     coins,
     defaultP,
     candies,
+    bagSize,
   } = res.data;
   if (msg === "Success") {
     await axios.put(`/auth/${initialData.username}`);
@@ -32,6 +33,7 @@ export const createPlayer = (initialData) => async (dispatch) => {
         defaultP: defaultP,
         loading: false,
         candies: candies,
+        bagSize: bagSize,
         msg: "Done",
       });
       break;
@@ -52,6 +54,7 @@ export const getPlayer = (username) => async (dispatch) => {
     coins,
     defaultP,
     candies,
+    bagSize,
   } = res.data.content;
   dispatch({
     type: "PLAYER_LOADED",
@@ -62,6 +65,7 @@ export const getPlayer = (username) => async (dispatch) => {
     coins: coins,
     defaultP: defaultP,
     candies: candies,
+    bagSize: bagSize,
   });
 };
 
@@ -71,6 +75,144 @@ export const loadLeaderboard = () => async (dispatch) => {
     dispatch({
       type: "LEADERBOARD_LOADED",
       content: res.data.data,
+    });
+  }
+};
+
+export const bagIncrease = (username) => async (dispatch) => {
+  const res = await axios.put(`/webmon/${username}/bag`);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const changeDefaultP = (name, newMon) => async (dispatch) => {
+  const body = {
+    newMon: newMon,
+  };
+  const res = await axios.put(`/webmon/${name}/newMon`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const changeCandy = (name, mon) => async (dispatch) => {
+  const body = {
+    mon: mon,
+  };
+  const res = await axios.put(`/webmon/${name}/candy`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const abandonPokemon = (name, mon) => async (dispatch) => {
+  const body = {
+    mon: mon,
+  };
+  const res = await axios.put(`/webmon/${name}/abandon`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const battleFinish = (name, mon, expGain, coinGain, candyGain) => async (
+  dispatch
+) => {
+  const body = {
+    mon: mon,
+    expGain: expGain,
+    coinGain: coinGain,
+    candyGain: candyGain,
+  };
+  const res = await axios.put(`/webmon/${name}/battle`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const reduceCoins = (name, coinReduction) => async (dispatch) => {
+  const body = {
+    coinRed: coinReduction,
+  };
+  const res = await axios.put(`/webmon/${name}/coins`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
+    });
+  }
+};
+
+export const catchNewMon = (name, newMonName, newMonPotential) => async (
+  dispatch
+) => {
+  const body = {
+    name: newMonName,
+    potential: newMonPotential,
+  };
+  const res = await axios.put(`/webmon/${name}/catch`, body);
+  const { msg, content } = res.data;
+  if (msg === "Updated") {
+    dispatch({
+      type: "PLAYER_STAT_CHANGE",
+      pokemons: content.pokemons,
+      totalBP: content.totalBP,
+      coins: content.coins,
+      defaultP: content.defaultP,
+      candies: content.candies,
+      bagSize: content.bagSize,
     });
   }
 };

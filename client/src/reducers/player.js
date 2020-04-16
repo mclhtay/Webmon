@@ -9,6 +9,7 @@ const initialState = {
   defaultP: "",
   candies: 0,
   msg: "",
+  bagSize: 0,
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +22,7 @@ export default function (state = initialState, action) {
     coins,
     defaultP,
     candies,
+    bagSize,
   } = action;
   switch (type) {
     case PLAYER_INITIALIZED:
@@ -34,6 +36,7 @@ export default function (state = initialState, action) {
         defaultP: defaultP,
         loading: false,
         candies: candies,
+        bagSize: bagSize,
         msg: "Done",
       };
     case "PLAYER_LOADED":
@@ -46,6 +49,17 @@ export default function (state = initialState, action) {
         coins: coins,
         defaultP: defaultP,
         loading: false,
+        bagSize: bagSize,
+        candies: candies,
+      };
+    case "PLAYER_STAT_CHANGE":
+      return {
+        ...state,
+        pokemons: pokemons,
+        totalBP: totalBP,
+        coins: coins,
+        defaultP: defaultP,
+        bagSize: bagSize,
         candies: candies,
       };
     case "NICKNAME_ERROR":
