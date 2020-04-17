@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Player = require("../models/Player");
 const Leaderboard = require("../models/Leaderboard");
+const config = require("config");
 // /webmon
 
 const changeLeaderBoard = async (username, nickname, updatedBP, name) => {
@@ -384,10 +385,180 @@ router.put("/:username/gift", async (req, res) => {
       giftContent.name
     );
   }
-  console.log(content.gifts);
+
   res.send({
     msg: "Updated",
     content: content,
   });
 });
+
+const adminSendGift = async (gift, username) => {
+  await Player.findOneAndUpdate(
+    {
+      username: username,
+    },
+    {
+      $push: {
+        gifts: {
+          gift,
+        },
+      },
+    },
+    { new: true }
+  );
+};
+
+router.put("/code", async (req, res) => {
+  const adminList = config.get("adminList");
+  const { code, name } = req.body;
+  //backend verification: is admin
+  if (adminList.find((m) => m === name)) {
+    //available codes:
+    /*
+    ldb d
+    ldb w :mon bp
+    a r :coin :candy :msg
+    a w :mon :bp :msg
+    :username r :coin :candy :msg
+    :username w :mon :bp :msg
+    */
+
+    try {
+      const decoded = code.split(/[ ,]+/);
+      let gift = {
+        giftType: "",
+        giftContent: {
+          coins: 0,
+          candies: 0,
+        },
+        giftMsg: "",
+      };
+      if (decoded[0] === "ldb") {
+        const ldb = await Leaderboard.findOne({ phase: "Beta" });
+        const { first, second, third } = ldb;
+        if (decoded[1] === "d") {
+          (gift.giftType = "Reward"),
+            (gift.giftContent = {
+              coins: 10000,
+              candies: 20,
+            });
+          gift.giftMsg = "Congratulations on reaching first place yesterday!";
+          adminSendGift(gift, first.username);
+          gift.giftContent.coins = 5000;
+          gift.giftContent.candies = 10;
+          gift.giftMsg = "Congratulations on reaching second place yesterday!";
+          adminSendGift(gift, second.username);
+          gift.giftContent.coins = 2500;
+          gift.giftContent.candies = 5;
+          gift.giftMsg = "Congratulations on reaching third place yesterday!";
+          adminSendGift(gift, third.username);
+        } else if (decoded[1] === "w") {
+          gift.giftType = "Pokemon";
+          gift.giftContent = {
+            name: decoded[2],
+            bp: parseInt(decoded[3]),
+          };
+          gift.giftMsg =
+            "Congratulations for staying on the leaderboard until the end!";
+          adminSendGift(gift, first.username);
+          adminSendGift(gift, second.username);
+          adminSendGift(gift, third.username);
+        }
+      } else if (decoded[0] === "a") {
+        if (decoded[1] === "r") {
+          gift.giftType = "Reward";
+          gift.giftContent = {
+            coins: parseInt(decoded[2]),
+            candies: parseInt(decoded[3]),
+          };
+          let theMsg = "";
+          for (let i = 4; i < decoded.length; i++) {
+            theMsg = theMsg + decoded[i] + " ";
+          }
+          gift.giftMsg = theMsg;
+          await Player.update(
+            {},
+            {
+              $push: {
+                gifts: {
+                  gift,
+                },
+              },
+            },
+            { multi: true }
+          );
+        } else if (decoded[1] === "w") {
+          gift.giftType = "Pokemon";
+          gift.giftContent = {
+            name: decoded[2],
+            bp: parseInt(decoded[3]),
+          };
+          let theMsg = "";
+          for (let i = 4; i < decoded.length; i++) {
+            theMsg = theMsg + decoded[i] + " ";
+          }
+          gift.giftMsg = theMsg;
+          await Player.update(
+            {},
+            {
+              $push: {
+                gifts: {
+                  gift,
+                },
+              },
+            },
+            { multi: true }
+          );
+        }
+      } else {
+        const validUsername = await Player.findOne({ username: decoded[0] });
+        if (!validUsername) {
+          res.send({
+            msg: "Cannot send to this player",
+          });
+          return;
+        }
+
+        if (decoded[1] === "r") {
+          gift.giftType = "Reward";
+          gift.giftContent = {
+            coins: parseInt(decoded[2]),
+            candies: parseInt(decoded[3]),
+          };
+          let theMsg = "";
+          for (let i = 4; i < decoded.length; i++) {
+            theMsg = theMsg + decoded[i] + " ";
+          }
+          gift.giftMsg = theMsg;
+          adminSendGift(gift, decoded[0]);
+        } else if (decoded[1] === "w") {
+          gift.giftType = "Pokemon";
+          gift.giftContent = {
+            name: decoded[2],
+            bp: parseInt(decoded[3]),
+          };
+          let theMsg = "";
+          for (let i = 4; i < decoded.length; i++) {
+            theMsg = theMsg + decoded[i] + " ";
+          }
+          gift.giftMsg = theMsg;
+          adminSendGift(gift, decoded[0]);
+        }
+      }
+      res.send({
+        msg: "Done",
+      });
+    } catch (err) {
+      console.log(err);
+      res.send({
+        msg: "Error",
+      });
+    }
+  } else {
+    res.send({
+      msg: "NOT ALLOWED",
+    });
+  }
+});
+
 module.exports = router;

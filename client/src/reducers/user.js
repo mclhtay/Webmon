@@ -12,10 +12,11 @@ const initialState = {
   route: "login",
   msg: "",
   initialized: false,
+  isAdmin: false,
 };
 
 export default function (state = initialState, action) {
-  const { name, type, route, msg, initialized } = action;
+  const { name, type, route, msg, initialized, isAdmin } = action;
   switch (type) {
     case ROUTE_CHANGE:
       return {
@@ -44,11 +45,17 @@ export default function (state = initialState, action) {
         status: "success",
         route: "login",
         initialized: initialized,
+        isAdmin: isAdmin,
       };
     case "postMessage":
       return {
         ...state,
         status: "",
+      };
+    case "ADMIN":
+      return {
+        ...state,
+        msg: msg,
       };
     default:
       return state;

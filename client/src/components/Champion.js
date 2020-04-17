@@ -397,8 +397,15 @@ const Champion = ({
               onClick={(e) => handleSecondaryViewport(e)}
               name="roll-reset"
               className="btn btn-sm btn-warning mlr10 home-button"
+              disabled={coins < 600 || pokemons.length === bagSize}
             >
-              Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 600
+              {pokemons.length === bagSize ? (
+                "Bag Full"
+              ) : (
+                <span>
+                  Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 600
+                </span>
+              )}
             </button>
             <button
               name="main"

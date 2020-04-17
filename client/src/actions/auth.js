@@ -61,6 +61,7 @@ export const loginAction = (username, password) => async (dispatch) => {
         type: LOGIN_SUCCESS,
         name: res.data.user.name,
         initialized: res.data.user.initialized,
+        isAdmin: res.data.user.isAdmin,
       });
 
       break;

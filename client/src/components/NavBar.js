@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import { handleViewportChange } from "../actions/utils";
 const NavBar = ({
-  user: { route, name },
+  user: { route, name, isAdmin },
   player: { nickname, coins, candies },
+  handleViewportChange,
 }) => {
   const handleSignout = (e) => {};
-
+  const admin = () => {
+    handleViewportChange("admin", "");
+  };
   return (
     <div className="game-nav">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,10 +19,12 @@ const NavBar = ({
         </i>
         <div className="pull-right">
           <ul className="navbar-nav mr-auto navbar-right">
-            {name === "carter" && (
+            {isAdmin && (
               <li className="nav-item">
                 <i className="nav-link">
-                  <button className="btn-sm btn btn-dark">Send Gift</button>
+                  <button onClick={admin} className="btn-sm btn btn-dark">
+                    Send Gift
+                  </button>
                 </i>
               </li>
             )}
@@ -55,6 +60,7 @@ const NavBar = ({
 NavBar.propTypes = {
   user: PropTypes.object.isRequired,
   player: PropTypes.object.isRequired,
+  handleViewportChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -62,18 +68,4 @@ const mapStateToProps = (state) => ({
   player: state.player,
 });
 
-export default connect(mapStateToProps, {})(NavBar);
-
-// export const connect(mapStateToProps, {})(NavBar) = (props) => {
-//     return (
-//       <div className="game-nav">
-//         <ul>
-//           <li>
-//             <span>
-//               Welcome {props.route === "login" && "back"} {props.name}
-//             </span>
-//           </li>
-//         </ul>
-//       </div>
-//     );
-//   };
+export default connect(mapStateToProps, { handleViewportChange })(NavBar);

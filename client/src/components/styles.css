@@ -263,6 +263,7 @@ form input {
 #defaultSprite {
   transform: scale(2);
   padding: 2%;
+  max-width: 150px;
 }
 
 #left-pane p {
@@ -331,6 +332,24 @@ form input {
   font-weight: bolder;
   vertical-align: middle;
   line-height: 5rem;
+}
+@media screen and (max-width: 1000px) {
+  .banner span {
+    font-family: "Cute Font", cursive;
+    font-size: 3rem;
+    font-weight: bolder;
+    vertical-align: middle;
+    line-height: 5rem;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .banner span {
+    font-family: "Cute Font", cursive;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    vertical-align: middle;
+    line-height: 5rem;
+  }
 }
 .opened {
   color: yellow;

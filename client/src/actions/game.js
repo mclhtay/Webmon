@@ -247,3 +247,16 @@ export const claimGift = (name, giftID) => async (dispatch) => {
     });
   }
 };
+
+export const submitCode = (code, name) => async (dispatch) => {
+  const body = {
+    code: code,
+    name: name,
+  };
+  const res = await axios.put(`/webmon/code`, body);
+  const { msg } = res.data;
+  dispatch({
+    type: "ADMIN",
+    msg: msg,
+  });
+};
