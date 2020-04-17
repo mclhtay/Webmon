@@ -11,6 +11,9 @@ const NavBar = ({
   const admin = () => {
     handleViewportChange("admin", "");
   };
+  const news = () => {
+    handleViewportChange("news", "");
+  };
   return (
     <div className="game-nav">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,6 +22,14 @@ const NavBar = ({
         </i>
         <div className="pull-right">
           <ul className="navbar-nav mr-auto navbar-right">
+            <li className="nav-item">
+              <i className="nav-link">
+                <button onClick={news} className="btn-sm btn btn-info">
+                  News
+                </button>
+              </i>
+            </li>
+
             {isAdmin && (
               <li className="nav-item">
                 <i className="nav-link">

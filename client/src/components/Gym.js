@@ -384,6 +384,18 @@ const Gym = ({
                     Back to Entrance
                   </button>
                 </div>
+                <div>
+                  {pokemons.find((m) => m.pokemon.name === oname) && (
+                    <p>
+                      Your {oname[0].toUpperCase() + oname.slice(1)}'s BP
+                      Potential:{" "}
+                      {
+                        pokemons.find((m) => m.pokemon.name === oname).pokemon
+                          .potential
+                      }
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

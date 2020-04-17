@@ -12,6 +12,7 @@ import Legend from "./Legend";
 import Event from "./Event";
 import Gift from "./Gift";
 import Admin from "./Admin";
+import News from "./News";
 const GameFrame = ({
   //   user: { name },
   player: { nickname, gender, defaultP, pokemons, totalBP, gifts },
@@ -194,6 +195,7 @@ const GameFrame = ({
       <Legend />
       <Event />
       <Admin />
+      <News />
     </div>
   );
 };

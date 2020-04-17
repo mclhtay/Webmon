@@ -1,8 +1,8 @@
 body {
-  background: url("https://thewallpaper.co//wp-content/uploads/2016/10/pokemon-pikachu-hd-wallpaper-background-hd-wallpapers-high-definition-desktop-wallpapers-for-windows-apple-mac-tablet-download-free-2560x1440.jpg")
-    no-repeat center center fixed;
+  background: url("./background.jpg") no-repeat center center fixed;
   text-align: center;
   background-size: cover;
+  scroll-behavior: smooth;
 }
 
 .poke-font {
@@ -554,7 +554,7 @@ ol {
 .roll-ball-base {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 400px;
 }
 .roll-ball {
   animation: spin 2s linear;

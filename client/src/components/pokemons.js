@@ -83,6 +83,78 @@ export default {
     },
     {
       pokemon: {
+        name: "caterpie",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png",
+        class: "onroute",
+        potential: [1, 3],
+      },
+    },
+    {
+      pokemon: {
+        name: "metapod",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png",
+        class: "onroute",
+        potential: [5, 10],
+      },
+    },
+    {
+      pokemon: {
+        name: "butterfree",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png",
+        class: "champion",
+        potential: [20, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "pidgey",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png",
+        class: "onroute",
+        potential: [3, 5],
+      },
+    },
+    {
+      pokemon: {
+        name: "pidgeotto",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png",
+        class: "gym",
+        potential: [10, 13],
+      },
+    },
+    {
+      pokemon: {
+        name: "pidgeot",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png",
+        class: "gym",
+        potential: [20, 25],
+      },
+    },
+    {
+      pokemon: {
+        name: "rattata",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png",
+        class: "onroute",
+        potential: [1, 3],
+      },
+    },
+    {
+      pokemon: {
+        name: "raticate",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png",
+        class: "gym",
+        potential: [13, 15],
+      },
+    },
+    {
+      pokemon: {
         name: "pichu",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/172.png",
@@ -101,6 +173,96 @@ export default {
     },
     {
       pokemon: {
+        name: "raichu",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png",
+        class: "champion",
+        potential: [35, 40],
+      },
+    },
+    {
+      pokemon: {
+        name: "jigglypuff",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png",
+        class: "gym",
+        potential: [10, 25],
+      },
+    },
+    {
+      pokemon: {
+        name: "wigglytuff",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/40.png",
+        class: "champion",
+        potential: [50, 70],
+      },
+    },
+    {
+      pokemon: {
+        name: "clefairy",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png",
+        class: "gym",
+        potential: [9, 26],
+      },
+    },
+    {
+      pokemon: {
+        name: "clefable",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/36.png",
+        class: "champion",
+        potential: [49, 69],
+      },
+    },
+    {
+      pokemon: {
+        name: "growlithe",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png",
+        class: "gym",
+        potential: [10, 15],
+      },
+    },
+    {
+      pokemon: {
+        name: "arcanine",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png",
+        class: "champion",
+        potential: [25, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "geodude",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png",
+        class: "onroute",
+        potential: [1, 3],
+      },
+    },
+    {
+      pokemon: {
+        name: "graveler",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png",
+        class: "gym",
+        potential: [10, 15],
+      },
+    },
+    {
+      pokemon: {
+        name: "golem",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png",
+        class: "champion",
+        potential: [20, 25],
+      },
+    },
+    {
+      pokemon: {
         name: "eevee",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png",
@@ -110,11 +272,74 @@ export default {
     },
     {
       pokemon: {
+        name: "slowpoke",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png",
+        class: "gym",
+        potential: [10, 15],
+      },
+    },
+    {
+      pokemon: {
+        name: "slowbro",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/80.png",
+        class: "legend",
+        potential: [30, 50],
+      },
+    },
+    {
+      pokemon: {
+        name: "gastly",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png",
+        class: "gym",
+        potential: [7, 15],
+      },
+    },
+    {
+      pokemon: {
+        name: "haunter",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/93.png",
+        class: "champion",
+        potential: [25, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "gengar",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png",
+        class: "legend",
+        potential: [35, 50],
+      },
+    },
+    {
+      pokemon: {
         name: "mew",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png",
         class: "legend",
         potential: [80, 100],
+      },
+    },
+    {
+      pokemon: {
+        name: "rhyhorn",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/111.png",
+        class: "gym",
+        potential: [20, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "rhydon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png",
+        class: "legend",
+        potential: [40, 55],
       },
     },
     {
@@ -133,7 +358,7 @@ export default {
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-x.png",
         class: "rare",
         roll: "yes",
-        potential: [80, 125],
+        potential: [120, 150],
       },
     },
     {
@@ -143,7 +368,7 @@ export default {
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-y.png",
         class: "rare",
         roll: "no",
-        potential: [85, 130],
+        potential: [115, 155],
       },
     },
     {
@@ -151,9 +376,153 @@ export default {
         name: "sylveon",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/700.png",
-        class: "rare",
-        roll: "yes",
+        class: "legend",
         potential: [25, 37],
+      },
+    },
+    {
+      pokemon: {
+        name: "vaporeon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png",
+        class: "legend",
+        potential: [20, 35],
+      },
+    },
+    {
+      pokemon: {
+        name: "jolteon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png",
+        class: "legend",
+        potential: [21, 35],
+      },
+    },
+    {
+      pokemon: {
+        name: "flareon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png",
+        class: "legend",
+        potential: [19, 40],
+      },
+    },
+    {
+      pokemon: {
+        name: "espeon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png",
+        class: "legend",
+        potential: [30, 50],
+      },
+    },
+    {
+      pokemon: {
+        name: "umbreon",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/197.png",
+        class: "legend",
+        potential: [30, 50],
+      },
+    },
+    {
+      pokemon: {
+        name: "magikarp",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png",
+        class: "onroute",
+        potential: [1, 3],
+      },
+    },
+    {
+      pokemon: {
+        name: "gyarados",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png",
+        class: "champion",
+        potential: [40, 50],
+      },
+    },
+    {
+      pokemon: {
+        name: "snorlax",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png",
+        class: "champion",
+        potential: [35, 60],
+      },
+    },
+    {
+      pokemon: {
+        name: "dratini",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png",
+        class: "gym",
+        potential: [20, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "dragonair",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png",
+        class: "champion",
+        potential: [40, 50],
+      },
+    },
+    {
+      pokemon: {
+        name: "dragonite",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png",
+        class: "legend",
+        potential: [60, 85],
+      },
+    },
+    {
+      pokemon: {
+        name: "articuno",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png",
+        class: "legend",
+        potential: [75, 90],
+      },
+    },
+    {
+      pokemon: {
+        name: "zapdos",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png",
+        class: "legend",
+        potential: [75, 90],
+      },
+    },
+    {
+      pokemon: {
+        name: "moltres",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/146.png",
+        class: "legend",
+        potential: [75, 90],
+      },
+    },
+    {
+      pokemon: {
+        name: "latios",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/381.png",
+        class: "rare",
+        roll: "no",
+        potential: [80, 100],
+      },
+    },
+    {
+      pokemon: {
+        name: "latias",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/380.png",
+        class: "legend",
+        potential: [79, 101],
       },
     },
     {
@@ -161,9 +530,17 @@ export default {
         name: "riolu",
         sprite:
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/447.png",
-        class: "rare",
-        roll: "yes",
-        potential: [10, 15],
+        class: "legend",
+        potential: [20, 30],
+      },
+    },
+    {
+      pokemon: {
+        name: "lucario",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png",
+        class: "legend",
+        potential: [80, 100],
       },
     },
   ],

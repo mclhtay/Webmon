@@ -49,13 +49,21 @@ const Pokedex = ({ viewport: { viewport }, handleViewportChange }) => {
             {poke.pokemon.potential[0] + " - " + poke.pokemon.potential[1]}
           </h4>
         </div>
+        <div>
+          {" "}
+          <a href="#top">
+            <button className="btn btn-sm btn-warning">Back to top</button>
+          </a>{" "}
+        </div>
       </div>
     </div>
   ));
   return (
     <div className={viewport === "pokedex" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content">
-        <h2 className="styled-font modal-title">Pokédex</h2>
+        <h2 className="styled-font modal-title" id="top">
+          Pokédex
+        </h2>
         <div className="container">
           <div className="row">{dexNav}</div>
         </div>

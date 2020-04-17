@@ -44,8 +44,8 @@ const Event = ({
   const eventMonSprites = eventMons.map((mon, index) => (
     <div className="col-lg-1 ma" key={index}>
       <img
-        height="75px"
-        width="75px"
+        height="120px"
+        width="120px"
         src={
           "http://play.pokemonshowdown.com/sprites/ani/" +
           mon.pokemon.name +
@@ -264,6 +264,18 @@ const Event = ({
                   >
                     Back to Entrance
                   </button>
+                </div>
+                <div>
+                  {pokemons.find((m) => m.pokemon.name === oname) && (
+                    <p>
+                      Your {oname[0].toUpperCase() + oname.slice(1)}'s BP
+                      Potential:{" "}
+                      {
+                        pokemons.find((m) => m.pokemon.name === oname).pokemon
+                          .potential
+                      }
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
