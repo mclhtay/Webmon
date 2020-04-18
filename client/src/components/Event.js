@@ -39,7 +39,10 @@ const Event = ({
   );
 
   const eventMons = pokemonArray.pokemons.filter(
-    (m) => m.pokemon.class === "rare" && m.pokemon.roll === "yes"
+    (m) =>
+      m.pokemon.class === "rare" &&
+      m.pokemon.roll === "yes" &&
+      m.pokemon.event === 1
   );
   const eventMonSprites = eventMons.map((mon, index) => (
     <div className="col-lg-1 ma" key={index}>
