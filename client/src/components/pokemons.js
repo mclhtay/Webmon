@@ -353,11 +353,34 @@ export default {
     },
     {
       pokemon: {
+        name: "mewtwo-megax",
+        sprite:
+          "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/mewtwo-mega-x.png",
+        class: "rare",
+        roll: "yes",
+        event: 2,
+        potential: [140, 180],
+      },
+    },
+    {
+      pokemon: {
+        name: "mewtwo-megay",
+        sprite:
+          "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/mewtwo-mega-y.png",
+        class: "rare",
+        roll: "yes",
+        event: 2,
+        potential: [150, 170],
+      },
+    },
+    {
+      pokemon: {
         name: "charizard-megax",
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-x.png",
         class: "rare",
         roll: "yes",
+        event: 1,
         potential: [120, 150],
       },
     },
@@ -368,6 +391,7 @@ export default {
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-y.png",
         class: "rare",
         roll: "no",
+        event: 1,
         potential: [115, 155],
       },
     },

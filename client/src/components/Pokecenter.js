@@ -8,16 +8,18 @@ import {
   changeDefaultP,
   changeCandy,
   abandonPokemon,
+  changeCookie,
 } from "../actions/game";
 const Pokecenter = ({
   user: { name },
-  player: { pokemons, candies, coins, defaultP, bagSize },
+  player: { pokemons, candies, coins, defaultP, bagSize, cookies },
   viewport: { viewport },
   handleViewportChange,
   bagIncrease,
   changeDefaultP,
   changeCandy,
   abandonPokemon,
+  changeCookie,
 }) => {
   const [selectedMon, setSelectedMon] = useState(defaultP);
   const changeViewport = () => {
@@ -75,13 +77,17 @@ const Pokecenter = ({
     if (
       window.confirm(
         "Are you sure you want to abandon " +
-          selectedMon +
+          selectedMon[0].toUpperCase() +
+          selectedMon.slice(1) +
           " ? \nThis cannot be un-done!"
       )
     ) {
       abandonPokemon(name, selectedMon);
       setSelectedMon(defaultP);
     }
+  };
+  const handleCookie = () => {
+    changeCookie(name, selectedMon);
   };
   return (
     <div
@@ -109,7 +115,14 @@ const Pokecenter = ({
               />
               <br />
               <span id="exp">Level: </span>
-              {level} &nbsp;&nbsp; <span id="exp">Exp:</span> {exp}/{level * 10}{" "}
+              {level} &nbsp;&nbsp; <span id="exp">Exp:</span>{" "}
+              {level === 100 ? (
+                <span>Max</span>
+              ) : (
+                <span>
+                  {exp}/{level * level * 100}{" "}
+                </span>
+              )}
               <br />
               <span id="potential">Potential:</span> {potential}&nbsp;&nbsp;
               <span id="bp">BP:</span> {bp}
@@ -123,11 +136,11 @@ const Pokecenter = ({
                 Accompany
               </button>
               <button
-                onClick={handleCandy}
-                className="btn home-button btn-warning"
-                disabled={candies < 1}
+                disabled={cookies <= 0}
+                onClick={handleCookie}
+                className="btn home-button btn-success"
               >
-                Use Candy
+                Use BP Cookie
               </button>
               <button
                 onClick={handleAbandon}
@@ -137,12 +150,30 @@ const Pokecenter = ({
                 Abandon
               </button>
             </div>
+            <div className="pokecenter-left-button-div">
+              <button
+                onClick={handleCandy}
+                className="btn home-button btn-warning"
+                disabled={candies < (level * (level + 1)) / 2 || level === 100}
+              >
+                {level === 100 ? (
+                  <span>Max Level</span>
+                ) : (
+                  <span>
+                    {" "}
+                    Use {(level * (level + 1)) / 2} Candies to Level Up
+                  </span>
+                )}
+              </button>
+            </div>
           </div>
           <div className="col-lg-8">
             <p>
               <i className="fas fa-coins" /> : {coins}{" "}
               <span style={{ padding: "0 2%" }} />
               <i className="fas fa-candy-cane" /> : {candies}
+              <span style={{ padding: "0 2%" }} />
+              <i className="fas fa-cookie-bite" /> {cookies}
               <span style={{ padding: "0 2%" }} /> Bag Size:{" "}
               {pokemons.length + "/" + bagSize}
               <button
@@ -173,6 +204,7 @@ Pokecenter.propTypes = {
   changeDefaultP: PropTypes.func.isRequired,
   changeCandy: PropTypes.func.isRequired,
   abandonPokemon: PropTypes.func.isRequired,
+  changeCookie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -187,4 +219,5 @@ export default connect(mapStateToProps, {
   handleViewportChange,
   changeCandy,
   abandonPokemon,
+  changeCookie,
 })(Pokecenter);

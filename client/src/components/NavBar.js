@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { handleViewportChange } from "../actions/utils";
 const NavBar = ({
   user: { route, name, isAdmin },
-  player: { nickname, coins, candies },
+  player: { nickname, coins, candies, cookies },
   handleViewportChange,
 }) => {
   const handleSignout = (e) => {};
@@ -54,6 +54,13 @@ const NavBar = ({
                 <i className="fas fa-candy-cane" /> {candies}
               </i>
             </li>
+
+            <li className="nav-item" title="candies">
+              <i className="nav-link">
+                <i className="fas fa-cookie-bite" /> {cookies}
+              </i>
+            </li>
+
             <li className="nav-item" id="signout-btn">
               <form onSubmit={(e) => handleSignout(e)}>
                 <button type="submit" className="btn btn-lg btn-primary">

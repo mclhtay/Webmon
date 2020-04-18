@@ -27,18 +27,27 @@ const Legend = ({
     rewardCoins: 0,
     rewardCandy: 0,
     rewardExp: 0,
+    rewardCookie: 0,
   });
-  const { rewardCoins, rewardCandy, result, rewardExp } = reward;
+  const { rewardCoins, rewardCandy, result, rewardExp, rewardCookie } = reward;
   const [rollRevealed, setRollRevealed] = useState(false);
   useEffect(() => {
     if (viewport === "legend")
-      battleFinish(user.name, defaultP, rewardExp, rewardCoins, rewardCandy);
+      battleFinish(
+        user.name,
+        defaultP,
+        rewardExp,
+        rewardCoins,
+        rewardCandy,
+        rewardCookie
+      );
   }, [
     defaultP,
     battleFinish,
     rewardCoins,
     rewardCandy,
     rewardExp,
+    rewardCookie,
     user.name,
     viewport,
   ]);
@@ -80,6 +89,7 @@ const Legend = ({
       rewardCoins: 0,
       rewardCandy: 0,
       rewardExp: 0,
+      rewardCookie: 0,
     });
     handleViewportChange("main", "");
   };
@@ -111,7 +121,7 @@ const Legend = ({
       if (e.currentTarget.name === "roll-reset") {
         setRollRevealed(false);
       }
-      reduceCoins(user.name, 800);
+      reduceCoins(user.name, 5000);
       const randomOpponent =
         legendMons[Math.floor(Math.random() * legendMons.length)];
       const randomBP =
@@ -149,6 +159,7 @@ const Legend = ({
           rewardCoins: Math.floor(Math.random() * 151) + 50,
           rewardCandy: Math.floor(Math.random() * 100) < 15 ? 1 : 0,
           rewardExp: bp > obp ? 200 : 200 + (obp - bp),
+          rewardCookie: Math.floor(Math.random() * 300) === 16 ? 1 : 0,
         });
       } else {
         setResult({
@@ -157,6 +168,7 @@ const Legend = ({
           rewardCoins: 0,
           rewardCandy: 0,
           rewardExp: 0,
+          rewardCookie: 0,
         });
       }
     } else if (e.currentTarget.name === "main") {
@@ -198,6 +210,8 @@ const Legend = ({
             <i className="fas fa-coins" />: 150 - 200
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <i className="fas fa-candy-cane" />: 15%
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <i className="fas fa-cookie-bite" />: ?
             <div>
               <button
                 type="button"
@@ -213,14 +227,14 @@ const Legend = ({
                 name="catch"
                 onClick={(e) => handleSecondaryViewport(e)}
                 className="mlr10 btn btn-sm btn-warning home-button"
-                disabled={coins < 800 || pokemons.length === bagSize}
+                disabled={coins < 5000 || pokemons.length === bagSize}
               >
                 {pokemons.length === bagSize ? (
                   "Bag Full"
                 ) : (
                   <span>
                     Catch &nbsp;&nbsp;
-                    <i className="fas fa-coins" /> 800
+                    <i className="fas fa-coins" /> 5000
                   </span>
                 )}
               </button>
@@ -275,6 +289,8 @@ const Legend = ({
                   <i className="fas fa-coins" />: {rewardCoins}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <i className="fas fa-candy-cane" />: {rewardCandy}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <i className="fas fa-cookie-bite" />: {rewardCookie}
                 </p>
                 <div>
                   <button
@@ -405,13 +421,13 @@ const Legend = ({
               onClick={(e) => handleSecondaryViewport(e)}
               name="roll-reset"
               className="btn btn-sm btn-warning mlr10 home-button"
-              disabled={coins < 800 || pokemons.length === bagSize}
+              disabled={coins < 5000 || pokemons.length === bagSize}
             >
               {pokemons.length === bagSize ? (
                 "Bag Full"
               ) : (
                 <span>
-                  Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 800
+                  Catch another &nbsp;&nbsp; <i className="fas fa-coins" /> 5000
                 </span>
               )}
             </button>

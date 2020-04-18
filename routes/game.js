@@ -87,6 +87,7 @@ router.post("/", async (req, res) => {
             giftContent: {
               coins: 10000,
               candies: 10,
+              cookies: 0,
             },
             giftMsg:
               "Thank you for registering! Here's your reward for being a beta tester!",
@@ -158,7 +159,22 @@ router.put("/:username/candy", async (req, res) => {
     let { candies, totalBP, pokemons, nickname } = player;
     let monToUpdated = pokemons.filter((m) => m.pokemon.name === mon);
     const index = pokemons.indexOf(monToUpdated[0]);
-
+    if (monToUpdated[0].pokemon.level === 100) {
+      res.send({
+        msg: "Updated",
+        content: player,
+      });
+      return;
+    }
+    const candiesRequired =
+      (monToUpdated[0].pokemon.level * (monToUpdated[0].pokemon.level + 1)) / 2;
+    if (candies < candiesRequired) {
+      res.send({
+        msg: "Updated",
+        content: player,
+      });
+      return;
+    }
     const { potential, bp, level, name } = monToUpdated[0].pokemon;
     const updatedBP = bp + potential;
     monToUpdated[0].pokemon.name = name;
@@ -172,7 +188,7 @@ router.put("/:username/candy", async (req, res) => {
         username: req.params.username,
       },
       {
-        candies: candies - 1,
+        candies: candies - candiesRequired,
         totalBP: totalBP > updatedBP ? totalBP : updatedBP,
         pokemons: pokemons,
       },
@@ -188,6 +204,45 @@ router.put("/:username/candy", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.put("/:username/cookie", async (req, res) => {
+  const { mon } = req.body;
+  try {
+    const player = await Player.findOne({ username: req.params.username });
+    const { cookies, totalBP, pokemons } = player;
+    if (cookies < 1) {
+      res.send({
+        msg: "Updated",
+        content: player,
+      });
+      return;
+    }
+    const monToUpdate = pokemons.filter((m) => m.pokemon.name === mon);
+    const index = pokemons.indexOf(monToUpdate[0]);
+    monToUpdate[0].pokemon.potential = monToUpdate[0].pokemon.potential + 10;
+
+    const updatedBP = monToUpdate[0].pokemon.bp + 10;
+    monToUpdate[0].pokemon.bp = updatedBP;
+    pokemons[index] = monToUpdate[0];
+    const content = await Player.findOneAndUpdate(
+      { username: req.params.username },
+      {
+        pokemons: pokemons,
+        cookies: cookies - 1,
+        totalBP: totalBP > updatedBP ? totalBP : updatedBP,
+      },
+      { new: true }
+    );
+    changeLeaderBoard(req.params.username, player.nickname, updatedBP, mon);
+
+    res.send({
+      msg: "Updated",
+      content: content,
+    });
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -218,18 +273,19 @@ router.put("/:username/abandon", async (req, res) => {
 
 router.put("/:username/battle", async (req, res) => {
   try {
-    const { mon, expGain, coinGain, candyGain } = req.body;
+    const { mon, expGain, coinGain, candyGain, cookieGain } = req.body;
     const player = await Player.findOne({ username: req.params.username });
-    const { candies, nickname, totalBP, coins, pokemons } = player;
+    const { candies, nickname, totalBP, coins, pokemons, cookies } = player;
     let monToUpdate = pokemons.filter((m) => m.pokemon.name === mon);
     const monIndex = pokemons.indexOf(monToUpdate[0]);
     const { exp, level, bp, potential } = monToUpdate[0].pokemon;
-    let newExp = exp + expGain;
+    let newExp = level === 100 ? exp : exp + expGain;
     let newLevel = level;
     let newBP = bp;
-    let expRequiredToLevel = newLevel * 10 + (newLevel - 1) * 10;
+    //cu
+    let expRequiredToLevel = newLevel * newLevel * 100;
 
-    while (newExp >= expRequiredToLevel) {
+    while (newExp >= expRequiredToLevel && level != 100) {
       newLevel += 1;
       newExp = newExp - expRequiredToLevel;
       newBP = newBP + potential;
@@ -248,6 +304,7 @@ router.put("/:username/battle", async (req, res) => {
         candies: candies + candyGain,
         coins: coins + coinGain,
         totalBP: newBP > totalBP ? newBP : totalBP,
+        cookies: cookies + cookieGain,
       },
       { new: true }
     );
@@ -336,7 +393,7 @@ router.put("/:username/catch", async (req, res) => {
 
 router.put("/:username/gift", async (req, res) => {
   const player = await Player.findOne({ username: req.params.username });
-  const { gifts, candies, coins } = player;
+  const { gifts, candies, coins, cookies } = player;
 
   const giftClaimed = gifts.filter((g) => g._id == req.body.id);
   const { giftType, giftContent } = giftClaimed[0].gift;
@@ -347,7 +404,11 @@ router.put("/:username/gift", async (req, res) => {
         username: req.params.username,
       },
       {
-        $inc: { candies: giftContent.candies, coins: giftContent.coins },
+        $inc: {
+          candies: giftContent.candies,
+          coins: giftContent.coins,
+          cookies: giftContent.cookies,
+        },
         $pull: {
           gifts: { _id: giftClaimed[0]._id },
         },
@@ -417,9 +478,9 @@ router.put("/code", async (req, res) => {
     /*
     ldb d
     ldb w :mon bp
-    a r :coin :candy :msg
+    a r :coin :candy :cookies :msg
     a w :mon :bp :msg
-    :username r :coin :candy :msg
+    :username r :coin :candy :cookie :msg
     :username w :mon :bp :msg
     */
 
@@ -439,17 +500,20 @@ router.put("/code", async (req, res) => {
         if (decoded[1] === "d") {
           (gift.giftType = "Reward"),
             (gift.giftContent = {
-              coins: 10000,
-              candies: 20,
+              coins: 50000,
+              candies: 100,
+              cookies: 20,
             });
           gift.giftMsg = "Congratulations on reaching first place yesterday!";
           adminSendGift(gift, first.username);
-          gift.giftContent.coins = 5000;
-          gift.giftContent.candies = 10;
+          gift.giftContent.coins = 30000;
+          gift.giftContent.candies = 50;
+          gift.giftContent.cookies = 10;
           gift.giftMsg = "Congratulations on reaching second place yesterday!";
           adminSendGift(gift, second.username);
-          gift.giftContent.coins = 2500;
-          gift.giftContent.candies = 5;
+          gift.giftContent.coins = 20000;
+          gift.giftContent.candies = 25;
+          gift.giftContent.cookies = 5;
           gift.giftMsg = "Congratulations on reaching third place yesterday!";
           adminSendGift(gift, third.username);
         } else if (decoded[1] === "w") {
@@ -470,9 +534,10 @@ router.put("/code", async (req, res) => {
           gift.giftContent = {
             coins: parseInt(decoded[2]),
             candies: parseInt(decoded[3]),
+            cookies: parseInt(decoded[4]),
           };
           let theMsg = "";
-          for (let i = 4; i < decoded.length; i++) {
+          for (let i = 5; i < decoded.length; i++) {
             theMsg = theMsg + decoded[i] + " ";
           }
           gift.giftMsg = theMsg;
@@ -524,9 +589,10 @@ router.put("/code", async (req, res) => {
           gift.giftContent = {
             coins: parseInt(decoded[2]),
             candies: parseInt(decoded[3]),
+            cookies: parseInt(decoded[4]),
           };
           let theMsg = "";
-          for (let i = 4; i < decoded.length; i++) {
+          for (let i = 5; i < decoded.length; i++) {
             theMsg = theMsg + decoded[i] + " ";
           }
           gift.giftMsg = theMsg;

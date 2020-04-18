@@ -296,6 +296,14 @@ form input {
   width: 100%;
   height: 100%;
 }
+.dark-overlay2 {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 #right-pane p {
   font-size: 4rem;
   color: #cee397;
@@ -374,7 +382,11 @@ form input {
   background-image: url("https://c4.wallpaperflare.com/wallpaper/903/706/550/pokemon-mega-charizard-x-pokemon-wallpaper-preview.jpg");
   background-size: cover;
 }
-
+#event-mewtwo {
+  background-image: url("https://cdn.wallpapersafari.com/18/82/02xm9a.png");
+  background-size: cover;
+  background-position: center;
+}
 /*poke dex component */
 .modal-frame {
   text-align: center;

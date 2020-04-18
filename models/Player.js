@@ -56,6 +56,10 @@ const PlayerSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  cookies: {
+    type: Number,
+    default: 0,
+  },
   bagSize: {
     type: Number,
     default: 10,

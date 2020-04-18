@@ -39,7 +39,10 @@ const Event = ({
   );
 
   const eventMons = pokemonArray.pokemons.filter(
-    (m) => m.pokemon.class === "rare" && m.pokemon.roll === "yes"
+    (m) =>
+      m.pokemon.class === "rare" &&
+      m.pokemon.roll === "yes" &&
+      m.pokemon.event === 2
   );
   const eventMonSprites = eventMons.map((mon, index) => (
     <div className="col-lg-1 ma" key={index}>
@@ -60,7 +63,7 @@ const Event = ({
     handleViewportChange("main", "");
   };
   const handleSecondaryViewport = (e) => {
-    handleViewportChange("event", e.currentTarget.name);
+    handleViewportChange("event2", e.currentTarget.name);
     if (e.currentTarget.name === "main") {
       setRollRevealed(false);
     } else if (
@@ -70,7 +73,7 @@ const Event = ({
       if (e.currentTarget.name === "roll-reset") {
         setRollRevealed(false);
       }
-      //38 + 25 + 20 + 10 = 93
+      //38 + 25 + 20 + 12 = 95
       reduceCoins(user.name, 10000);
       const randomClassDeterminer = Math.floor(Math.random() * 100);
       let randomClass = "";
@@ -86,7 +89,7 @@ const Event = ({
         randomClass = "champion";
         randomOpponent =
           championMons[Math.floor(Math.random() * championMons.length)];
-      } else if (randomClassDeterminer > 82 && randomClassDeterminer < 93) {
+      } else if (randomClassDeterminer > 82 && randomClassDeterminer < 95) {
         randomClass = "legend";
         randomOpponent =
           legendMons[Math.floor(Math.random() * legendMons.length)];
@@ -136,21 +139,19 @@ const Event = ({
   };
   const handleCatch = () => {
     catchNewMon(user.name, oname, obp);
-    handleViewportChange("event", "postcatch");
+    handleViewportChange("event2", "postcatch");
   };
 
   return (
-    <div className={viewport === "event" ? "modal-frame come-in" : "blind"}>
-      <div className="modal-content" id="event-mega-charizard">
+    <div className={viewport === "event2" ? "modal-frame come-in" : "blind"}>
+      <div className="modal-content" id="event-mewtwo">
         <div className="modal-foreground">
-          <h3 className="modal-title styled-font">Mega Charizard-X Event</h3>
+          <h3 className="modal-title styled-font">Mewtwo Strikes Back</h3>
           <span className="close-modal" onClick={handleViewport} name="exit">
             &#10008;
           </span>
           <div className={secondary === "main" ? "come-in" : "blind"}>
-            <h5>
-              Welcome to the Limited Time Mega Charizard-X catching event!
-            </h5>
+            <h5>Welcome to Mega Mewtwo catching Event!</h5>
             <p>
               There is a chance that you can catch these event exclusive
               pokémons and surpass your competing trainers!
@@ -173,11 +174,11 @@ const Event = ({
               </div>
               <div className="col-lg-2 ma">
                 <img src={championBall} alt="onrouteball" />
-                <p>Legend: 10%</p>
+                <p>Legend: 12%</p>
               </div>
               <div className="col-lg-2 ma">
                 <img src={masterBall} alt="masterball" />
-                <p>Event: 7%</p>
+                <p>Event: 5%</p>
               </div>
             </div>
             <p>

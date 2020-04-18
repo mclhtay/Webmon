@@ -13,6 +13,7 @@ import Event from "./Event";
 import Gift from "./Gift";
 import Admin from "./Admin";
 import News from "./News";
+import Event2 from "./Event2";
 const GameFrame = ({
   //   user: { name },
   player: { nickname, gender, defaultP, pokemons, totalBP, gifts },
@@ -24,7 +25,8 @@ const GameFrame = ({
       viewportName === "gym" ||
       viewportName === "champion" ||
       viewportName === "legend" ||
-      viewportName === "event"
+      viewportName === "event" ||
+      viewportName === "event2"
     ) {
       handleViewportChange(viewportName, "main");
     } else handleViewportChange(viewportName);
@@ -53,8 +55,15 @@ const GameFrame = ({
             </span>{" "}
             <br />
             <span id="exp">Level: </span>
-            {level} &nbsp;&nbsp; <span id="exp">Exp:</span> {exp}/
-            {level * 10 + (level - 1) * 10} <br />
+            {level} &nbsp;&nbsp; <span id="exp">Exp:</span>{" "}
+            {level === 100 ? (
+              <span>Max</span>
+            ) : (
+              <span>
+                {exp}/{level * level * 100}{" "}
+              </span>
+            )}
+            <br />
             <span id="bp">BP:</span> {bp}
           </p>
           <div
@@ -171,14 +180,27 @@ const GameFrame = ({
               <div className="row">
                 <div
                   id="event-mega-charizard"
-                  className="col-lg-8 col-md-8 col-sm-8 banner"
+                  className="col-lg-5 col-md-5 col-sm-5 banner"
                 >
                   <span
                     className="opened enable-click"
                     onClick={(e) => handleViewPort("event")}
                   >
-                    Limited Time Mega Charizard X Event
+                    Mega Charizard X
                   </span>
+                </div>
+                <div
+                  id="event-mewtwo"
+                  className="col-lg-5 col-md-5 col-sm-5 banner"
+                >
+                  <div className="dark-overlay2">
+                    <span
+                      className="opened enable-click"
+                      onClick={(e) => handleViewPort("event2")}
+                    >
+                      Mewtwo Strikes Back
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -194,6 +216,7 @@ const GameFrame = ({
       <Champion />
       <Legend />
       <Event />
+      <Event2 />
       <Admin />
       <News />
     </div>

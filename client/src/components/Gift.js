@@ -25,6 +25,8 @@ const Gift = ({
               <i className="fas fa-coins" /> x {g.gift.giftContent.coins}
               &nbsp;&nbsp; and&nbsp;&nbsp;
               <i className="fas fa-candy-cane" /> x{g.gift.giftContent.candies}
+              &nbsp;&nbsp; and&nbsp;&nbsp;
+              <i className="fas fa-cookie-bite" /> x{g.gift.giftContent.cookies}
             </div>
           ) : (
             <div>

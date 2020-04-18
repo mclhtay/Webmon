@@ -51,20 +51,23 @@ const Leaderboard = ({
               <ol id="leaderboard-des">
                 <li>
                   <span>
-                    <i className="fas fa-coins" /> x 10000 and{" "}
-                    <i className="fas fa-candy-cane" /> x 20{" "}
+                    <i className="fas fa-coins" /> x 50000 and{" "}
+                    <i className="fas fa-candy-cane" /> x 100 and{" "}
+                    <i className="fas fa-cookie-bite" /> x 20
                   </span>
                 </li>
 
                 <li>
                   {" "}
-                  <i className="fas fa-coins" /> x 5000 and{" "}
-                  <i className="fas fa-candy-cane" /> x 10{" "}
+                  <i className="fas fa-coins" /> x 30000 and{" "}
+                  <i className="fas fa-candy-cane" /> x 50{" "}
+                  <i className="fas fa-cookie-bite" /> x 10
                 </li>
 
                 <li>
-                  {"  "} <i className="fas fa-coins" /> x 2500 and{" "}
-                  <i className="fas fa-candy-cane" /> x 5{" "}
+                  {"  "} <i className="fas fa-coins" /> x 20000 and{" "}
+                  <i className="fas fa-candy-cane" /> x 25{" "}
+                  <i className="fas fa-cookie-bite" /> x 5
                 </li>
               </ol>
             </div>
