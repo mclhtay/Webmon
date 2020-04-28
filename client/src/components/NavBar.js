@@ -18,6 +18,11 @@ const NavBar = ({
   const news = () => {
     handleViewportChange("news", "");
   };
+
+  const master = () => {
+    handleViewportChange("master", "");
+  };
+
   return (
     <div className="game-nav">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,6 +35,13 @@ const NavBar = ({
               <i className="nav-link">
                 <button onClick={news} className="btn-sm btn btn-info">
                   News
+                </button>
+              </i>
+            </li>
+            <li>
+              <i className="nav-link">
+                <button onClick={master} className="btn btn-sm btn-warning">
+                  Masters
                 </button>
               </i>
             </li>

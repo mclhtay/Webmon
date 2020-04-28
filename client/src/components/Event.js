@@ -243,6 +243,7 @@ const Event = ({
                     oname +
                     ".gif"
                   }
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
                   alt="revealed sprite"
                   className="come-in-big ma"
                 />

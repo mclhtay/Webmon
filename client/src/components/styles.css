@@ -473,7 +473,9 @@ ol {
 .special {
   color: #b80d57;
 }
-
+.flip-img {
+  transform: scaleX(-1);
+}
 .leader-container {
   background-color: #f8eeee;
   border-radius: 10px;

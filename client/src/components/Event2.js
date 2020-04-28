@@ -239,6 +239,7 @@ const Event = ({
                   }
                   alt="revealed sprite"
                   className="come-in-big ma"
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
                 />
                 <span className="styled-font roll-bp">BP: {obp}</span>
                 <div className="giveMeSomeSpace">

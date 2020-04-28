@@ -122,8 +122,7 @@ const Legend = ({
         setRollRevealed(false);
       }
       reduceCoins(user.name, 5000);
-      const randomOpponent =
-        legendMons[Math.floor(Math.random() * legendMons.length)];
+      const randomOpponent = Math.floor(Math.random() * legendMons.length);
       const randomBP =
         Math.floor(
           Math.random() *
@@ -370,6 +369,7 @@ const Legend = ({
                   }
                   alt="revealed sprite"
                   className="come-in-big ma"
+                  style={{ maxWidth: "150px", maxHeight: "150px" }}
                 />
                 <span className="styled-font roll-bp">BP: {obp}</span>
                 <div className="giveMeSomeSpace">
