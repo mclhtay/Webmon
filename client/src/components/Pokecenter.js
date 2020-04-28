@@ -95,6 +95,7 @@ const Pokecenter = ({
     >
       <div className="modal-content">
         <h3 className="modal-title styled-font">Pokécenter</h3>
+        <h6>Note* Cookies now have a 10% success rate</h6>
         <span name="exit" className="close-modal" onClick={changeViewport}>
           &#10008;
         </span>

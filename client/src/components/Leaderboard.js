@@ -26,12 +26,16 @@ const Leaderboard = ({
     handleViewportChange("main", "leaderboard");
   };
 
-  const eventPokemonName = "Charizard-megay";
+  const eventPokemonName = "Zamazenta-Crowned";
   const eventPokemonSprite =
     "http://play.pokemonshowdown.com/sprites/ani/" +
     eventPokemonName.toLowerCase() +
     ".gif";
-
+  const seeBanned = () => {
+    window.alert(
+      "Pokémons prohibited from entering the leaderboard: \n\tCharizard-megax\n\tMewtwo-megax\n\tMewtwo-megay"
+    );
+  };
   return (
     <div
       className={viewport === "leaderboard" ? "modal-frame come-in" : "blind"}
@@ -39,6 +43,12 @@ const Leaderboard = ({
       <div className="modal-content" id="leaderboard-modal">
         <div className="leaderboard-foreground">
           <h2 className="styled-font modal-title">Leaderboard</h2>
+          <button
+            className={"home-btn btn btn-sm btn-primary mlr10"}
+            onClick={seeBanned}
+          >
+            See Banned Pokémons
+          </button>
           <span name="exit" className="close-modal" onClick={changeViewport}>
             &#10008;
           </span>

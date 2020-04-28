@@ -146,12 +146,12 @@ const Event = ({
     <div className={viewport === "event2" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content" id="event-mewtwo">
         <div className="modal-foreground">
-          <h3 className="modal-title styled-font">Mewtwo Strikes Back</h3>
+          <h3 className="modal-title styled-font">Heroes of Many Battles</h3>
           <span className="close-modal" onClick={handleViewport} name="exit">
             &#10008;
           </span>
           <div className={secondary === "main" ? "come-in" : "blind"}>
-            <h5>Welcome to Mega Mewtwo catching Event!</h5>
+            <h5>Welcome to Zacian and Zamazenta catching Event!</h5>
             <p>
               There is a chance that you can catch these event exclusive
               pokémons and surpass your competing trainers!

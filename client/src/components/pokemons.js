@@ -357,7 +357,7 @@ export default {
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/mewtwo-mega-x.png",
         class: "rare",
-        roll: "yes",
+        roll: "no",
         event: 2,
         potential: [140, 180],
       },
@@ -368,7 +368,7 @@ export default {
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/mewtwo-mega-y.png",
         class: "rare",
-        roll: "yes",
+        roll: "no",
         event: 2,
         potential: [150, 170],
       },
@@ -379,7 +379,7 @@ export default {
         sprite:
           "https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/charizard-mega-x.png",
         class: "rare",
-        roll: "yes",
+        roll: "no",
         event: 1,
         potential: [120, 150],
       },
@@ -565,6 +565,94 @@ export default {
           "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/448.png",
         class: "legend",
         potential: [80, 100],
+      },
+    },
+    {
+      pokemon: {
+        name: "giratina",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/487.png",
+        class: "rare",
+        roll: "yes",
+        event: 1,
+        potential: [100, 120],
+      },
+    },
+    {
+      pokemon: {
+        name: "dialga",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/483.png",
+        class: "rare",
+        roll: "yes",
+        event: 1,
+        potential: [110, 118],
+      },
+    },
+    {
+      pokemon: {
+        name: "palkia",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/484.png",
+        class: "rare",
+        roll: "yes",
+        event: 1,
+        potential: [105, 115],
+      },
+    },
+    {
+      pokemon: {
+        name: "arceus",
+        sprite:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png",
+        class: "rare",
+        roll: "yes",
+        event: 1,
+        potential: [250, 300],
+      },
+    },
+    {
+      pokemon: {
+        name: "zacian",
+        sprite:
+          "https://img.pokemondb.net/sprites/sword-shield/normal/zacian-hero.png",
+        class: "rare",
+        roll: "yes",
+        event: 2,
+        potential: [130, 150],
+      },
+    },
+    {
+      pokemon: {
+        name: "zacian-crowned",
+        sprite:
+          "https://img.pokemondb.net/sprites/sword-shield/normal/zacian-crowned.png",
+        class: "rare",
+        roll: "no",
+        event: 2,
+        potential: [170, 200],
+      },
+    },
+    {
+      pokemon: {
+        name: "zamazenta",
+        sprite:
+          "https://img.pokemondb.net/sprites/sword-shield/normal/zamazenta-hero.png",
+        class: "rare",
+        roll: "yes",
+        event: 2,
+        potential: [130, 150],
+      },
+    },
+    {
+      pokemon: {
+        name: "zamazenta-crowned",
+        sprite:
+          "https://img.pokemondb.net/sprites/sword-shield/normal/zamazenta-crowned.png",
+        class: "rare",
+        roll: "no",
+        event: 2,
+        potential: [170, 200],
       },
     },
   ],

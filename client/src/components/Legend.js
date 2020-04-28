@@ -377,6 +377,7 @@ const Legend = ({
                     onClick={handleCatch}
                     type="button"
                     className="btn btn-sm btn-warning home-button mlr10"
+                    style={{ zIndex: "99" }}
                     disabled={
                       !pokemons.find((m) => m.pokemon.name === oname) &&
                       pokemons.length === bagSize
@@ -389,6 +390,7 @@ const Legend = ({
                       : "Keep"}
                   </button>
                   <button
+                    style={{ zIndex: "99" }}
                     name="main"
                     onClick={(e) => handleSecondaryViewport(e)}
                     type="button"

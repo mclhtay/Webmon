@@ -186,7 +186,7 @@ const GameFrame = ({
                     className="opened enable-click"
                     onClick={(e) => handleViewPort("event")}
                   >
-                    Mega Charizard X
+                    World Creation
                   </span>
                 </div>
                 <div
@@ -198,7 +198,7 @@ const GameFrame = ({
                       className="opened enable-click"
                       onClick={(e) => handleViewPort("event2")}
                     >
-                      Mewtwo Strikes Back
+                      Sword and Shield
                     </span>
                   </div>
                 </div>

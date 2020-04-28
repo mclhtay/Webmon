@@ -7,7 +7,11 @@ const NavBar = ({
   player: { nickname, coins, candies, cookies },
   handleViewportChange,
 }) => {
-  const handleSignout = (e) => {};
+  const handleSignout = (e) => {
+    if (localStorage.getItem("webmon")) {
+      localStorage.removeItem("webmon");
+    }
+  };
   const admin = () => {
     handleViewportChange("admin", "");
   };

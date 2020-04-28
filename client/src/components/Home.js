@@ -17,7 +17,17 @@ const Home = ({
     password: "",
   });
 
+  const [rmb, setRMB] = useState(false);
   const { username, password } = formData;
+
+  if (localStorage.getItem("webmon")) {
+    const user = JSON.parse(localStorage.getItem("webmon"));
+    loginAction(user.username, user.password);
+  }
+
+  const handleRMB = () => {
+    setRMB(!rmb);
+  };
 
   const routeHandler = (e) => {
     if (e.target.name !== route) {
@@ -42,13 +52,20 @@ const Home = ({
     route === "login"
       ? loginAction(username, password)
       : registerAction(username, password);
-    setFormData({
-      username: "",
-      password: "",
-    });
+    // setFormData({
+    //   username: "",
+    //   password: "",
+    // });
   };
 
   if (status === "success") {
+    const user = {
+      username: username,
+      password: password,
+    };
+    if (rmb) {
+      localStorage.setItem("webmon", JSON.stringify(user));
+    }
     return <Redirect to="/webmon" />;
   }
 
@@ -116,6 +133,15 @@ const Home = ({
                 type="password"
                 minLength="8"
               />
+              <div>
+                <input
+                  type="checkbox"
+                  style={{ display: "inline" }}
+                  onChange={handleRMB}
+                />{" "}
+                <span>Remember Me</span>
+              </div>
+
               <button
                 type="submit"
                 className="btn btn-lg btn-primary home-button"

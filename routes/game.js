@@ -6,6 +6,13 @@ const config = require("config");
 // /webmon
 
 const changeLeaderBoard = async (username, nickname, updatedBP, name) => {
+  const bannedList = ["mewtwo-megay", "mewtwo-megax", "charizard-megax"];
+  const ll = bannedList.filter((x) => x === name);
+  console.log(ll);
+  if (bannedList.filter((x) => x === name).length !== 0) {
+    return;
+  }
+
   const leaderboard = await Leaderboard.findOne({ phase: "Beta" });
   const { first, second, third } = leaderboard;
   const newLeader = {
@@ -219,13 +226,19 @@ router.put("/:username/cookie", async (req, res) => {
       });
       return;
     }
+    const successCookie = Math.floor(Math.random() * 10) === 4 ? true : false;
     const monToUpdate = pokemons.filter((m) => m.pokemon.name === mon);
     const index = pokemons.indexOf(monToUpdate[0]);
-    monToUpdate[0].pokemon.potential = monToUpdate[0].pokemon.potential + 10;
+    monToUpdate[0].pokemon.potential = successCookie
+      ? monToUpdate[0].pokemon.potential + 10
+      : monToUpdate[0].pokemon.potential;
 
-    const updatedBP = monToUpdate[0].pokemon.bp + 10;
+    const updatedBP = successCookie
+      ? monToUpdate[0].pokemon.bp + 10
+      : monToUpdate[0].pokemon.bp;
     monToUpdate[0].pokemon.bp = updatedBP;
     pokemons[index] = monToUpdate[0];
+
     const content = await Player.findOneAndUpdate(
       { username: req.params.username },
       {

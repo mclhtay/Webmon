@@ -58,6 +58,7 @@ const Event = ({
       />
     </div>
   ));
+
   const handleViewport = () => {
     setRollRevealed(false);
     handleViewportChange("main", "");
@@ -95,8 +96,10 @@ const Event = ({
           legendMons[Math.floor(Math.random() * legendMons.length)];
       } else {
         randomClass = "event";
-        randomOpponent =
-          eventMons[Math.floor(Math.random() * eventMons.length)];
+        const arceus = Math.floor(Math.random() * 10) === 4 ? true : false;
+        randomOpponent = arceus
+          ? eventMons[eventMons.length - 1]
+          : eventMons[Math.floor(Math.random() * (eventMons.length - 1))];
       }
       const randomBP =
         Math.floor(
@@ -146,13 +149,14 @@ const Event = ({
     <div className={viewport === "event" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content" id="event-mega-charizard">
         <div className="modal-foreground">
-          <h3 className="modal-title styled-font">Mega Charizard-X Event</h3>
+          <h3 className="modal-title styled-font">World Creation</h3>
           <span className="close-modal" onClick={handleViewport} name="exit">
             &#10008;
           </span>
           <div className={secondary === "main" ? "come-in" : "blind"}>
             <h5>
-              Welcome to the Limited Time Mega Charizard-X catching event!
+              Welcome to the Limited Time Sinnoh Region Legendaries catching
+              event!
             </h5>
             <p>
               There is a chance that you can catch these event exclusive
