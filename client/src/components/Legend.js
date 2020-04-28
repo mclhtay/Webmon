@@ -122,7 +122,8 @@ const Legend = ({
         setRollRevealed(false);
       }
       reduceCoins(user.name, 5000);
-      const randomOpponent = Math.floor(Math.random() * legendMons.length);
+      const randomOpponent =
+        legendMons[Math.floor(Math.random() * legendMons.length)];
       const randomBP =
         Math.floor(
           Math.random() *
