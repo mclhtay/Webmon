@@ -44,6 +44,20 @@ const GameFrame = ({
 
   return (
     <div>
+      {/* <div
+        className="alert alert-warning alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Hey {nickname}!</strong> Check out the Masters Beta
+        <button
+          type="button"
+          className="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> */}
       <div className=" row" id="game-frame">
         <div id="left-pane" className="col-lg-3 col-md-12 col-sm-12">
           <p className="styled-font">{nickname}</p>
