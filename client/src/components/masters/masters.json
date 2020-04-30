@@ -1,0 +1,57 @@
+{
+  "grass": {
+    "desc": "Every time a grass type pokémon attacks, the entire team heals 50 HP",
+    "effect": ["D T H 50 100"],
+    "req": [0]
+  },
+  "poison": {
+    "desc": "Every time a poison type pokémon attacks, there is a 20% chance of decreasing enemy defense by 50",
+    "effect": ["D O D 50 100"],
+    "req": [0]
+  },
+  "fire": {
+    "desc": "Fire type pokémon have a chance to increase their attack by 20. 1 = 10%, 2 = 20%",
+    "effect": ["D S A 20 10", "D S A 20 20"],
+    "req": [1, 2]
+  },
+  "flying": {
+    "desc": "Increases the entire team's speed. 2 = +20",
+    "effect": ["B T S 20 100"],
+    "req": [2]
+  },
+  "fighting": {
+    "desc": "Fighting type pokémon's abilities can critical strike and deal double damage",
+    "effect": ["D O C 1 30"],
+    "req": [0]
+  },
+  "steel": {
+    "desc": "Increases the defense of the entire team. 2 = +20, 3 = +50",
+    "effect": ["B T D 20 100", "B T D 50 100"],
+    "req": [2, 3]
+  },
+  "water": {
+    "desc": "Water type pokémon can decrease enemy attack. 2 = -30",
+    "effect": ["D O A 30 100"],
+    "req": [2]
+  },
+  "fairy": {
+    "desc": "All fairy pokémon deal true damage",
+    "effect": ["D O T 1 100"],
+    "req": [0]
+  },
+  "ghost": {
+    "desc": "Ghost pokémon are immune to normal and fighting type moves",
+    "effect": ["D S B Ghost"],
+    "req": [0]
+  },
+  "dragon": {
+    "desc": "Dragon pokémon increases the maximum HP of the team. 2 = +100, 3 = +200",
+    "effect": ["B T H 100 100", "B T H 200 100"],
+    "req": [2, 3]
+  },
+  "normal": {
+    "desc": "Normal type pokémons' abilities use no action point",
+    "effect": ["D S B Normal"],
+    "req": [0]
+  }
+}
