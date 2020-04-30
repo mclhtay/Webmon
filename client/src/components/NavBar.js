@@ -20,7 +20,7 @@ const NavBar = ({
   };
 
   const master = () => {
-    handleViewportChange("master", "");
+    handleViewportChange("master", "main");
   };
 
   return (
@@ -38,13 +38,13 @@ const NavBar = ({
                 </button>
               </i>
             </li>
-            {/* <li>
+            <li>
               <i className="nav-link">
                 <button onClick={master} className="btn btn-sm btn-warning">
                   Masters
                 </button>
               </i>
-            </li> */}
+            </li>
 
             {isAdmin && (
               <li className="nav-item">

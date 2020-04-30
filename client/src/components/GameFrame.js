@@ -14,6 +14,8 @@ import Gift from "./Gift";
 import Admin from "./Admin";
 import News from "./News";
 import Event2 from "./Event2";
+import Master from "./masters/Master";
+
 const GameFrame = ({
   //   user: { name },
   player: { nickname, gender, defaultP, pokemons, totalBP, gifts },
@@ -44,7 +46,7 @@ const GameFrame = ({
 
   return (
     <div>
-      {/* <div
+      <div
         className="alert alert-warning alert-dismissible fade show"
         role="alert"
       >
@@ -57,7 +59,7 @@ const GameFrame = ({
         >
           <span aria-hidden="true">&times;</span>
         </button>
-      </div> */}
+      </div>
       <div className=" row" id="game-frame">
         <div id="left-pane" className="col-lg-3 col-md-12 col-sm-12">
           <p className="styled-font">{nickname}</p>
@@ -233,6 +235,7 @@ const GameFrame = ({
       <Event2 />
       <Admin />
       <News />
+      <Master />
     </div>
   );
 };
