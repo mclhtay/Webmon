@@ -96,7 +96,13 @@ const Master = ({
   );
 
   const actionPoints = (num) => {
-    return <div>{Array(num).fill(<img src={ap} alt="action points" />)}</div>;
+    return (
+      <div className="inline">
+        {Array.from(Array(num), (_, i) => (
+          <img key={i} src={ap} alt="action points" className="star" />
+        ))}
+      </div>
+    );
   };
   const handleShowCaseView = (e) => {
     const originalStats = pokemonArray.pokemons.filter(
@@ -210,7 +216,7 @@ const Master = ({
                   </div>
                 </div>
 
-                <div className="column col-lg-1">
+                <div className="column col-lg-1 m5p">
                   <h4 className="styled-font">
                     {viewing.name &&
                       viewing.name[0].toUpperCase() + viewing.name.slice(1)}
@@ -232,8 +238,19 @@ const Master = ({
                   </div>
                 </div>
 
-                <div className="col-lg-1 column">
-                  <p>Ability: </p>
+                <div className="col-lg-3 column m5p">
+                  <div className="card" style={{ width: "18rem" }}>
+                    <div className="card-body">
+                      <h5 className="card-title">{viewing.move.name}</h5>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Power: {viewing.move.effect.split(" ")[2]}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Cost: {actionPoints(viewing.move.p)}
+                      </h6>
+                      <p className="card-text">{viewing.move.desc}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
