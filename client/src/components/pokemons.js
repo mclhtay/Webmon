@@ -836,7 +836,7 @@ export default {
         move: {
           name: "Iron Defense",
           effect: "T D 20",
-          desc: "Zamazenta raises team's defense bt 20",
+          desc: "Zamazenta raises team's defense by 20",
           p: 1,
         },
       },

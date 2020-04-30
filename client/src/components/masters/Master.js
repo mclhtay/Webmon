@@ -96,6 +96,8 @@ const Master = ({
   );
 
   const actionPoints = (num) => {
+    if (num === 0) return <span>0</span>;
+
     return (
       <div className="inline">
         {Array.from(Array(num), (_, i) => (
@@ -256,7 +258,11 @@ const Master = ({
             )}
 
             <div className="row" name="prep section">
-              <div className="col-lg-6" name="team "></div>
+              <div className="col-lg-6 column" name="team ">
+                <div id="two"></div>
+                <div id="one"></div>
+                <div id="three"></div>
+              </div>
               <div className="col-lg-6" name="available">
                 <div className="row">
                   {playerOwned.map((x, y) => (
