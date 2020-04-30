@@ -52,8 +52,8 @@ const Pokecenter = ({
         onClick={(e) => handleSelectedMon(e)}
         className={
           mon.pokemon.name === selectedMon
-            ? "defaultP pokecenter-sprite"
-            : "pokecenter-sprite"
+            ? "defaultP pokecenter-sprite sprite-img"
+            : "pokecenter-sprite sprite-img"
         }
         src={
           pokemonArray.pokemons.find(

@@ -17,7 +17,13 @@ const Pokedex = ({ viewport: { viewport }, handleViewportChange }) => {
     >
       <a href={"#" + poke.pokemon.name}>
         {" "}
-        <img src={poke.pokemon.sprite} alt="nav" height="100px" width="100px" />
+        <img
+          src={poke.pokemon.sprite}
+          alt="nav"
+          height="100px"
+          width="100px"
+          className="sprite-img"
+        />
       </a>
     </div>
   ));

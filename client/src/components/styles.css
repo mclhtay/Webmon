@@ -675,3 +675,18 @@ ol {
   max-width: 100px;
   max-height: 100px;
 }
+
+.test {
+  animation-name: testtest;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes testtest {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

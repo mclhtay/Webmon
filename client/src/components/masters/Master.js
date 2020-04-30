@@ -19,6 +19,7 @@ import water from "./water.jpg";
 
 const Master = ({
   viewport: { viewport, secondary },
+  player: { pokemons },
   handleViewportChange,
 }) => {
   const [team, setTeam] = useState({
@@ -73,6 +74,13 @@ const Master = ({
     }
   }
 
+  const playerOwned = pokemons.filter(
+    (x) =>
+      availableMons.filter(
+        (y) => y.pokemon.name === x.pokemon.name && !y.pokemon.isSpecial
+      ).length > 0
+  );
+
   return (
     <div className={viewport === "master" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content">
@@ -108,7 +116,31 @@ const Master = ({
           </div>
 
           {/*prep screen */}
-          <div className={secondary === "prep" ? "come-in" : "blind"}></div>
+          <div className={secondary === "prep" ? "come-in" : "blind"}>
+            <div className="row" name="show case bar"></div>
+            <div className="row" name="prep section">
+              <div className="col-lg-6" name="team ">
+                <h3 className="styled-font">Coming Soon</h3>
+              </div>
+              <div className="col-lg-6" name="available">
+                <div className="row">
+                  {playerOwned.map((x, y) => (
+                    <div key={y} className="col-lg-2">
+                      <img
+                        src={
+                          pokemonArray.pokemons.filter(
+                            (z) => z.pokemon.name === x.pokemon.name
+                          )[0].pokemon.sprite
+                        }
+                        className="sprite-img pokecenter-sprite"
+                        alt={x.pokemon.name}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -117,11 +149,13 @@ const Master = ({
 
 Master.propTypes = {
   viewport: PropTypes.object.isRequired,
+  player: PropTypes.object.isRequired,
   handleViewportChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   viewport: state.viewport,
+  player: state.player,
 });
 
 export default connect(mapStateToProps, { handleViewportChange })(Master);
