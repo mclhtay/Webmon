@@ -16,7 +16,11 @@ import normal from "./normal.jpg";
 import poison from "./poison.jpg";
 import steel from "./steel.jpg";
 import water from "./water.jpg";
-
+import star from "./star.jpg";
+import atk from "./atk.jpg";
+import dfs from "./dfs.jpg";
+import spd from "./spd.jpg";
+import ap from "./ap.jpg";
 const Master = ({
   viewport: { viewport, secondary },
   player: { pokemons },
@@ -46,6 +50,16 @@ const Master = ({
     },
   });
   const { one, two, three } = team;
+  const [viewing, setViewing] = useState({
+    name: "",
+    level: 0,
+    hp: 0,
+    atk: 0,
+    dfs: 0,
+    spd: 0,
+    type: [],
+    move: {},
+  });
   const types = [
     { type: ["dragon", dragon] },
     { type: ["fairy", fairy] },
@@ -81,13 +95,51 @@ const Master = ({
       ).length > 0
   );
 
+  const actionPoints = (num) => {
+    return <div>{Array(num).fill(<img src={ap} alt="action points" />)}</div>;
+  };
+  const handleShowCaseView = (e) => {
+    const originalStats = pokemonArray.pokemons.filter(
+      (x) => x.pokemon.name === e.currentTarget.dataset.name
+    );
+    const multipler =
+      e.currentTarget.dataset.level < 60
+        ? 1
+        : e.currentTarget.dataset.level < 90
+        ? 2
+        : 3;
+    const type = [];
+    for (let i = 0; i < originalStats[0].pokemon.type.length; i++) {
+      let name = originalStats[0].pokemon.type[i];
+      type.push(types.filter((x) => x.type[0] === name)[0].type[1]);
+    }
+    setViewing({
+      ...viewing,
+      name: e.currentTarget.dataset.name,
+      level: e.currentTarget.dataset.level,
+      hp: originalStats[0].pokemon.stats["hp"] * multipler,
+      atk: originalStats[0].pokemon.stats["atk"] * multipler,
+      dfs: originalStats[0].pokemon.stats["dfs"] * multipler,
+      spd: originalStats[0].pokemon.stats["spd"] * multipler,
+      type: type,
+      move: originalStats[0].pokemon.move,
+    });
+  };
+  const handleViewport = (p, s) => {
+    setViewing({
+      name: "",
+      level: 0,
+    });
+    handleViewportChange("main", "");
+  };
+
   return (
     <div className={viewport === "master" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content">
         <div className="modal-foreground">
           <span
             className="close-modal"
-            onClick={() => handleViewportChange("main", "")}
+            onClick={() => handleViewport("main", "")}
             name="exit"
           >
             &#10008;
@@ -117,15 +169,87 @@ const Master = ({
 
           {/*prep screen */}
           <div className={secondary === "prep" ? "come-in" : "blind"}>
-            <div className="row" name="show case bar"></div>
-            <div className="row" name="prep section">
-              <div className="col-lg-6" name="team ">
-                <h3 className="styled-font">Coming Soon</h3>
+            {viewing.name && (
+              <div className="row" style={{ justifyContent: "center" }}>
+                <div className="col-lg-2 column m5p">
+                  <div
+                    className={viewing.name !== "" ? "row" : "blind"}
+                    name="show case bar"
+                  >
+                    {viewing.level < 60 ? (
+                      <div className="ma">
+                        {" "}
+                        <img src={star} alt="star" className="star" />
+                      </div>
+                    ) : viewing.level < 90 ? (
+                      <div className="ma">
+                        <img src={star} alt="star" className="star" />
+                        <img src={star} alt="star" className="star" />
+                      </div>
+                    ) : (
+                      <div className="ma">
+                        <img src={star} alt="star" className="star" />
+                        <img src={star} alt="star" className="star" />
+                        <img src={star} alt="star" className="star" />
+                      </div>
+                    )}
+                  </div>
+                  <img
+                    src={
+                      "http://play.pokemonshowdown.com/sprites/ani/" +
+                      viewing.name +
+                      ".gif"
+                    }
+                    alt={viewing.name}
+                    className="ma type-img"
+                  />
+                  <div>
+                    {viewing.type.map((x, y) => (
+                      <img key={y} src={x} alt="type" className="bigger-star" />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="column col-lg-1">
+                  <h4 className="styled-font">
+                    {viewing.name &&
+                      viewing.name[0].toUpperCase() + viewing.name.slice(1)}
+                  </h4>
+                  <div>
+                    <p>HP: {viewing.hp}</p>
+                  </div>
+                  <div>
+                    <img src={atk} alt="attack" className="star" />{" "}
+                    <p className="inline">{viewing.atk}</p>
+                  </div>
+                  <div>
+                    <img src={dfs} alt="defense" className="star" />{" "}
+                    <p className="inline">{viewing.dfs}</p>
+                  </div>
+                  <div>
+                    <img src={spd} alt="speed" className="star" />{" "}
+                    <p className="inline">{viewing.spd}</p>
+                  </div>
+                </div>
+
+                <div className="col-lg-1 column">
+                  <p>Ability: </p>
+                </div>
               </div>
+            )}
+
+            <div className="row" name="prep section">
+              <div className="col-lg-6" name="team "></div>
               <div className="col-lg-6" name="available">
                 <div className="row">
                   {playerOwned.map((x, y) => (
-                    <div key={y} className="col-lg-2">
+                    <div
+                      key={y}
+                      className="col-lg-2"
+                      data-name={x.pokemon.name}
+                      data-level={x.pokemon.level}
+                      onClick={(e) => handleShowCaseView(e)}
+                    >
                       <img
                         src={
                           pokemonArray.pokemons.filter(

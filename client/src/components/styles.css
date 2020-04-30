@@ -675,7 +675,14 @@ ol {
   max-width: 100px;
   max-height: 100px;
 }
-
+.star {
+  max-width: 30px;
+  max-height: 30px;
+}
+.bigger-star {
+  max-width: 50px;
+  max-height: 50px;
+}
 .test {
   animation-name: testtest;
   animation-duration: 5s;
@@ -689,4 +696,14 @@ ol {
   to {
     opacity: 0;
   }
+}
+.m5p {
+  margin: 0 5%;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+.inline {
+  display: inline;
 }

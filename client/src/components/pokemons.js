@@ -785,8 +785,8 @@ export default {
         },
         move: {
           name: "Swords Dance",
-          effect: "S A 20",
-          desc: "Zacian increases its own attack",
+          effect: "T A 20",
+          desc: "Zacian increases the team's attack by 20",
           p: 1,
         },
       },
@@ -835,8 +835,8 @@ export default {
         },
         move: {
           name: "Iron Defense",
-          effect: "S D 20",
-          desc: "Zamazenta raises its own defense",
+          effect: "T D 20",
+          desc: "Zamazenta raises team's defense bt 20",
           p: 1,
         },
       },
