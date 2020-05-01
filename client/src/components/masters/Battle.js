@@ -260,7 +260,7 @@ const Battle = ({
           </div>
         </div>
 
-        <div className="row move-selection">
+        <div className="row move-selection" style={{ margin: "5% 0" }}>
           <div className="card col-lg-3" style={{ width: "15rem" }}>
             <div className="card-body">
               <h5 className="card-title">Card title</h5>
