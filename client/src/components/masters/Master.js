@@ -21,11 +21,13 @@ import atk from "./atk.jpg";
 import dfs from "./dfs.jpg";
 import spd from "./spd.jpg";
 import ap from "./ap.jpg";
+import arceus from "./moves/arceus.gif";
 const Master = ({
   viewport: { viewport, secondary },
   player: { pokemons },
   handleViewportChange,
 }) => {
+
   const [team, setTeam] = useState({
     one: {
       name: "",
@@ -244,6 +246,17 @@ const Master = ({
     });
   };
 
+  //replay one loop gif
+  const testt = () => {
+
+    let img = document.createElement("img");
+    img.src = arceus + "?a=" + Math.random();
+    document.getElementById("test").appendChild(img);
+    window.setTimeout(() => {
+      document.getElementById("test").removeChild(img);
+    }, 3000);
+  };
+
   return (
     <div className={viewport === "master" ? "modal-frame come-in" : "blind"}>
       <div className="modal-content">
@@ -277,6 +290,9 @@ const Master = ({
               </div>
             </div>
           </div>
+
+{//TODO: Testing on making it foreground}
+          <div id="test" className="testt"></div>
 
           {/*prep screen */}
           <div className={secondary === "prep" ? "come-in" : "blind"}>
@@ -444,6 +460,7 @@ const Master = ({
                 <button
                   className="btn btn-sm btn-warning"
                   disabled={!one.name || !two.name || !three.name}
+                  onClick={testt}
                 >
                   I'm Ready!
                 </button>
