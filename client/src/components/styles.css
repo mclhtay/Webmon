@@ -736,9 +736,57 @@ ol {
 }
 .testt {
   position: absolute;
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  /* z-index: 9; */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  left: 0;
+  right: 0;
+  top: 0;
+
   width: 100%;
   height: 100%;
   margin: auto;
+}
+.ranking-font {
+  font-size: 1.5rem;
+}
+.p20-0 {
+  padding: 20px 0;
+}
+.p0-20 {
+  padding: 0 10px;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.battle-status-img {
+  max-width: 20px;
+  max-height: 30px;
+}
+.column.left p,
+.column.right p {
+  font-size: 0.8rem;
+}
+
+.team-member-sprite {
+  max-width: 200px;
+  max-height: 200px;
+  margin: 5% auto;
+}
+.enemy-member-sprite {
+  max-width: 200px;
+  max-height: 200px;
+  margin: 5% auto;
+}
+.first-member {
+  margin-right: 25%;
+}
+.first-member-enemy {
+  margin-left: 25%;
+}
+
+.move-selection {
+  border: solid 1px rgba(0, 140, 186, 0.5);
 }

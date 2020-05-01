@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Player = require("../models/Player");
 const Leaderboard = require("../models/Leaderboard");
+const Master = require("../models/Master");
 const config = require("config");
 // /webmon
 
 const changeLeaderBoard = async (username, nickname, updatedBP, name) => {
   const bannedList = ["mewtwo-megay", "mewtwo-megax", "charizard-megax"];
   const ll = bannedList.filter((x) => x === name);
-  console.log(ll);
   if (bannedList.filter((x) => x === name).length !== 0) {
     return;
   }
@@ -638,6 +638,72 @@ router.put("/code", async (req, res) => {
       msg: "NOT ALLOWED",
     });
   }
+});
+
+//route to initialize a player to become a master
+router.post("/master", async (req, res) => {
+  const { one, two, three, username, nickname, match } = req.body;
+  const initialized = await Master.findOne({ username: username });
+  if (!initialized) {
+    const newMaster = new Master({
+      username: username,
+      nickname: nickname,
+      one: one,
+      two: two,
+      three: three,
+      matchedTypes: match,
+      action: [0, 1, 2, 3],
+    });
+    await newMaster.save();
+  } else {
+    await Master.findOneAndUpdate(
+      { username: username },
+      {
+        one: one,
+        two: two,
+        three: three,
+        matchedTypes: match,
+        action: [0, 1, 2, 3],
+      }
+    );
+  }
+  res.send({ msg: "Done" });
+});
+
+router.get("/master/:username", async (req, res) => {
+  const masters = await Master.find();
+  const playable = masters.filter((x) => x.username !== req.params.username);
+  if (playable.length < 1) {
+    res.send({ msg: "No" });
+  } else {
+    const opponent = playable[Math.floor(Math.random() * playable.length)];
+
+    res.send({ msg: "Yes", opp: opponent });
+  }
+});
+
+router.get("/master/ranking/load", async (req, res) => {
+  const masters = await Master.find();
+  const filteredMasters = [];
+  masters.forEach((x) => {
+    const pair = {
+      nickname: x.nickname,
+      MP: x.MP,
+    };
+    filteredMasters.push(pair);
+  });
+
+  for (let i = 0; i < filteredMasters.length; i++) {
+    for (let j = i + 1; j < filteredMasters.length; j++) {
+      if (filteredMasters[j].MP > filteredMasters[i].MP) {
+        let temp = filteredMasters[i];
+        filteredMasters[i] = filteredMasters[j];
+        filteredMasters[j] = temp;
+      }
+    }
+  }
+  const ranking = filteredMasters;
+  res.send({ ranking });
 });
 
 module.exports = router;
