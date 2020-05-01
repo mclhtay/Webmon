@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Synergy from "./Synergy";
@@ -31,23 +31,25 @@ const Master = ({
       name: "",
       stars: 0,
       baseStats: [0, 0, 0, 0],
-      beforeStats: [0, 0, 0, 0],
-      duringStats: [0, 0, 0, 0],
+      type: [],
     },
     two: {
       name: "",
       stars: 0,
       baseStats: [0, 0, 0, 0],
-      beforeStats: [0, 0, 0, 0],
-      duringStats: [0, 0, 0, 0],
+      type: [],
     },
     three: {
       name: "",
       stars: 0,
       baseStats: [0, 0, 0, 0],
-      beforeStats: [0, 0, 0, 0],
-      duringStats: [0, 0, 0, 0],
+      type: [],
     },
+  });
+  const [teamBox, setTeamBox] = useState({
+    one: false,
+    two: false,
+    three: false,
   });
   const { one, two, three } = team;
   const [viewing, setViewing] = useState({
@@ -58,8 +60,69 @@ const Master = ({
     dfs: 0,
     spd: 0,
     type: [],
+    typeName: [],
     move: {},
+    star: 0,
   });
+  useEffect(() => {
+    if (
+      teamBox.one &&
+      viewing.name !== two.name &&
+      viewing.name !== three.name
+    ) {
+      setTeam({
+        ...team,
+        one: {
+          name: viewing.name,
+          stars: viewing.star,
+          baseStats: [viewing.hp, viewing.atk, viewing.dfs, viewing.spd],
+          type: viewing.typeName,
+        },
+      });
+    } else if (
+      teamBox.two &&
+      viewing.name !== one.name &&
+      viewing.name !== three.name
+    ) {
+      setTeam({
+        ...team,
+        two: {
+          name: viewing.name,
+          stars: viewing.star,
+          baseStats: [viewing.hp, viewing.atk, viewing.dfs, viewing.spd],
+          type: viewing.typeName,
+        },
+      });
+    } else if (
+      teamBox.three &&
+      viewing.name !== one.name &&
+      viewing.name !== two.name
+    ) {
+      setTeam({
+        ...team,
+        three: {
+          name: viewing.name,
+          stars: viewing.star,
+          baseStats: [viewing.hp, viewing.atk, viewing.dfs, viewing.spd],
+          type: viewing.typeName,
+        },
+      });
+    }
+  }, [viewing]);
+  const [matched, setMatched] = useState({});
+  useEffect(() => {
+    const matchedTypes = {};
+    one.type.forEach((x) =>
+      matchedTypes[x] ? (matchedTypes[x] += 1) : (matchedTypes[x] = 1)
+    );
+    two.type.forEach((x) =>
+      matchedTypes[x] ? (matchedTypes[x] += 1) : (matchedTypes[x] = 1)
+    );
+    three.type.forEach((x) =>
+      matchedTypes[x] ? (matchedTypes[x] += 1) : (matchedTypes[x] = 1)
+    );
+    setMatched(matchedTypes);
+  }, [team]);
   const types = [
     { type: ["dragon", dragon] },
     { type: ["fairy", fairy] },
@@ -130,15 +193,55 @@ const Master = ({
       dfs: originalStats[0].pokemon.stats["dfs"] * multipler,
       spd: originalStats[0].pokemon.stats["spd"] * multipler,
       type: type,
+      typeName: originalStats[0].pokemon.type,
       move: originalStats[0].pokemon.move,
+      star: multipler,
     });
   };
   const handleViewport = (p, s) => {
     setViewing({
+      ...viewing,
       name: "",
       level: 0,
     });
+    setTeam({
+      one: {
+        name: "",
+        stars: 0,
+        baseStats: [0, 0, 0, 0],
+        type: [],
+      },
+      two: {
+        name: "",
+        stars: 0,
+        baseStats: [0, 0, 0, 0],
+        type: [],
+      },
+      three: {
+        name: "",
+        stars: 0,
+        baseStats: [0, 0, 0, 0],
+        type: [],
+      },
+    });
     handleViewportChange("main", "");
+  };
+
+  const handleTeam = (e) => {
+    setTeamBox({
+      [e.currentTarget.id]: true,
+    });
+  };
+  const kickMemberOut = (m) => {
+    setTeam({
+      ...team,
+      [m]: {
+        name: "",
+        stars: 0,
+        baseStats: [0, 0, 0, 0],
+        type: [],
+      },
+    });
   };
 
   return (
@@ -257,11 +360,93 @@ const Master = ({
               </div>
             )}
 
-            <div className="row" name="prep section">
-              <div className="col-lg-6 column" name="team ">
-                <div id="two"></div>
-                <div id="one"></div>
-                <div id="three"></div>
+            <div className="row giveMeSomeSpace" name="prep section">
+              <div className="col-lg-3 column" name="team ">
+                <p>Your Team</p>
+                <div
+                  id="two"
+                  className={teamBox.two ? "team-select" : "team-noselect"}
+                  onClick={(e) => handleTeam(e)}
+                >
+                  {two.name !== "" ? (
+                    <div>
+                      <span onClick={() => kickMemberOut("two")}>&#10008;</span>
+                      <img
+                        src={
+                          pokemonArray.pokemons.filter(
+                            (x) => x.pokemon.name === two.name
+                          )[0].pokemon.sprite
+                        }
+                        alt={two.name}
+                        className="flip-img sprite-img"
+                      />
+                    </div>
+                  ) : (
+                    <p>2</p>
+                  )}
+                </div>
+                <div
+                  id="one"
+                  className={teamBox.one ? "team-select" : "team-noselect"}
+                  onClick={(e) => handleTeam(e)}
+                >
+                  {one.name !== "" ? (
+                    <div>
+                      <span onClick={() => kickMemberOut("one")}>&#10008;</span>
+                      <img
+                        src={
+                          pokemonArray.pokemons.filter(
+                            (x) => x.pokemon.name === one.name
+                          )[0].pokemon.sprite
+                        }
+                        alt={one.name}
+                        className="flip-img sprite-img"
+                      />
+                    </div>
+                  ) : (
+                    <p>1</p>
+                  )}
+                </div>
+                <div
+                  id="three"
+                  className={teamBox.three ? "team-select" : "team-noselect"}
+                  onClick={(e) => handleTeam(e)}
+                >
+                  {three.name !== "" ? (
+                    <div>
+                      <span onClick={() => kickMemberOut("three")}>
+                        &#10008;
+                      </span>
+                      <img
+                        src={
+                          pokemonArray.pokemons.filter(
+                            (x) => x.pokemon.name === three.name
+                          )[0].pokemon.sprite
+                        }
+                        alt={three.name}
+                        className="flip-img sprite-img"
+                      />
+                    </div>
+                  ) : (
+                    <p>3</p>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3 column" name="synergies">
+                <div id="syngergies">
+                  {Object.keys(matched).length > 0 &&
+                    Object.keys(matched).map((x, y) => (
+                      <h4 key={y} className="styled-font">
+                        {x[0].toUpperCase() + x.slice(1)}: {matched[x]}
+                      </h4>
+                    ))}
+                </div>
+                <button
+                  className="btn btn-sm btn-warning"
+                  disabled={!one.name || !two.name || !three.name}
+                >
+                  I'm Ready!
+                </button>
               </div>
               <div className="col-lg-6" name="available">
                 <div className="row">

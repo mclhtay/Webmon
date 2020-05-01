@@ -707,3 +707,30 @@ ol {
 .inline {
   display: inline;
 }
+.team-noselect {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+  width: 7rem;
+  height: 7rem;
+  margin: 2%;
+  cursor: pointer;
+}
+.team-noselect p,
+.team-select p {
+  line-height: 7rem;
+  vertical-align: center;
+}
+.team-select {
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.5);
+  width: 7rem;
+  height: 7rem;
+  margin: 2%;
+  cursor: pointer;
+}
+#one {
+  margin: 0 15%;
+}
+
+#syngergies {
+  vertical-align: middle;
+  line-height: 400px;
+}
