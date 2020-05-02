@@ -10,8 +10,8 @@
     "req": [1, 3]
   },
   "fire": {
-    "desc": "Fire type pokémon have a chance to increase their attack by 20. 1 = 10%, 2 = 20%",
-    "effect": ["D S A 20 10", "D S A 20 20"],
+    "desc": "Fire type pokémon have a chance to increase their team's attack by 20. 1 = 10%, 2 = 20%",
+    "effect": ["D T A 20 10", "D T A 20 20"],
     "req": [1, 2]
   },
   "flying": {
@@ -31,17 +31,17 @@
   },
   "water": {
     "desc": "Water type pokémon can decrease enemy attack. 2 = -30",
-    "effect": ["D O A 30 100"],
+    "effect": ["D O A -30 100"],
     "req": [2]
   },
   "fairy": {
     "desc": "All fairy pokémon deal true damage",
-    "effect": ["D O T 1 100"],
+    "effect": ["D Fairy"],
     "req": [0]
   },
   "ghost": {
     "desc": "Ghost pokémon are immune to normal and fighting type moves",
-    "effect": ["D S B Ghost"],
+    "effect": ["D Ghost"],
     "req": [0]
   },
   "dragon": {
@@ -51,7 +51,7 @@
   },
   "normal": {
     "desc": "Normal type pokémons' abilities use no action point",
-    "effect": ["D S B Normal"],
+    "effect": ["D Normal"],
     "req": [0]
   }
 }

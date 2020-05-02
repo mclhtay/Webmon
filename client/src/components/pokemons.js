@@ -760,7 +760,7 @@ export default {
         },
         move: {
           name: "Judgement",
-          effect: "O H 100",
+          effect: "M H 100",
           desc: "Arceus attacks the enemy team and deals damage",
           p: 0,
         },

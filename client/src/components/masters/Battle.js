@@ -57,6 +57,7 @@ const Battle = ({
       atk: 0,
       dfs: 0,
       spd: 0,
+      stars: 0,
       currentHP: 0,
       maxHP: 0,
       move: {
@@ -70,6 +71,7 @@ const Battle = ({
     two: {
       name: "two.name",
       atk: 0,
+      stars: 0,
       dfs: 0,
       spd: 0,
       currentHP: 0,
@@ -85,6 +87,7 @@ const Battle = ({
     three: {
       name: "three.name",
       atk: 0,
+      stars: 0,
       dfs: 0,
       spd: 0,
       currentHP: 0,
@@ -101,6 +104,7 @@ const Battle = ({
     eone: {
       name: "eone.name",
       atk: 0,
+      stars: 0,
       dfs: 0,
       spd: 0,
       currentHP: 0,
@@ -118,6 +122,7 @@ const Battle = ({
       atk: 0,
       dfs: 0,
       spd: 0,
+      stars: 0,
       currentHP: 0,
       maxHP: 0,
       move: {
@@ -131,6 +136,7 @@ const Battle = ({
     ethree: {
       name: "ethree.name",
       atk: 0,
+      stars: 0,
       dfs: 0,
       spd: 0,
       currentHP: 0,
@@ -205,6 +211,8 @@ const Battle = ({
             case "S":
               spdB = bb;
               break;
+            default:
+              break;
           }
         } else {
           battleTrait.push(x);
@@ -250,6 +258,8 @@ const Battle = ({
             case "S":
               espdB = bb;
               break;
+            default:
+              break;
           }
         } else {
           ebattleTrait.push(x);
@@ -264,6 +274,7 @@ const Battle = ({
           spd: one.baseStats[3] + spdB,
           currentHP: one.baseStats[0] + hpB,
           maxHP: one.baseStats[0] + hpB,
+          stars: one.stars,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === one.name
           )[0].pokemon.move,
@@ -279,6 +290,7 @@ const Battle = ({
           spd: two.baseStats[3] + spdB,
           currentHP: two.baseStats[0] + hpB,
           maxHP: two.baseStats[0] + hpB,
+          stars: one.stars,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === two.name
           )[0].pokemon.move,
@@ -293,6 +305,7 @@ const Battle = ({
           dfs: three.baseStats[2] + dfsB,
           spd: three.baseStats[3] + spdB,
           currentHP: three.baseStats[0] + hpB,
+          stars: one.stars,
           maxHP: three.baseStats[0] + hpB,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === three.name
@@ -308,6 +321,7 @@ const Battle = ({
           atk: eone.baseStats[1] + eatkB,
           dfs: eone.baseStats[2] + edfsB,
           spd: eone.baseStats[3] + espdB,
+          stars: eone.stars,
           currentHP: eone.baseStats[0] + ehpB,
           maxHP: eone.baseStats[0] + ehpB,
           move: pokemonArray.pokemons.filter(
@@ -325,6 +339,7 @@ const Battle = ({
           spd: etwo.baseStats[3] + espdB,
           currentHP: etwo.baseStats[0] + ehpB,
           maxHP: etwo.baseStats[0] + ehpB,
+          stars: etwo.stars,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === etwo.name
           )[0].pokemon.move,
@@ -339,6 +354,7 @@ const Battle = ({
           dfs: ethree.baseStats[2] + edfsB,
           spd: ethree.baseStats[3] + espdB,
           currentHP: ethree.baseStats[0] + ehpB,
+          stars: ethree.stars,
           maxHP: ethree.baseStats[0] + ehpB,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === ethree.name
@@ -351,24 +367,12 @@ const Battle = ({
         },
         eap: 3,
         round: 1,
+        equeue: equeue,
         activeTrait: activeTrait,
         eactiveTrait: eactiveTrait,
       });
     }
-  }, [
-    loading,
-    secondary,
-    viewport,
-    initializeMaster,
-    matched,
-    name,
-    nickname,
-    one,
-    two,
-    three,
-    eone,
-    gameSwitch,
-  ]);
+  }, [loading, secondary, viewport, gameSwitch]);
 
   useEffect(() => {
     if (
@@ -486,21 +490,650 @@ const Battle = ({
     }, 2000);
   };
 
+  const damageDealt = (starCount, power, a, d) => {
+    return Math.floor((2 * starCount * 30) / 5 + (2 * power * a) / d / 50 + 2);
+  };
+
   const changeStats = (mon, side, monMove) => {
+    const myOne = gameStats.one,
+      myTwo = gameStats.two,
+      myThree = gameStats.three,
+      theirOne = gameStats.eone,
+      theirTwo = gameStats.etwo,
+      theirThree = gameStats.ethree;
+    let damage = 0;
+    let msg = "";
     if (side === "me") {
       const theMove = monMove.effect.split(" ");
-      const theBonus = mon.bonus;
-      console.log(theMove, theBonus);
+      const theBonus = mon.bonus.split(" ");
+      let mass = false;
+      switch (theMove[0]) {
+        case "T":
+          switch (theMove[1]) {
+            case "A":
+              myOne.atk = myOne.atk + parseInt(theMove[2]);
+              myTwo.atk = myTwo.atk + parseInt(theMove[2]);
+              myThree.atk = myThree.atk + parseInt(theMove[2]);
+
+              msg = `Team gained ${theMove[2]} Attack. `;
+              break;
+            case "D":
+              myOne.dfs = myOne.dfs + parseInt(theMove[2]);
+              myTwo.dfs = myTwo.dfs + parseInt(theMove[2]);
+              myThree.dfs = myThree.dfs + parseInt(theMove[2]);
+              msg = `Team gained ${theMove[2]} Defense. `;
+              break;
+            default:
+              msg = "Nothing happened";
+              break;
+          }
+          break;
+        case "M":
+          damage = parseInt(theMove[2]);
+          mass = true;
+          break;
+        case "O":
+          damage = parseInt(theMove[2]);
+          break;
+        default:
+          msg = "Nothing happened";
+          break;
+      }
+      switch (theBonus[1]) {
+        case "T":
+          switch (theBonus[2]) {
+            case "A":
+              const increaseAMT = parseInt(theBonus[3]);
+              const chance =
+                Math.floor(Math.random() * 100) + 1 <= parseInt(theBonus[4])
+                  ? true
+                  : false;
+              myOne.atk = myOne.atk + (chance ? increaseAMT : 0);
+              myTwo.atk = myTwo.atk + (chance ? increaseAMT : 0);
+              myThree.atk = myThree.atk + (chance ? increaseAMT : 0);
+              msg += chance
+                ? `Team gained ${increaseAMT} Attack with trait bonus.`
+                : "";
+              break;
+            case "H":
+              myOne.currentHP =
+                myOne.currentHP + parseInt(theBonus[3]) >= myOne.maxHP
+                  ? myOne.maxHP
+                  : myOne.currentHP + parseInt(theBonus[3]);
+              myTwo.currentHP =
+                myTwo.currentHP + parseInt(theBonus[3]) >= myTwo.maxHP
+                  ? myTwo.maxHP
+                  : myTwo.currentHP + parseInt(theBonus[3]);
+              myThree.currentHP =
+                myThree.currentHP + parseInt(theBonus[3]) >= myThree.maxHP
+                  ? myThree.maxHP
+                  : myThree.currentHP + parseInt(theBonus[3]);
+              msg += `Team gained ${theBonus[3]} HP with trait bonus. `;
+              break;
+            default:
+              break;
+          }
+          break;
+
+        case "O":
+          switch (theBonus[2]) {
+            case "A":
+              if (theirOne.currentHP > 0) {
+                theirOne.atk =
+                  theirOne.atk + parseInt(theBonus[3]) >= 0
+                    ? theirOne.atk + parseInt(theBonus[3])
+                    : 0;
+              } else if (theirTwo.currentHP > 0) {
+                theirTwo.atk =
+                  theirTwo.atk + parseInt(theBonus[3]) >= 0
+                    ? theirTwo.atk + parseInt(theBonus[3])
+                    : 0;
+              } else {
+                theirThree.atk =
+                  theirThree.atk + parseInt(theBonus[3]) >= 0
+                    ? theirThree.atk + parseInt(theBonus[3])
+                    : 0;
+              }
+              msg += `Decreased enemy attack by ${theBonus[3]}. `;
+              break;
+            case "C":
+              const chance =
+                Math.floor(Math.random() * 100) + 1 <= parseInt(theBonus[4])
+                  ? true
+                  : false;
+              damage = chance ? damage * 2 : damage;
+              msg += chance ? "The ability landed a critical hit. " : "";
+              break;
+            default:
+              break;
+          }
+        default:
+          break;
+      }
+      if (mass) {
+        //see if is fairy
+        if (theBonus[1] === "Fairy") {
+          theirOne.currentHP =
+            theirOne.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : theirOne.currentHP - parseInt(theMove[2]) * mon.stars;
+          theirTwo.currentHP =
+            theirTwo.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : theirTwo.currentHP - parseInt(theMove[2]) * mon.stars;
+          theirThree.currentHP =
+            theirThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : theirThree.currentHP - parseInt(theMove[2]) * mon.stars;
+          msg += `${theMove[2]} true damage was dealt to the enemy team`;
+        } else {
+          if (theBonus[1] === "Normal" || theBonus[2] === "C") {
+            theirOne.currentHP =
+              theirOne.bonus.split(" ")[1] === "Ghost"
+                ? theirOne.currentHP
+                : theirOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirOne.dfs) <
+                  0
+                ? 0
+                : theirOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
+            theirTwo.currentHP =
+              theirTwo.bonus.split(" ")[1] === "Ghost"
+                ? theirTwo.currentHP
+                : theirTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs) <
+                  0
+                ? 0
+                : theirTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
+
+            theirThree.currentHP =
+              theirThree.bonus && theirThree.bonus.split(" ")[1] === "Ghost"
+                ? theirThree.currentHP
+                : theirThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
+                  0
+                ? 0
+                : theirThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirThree.dfs);
+            msg += `Enemy team was damaged`;
+          } else {
+            theirOne.currentHP =
+              theirOne.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, theirOne.dfs) <
+              0
+                ? 0
+                : theirOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
+            theirTwo.currentHP =
+              theirTwo.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs) <
+              0
+                ? 0
+                : theirTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
+            theirThree.currentHP =
+              theirThree.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
+              0
+                ? 0
+                : theirThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirThree.dfs);
+            msg += `Enemy team was damaged`;
+          }
+        }
+      } else {
+        if (theBonus[1] === "Fairy") {
+          if (theirOne.currentHP > 0) {
+            theirOne.currentHP =
+              theirOne.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : theirOne.currentHP - parseInt(theMove[2]) * mon.stars;
+          } else if (theirTwo.currentHP > 0) {
+            theirTwo.currentHP =
+              theirTwo.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : theirTwo.currentHP - parseInt(theMove[2]) * mon.stars;
+          } else if (theirThree.currentHP > 0) {
+            theirThree.currentHP =
+              theirThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : theirThree.currentHP - parseInt(theMove[2]) * mon.stars;
+          }
+          msg += `The enemy was dealt ${theMove[2]} true damage`;
+        } else {
+          if (theBonus[1] === "Normal" || theBonus[2] === "C") {
+            if (theirOne.currentHP > 0) {
+              theirOne.currentHP =
+                theirOne.bonus && theirOne.bonus.split(" ")[1] === "Ghost"
+                  ? theirOne.currentHP
+                  : theirOne.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, theirOne.dfs) <
+                    0
+                  ? 0
+                  : theirOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
+              if (theirOne.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  theirOne.dfs
+                )} damage to ${theirOne.name}`;
+            } else if (theirTwo.currentHP > 0) {
+              theirTwo.currentHP =
+                theirTwo.bonus && theirTwo.bonus.split(" ")[1] === "Ghost"
+                  ? theirTwo.currentHP
+                  : theirTwo.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs) <
+                    0
+                  ? 0
+                  : theirTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
+              if (theirTwo.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  theirTwo.dfs
+                )} damage to ${theirTwo.name}`;
+            } else {
+              theirThree.currentHP =
+                theirThree.bonus && theirThree.bonus.split(" ")[1] === "Ghost"
+                  ? theirThree.currentHP
+                  : theirThree.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
+                    0
+                  ? 0
+                  : theirThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirThree.dfs);
+              if (theirThree.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  theirThree.dfs
+                )} damage to ${theirThree.name}`;
+            }
+          } else {
+            if (theirOne.currentHP > 0) {
+              theirOne.currentHP =
+                theirOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirOne.dfs) <
+                0
+                  ? 0
+                  : theirOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                theirOne.dfs
+              )} damage`;
+            } else if (theirTwo.currentHP > 0) {
+              theirTwo.currentHP =
+                theirTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs) <
+                0
+                  ? 0
+                  : theirTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                theirTwo.dfs
+              )} damage`;
+            } else if (theirThree.currentHP > 0) {
+              theirThree.currentHP =
+                theirThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
+                0
+                  ? 0
+                  : theirThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, theirThree.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                theirThree.dfs
+              )} damage`;
+            }
+          }
+        }
+      }
     } else {
       const theMove = monMove.effect.split(" ");
       const theBonus = mon.bonus;
-      console.log(theMove, theBonus);
+
+      let mass = false;
+      switch (theMove[0]) {
+        case "T":
+          switch (theMove[1]) {
+            case "A":
+              theirOne.atk = theirOne.atk + parseInt(theMove[2]);
+              theirTwo.atk = theirTwo.atk + parseInt(theMove[2]);
+              theirThree.atk = theirThree.atk + parseInt(theMove[2]);
+
+              msg = `Enemy team gained ${theMove[2]} Attack. `;
+              break;
+            case "D":
+              theirOne.dfs = theirOne.dfs + parseInt(theMove[2]);
+              theirTwo.dfs = theirTwo.dfs + parseInt(theMove[2]);
+              theirThree.dfs = theirThree.dfs + parseInt(theMove[2]);
+              msg = `Enemy team gained ${theMove[2]} Defense. `;
+              break;
+            default:
+              msg = "Nothing happened";
+              break;
+          }
+          break;
+        case "M":
+          damage = parseInt(theMove[2]);
+          mass = true;
+          break;
+        case "O":
+          damage = parseInt(theMove[2]);
+          break;
+        default:
+          msg = "Nothing happened";
+          break;
+      }
+      switch (theBonus[1]) {
+        case "T":
+          switch (theBonus[2]) {
+            case "A":
+              const increaseAMT = parseInt(theBonus[3]);
+              const chance =
+                Math.floor(Math.random() * 100) + 1 <= parseInt(theBonus[4])
+                  ? true
+                  : false;
+              theirOne.atk = theirOne.atk + (chance ? increaseAMT : 0);
+              theirTwo.atk = theirTwo.atk + (chance ? increaseAMT : 0);
+              theirThree.atk = theirThree.atk + (chance ? increaseAMT : 0);
+              msg += chance
+                ? `Enemy team gained ${increaseAMT} Attack with trait bonus.`
+                : "";
+              break;
+            case "H":
+              theirOne.currentHP =
+                theirOne.currentHP + parseInt(theBonus[3]) >= theirOne.maxHP
+                  ? theirOne.maxHP
+                  : theirOne.currentHP + parseInt(theBonus[3]);
+              theirTwo.currentHP =
+                theirTwo.currentHP + parseInt(theBonus[3]) >= theirTwo.maxHP
+                  ? theirTwo.maxHP
+                  : theirTwo.currentHP + parseInt(theBonus[3]);
+              theirThree.currentHP =
+                theirThree.currentHP + parseInt(theBonus[3]) >= theirThree.maxHP
+                  ? theirThree.maxHP
+                  : theirThree.currentHP + parseInt(theBonus[3]);
+              msg += `Enemy team gained ${theBonus[3]} HP with trait bonus. `;
+              break;
+            default:
+              break;
+          }
+          break;
+        case "O":
+          switch (theBonus[2]) {
+            case "A":
+              if (myOne.currentHP > 0) {
+                myOne.atk =
+                  myOne.atk + parseInt(theBonus[3]) >= 0
+                    ? myOne.atk + parseInt(theBonus[3])
+                    : 0;
+              } else if (myTwo.currentHP > 0) {
+                myTwo.atk =
+                  myTwo.atk + parseInt(theBonus[3]) >= 0
+                    ? myTwo.atk + parseInt(theBonus[3])
+                    : 0;
+              } else {
+                myThree.atk =
+                  myThree.atk + parseInt(theBonus[3]) >= 0
+                    ? myThree.atk + parseInt(theBonus[3])
+                    : 0;
+              }
+              msg += `Decreased your attack by ${theBonus[3]}. `;
+              break;
+            case "C":
+              const chance =
+                Math.floor(Math.random() * 100) + 1 <= parseInt(theBonus[4])
+                  ? true
+                  : false;
+              damage = chance ? damage * 2 : damage;
+              msg += chance ? "The ability landed a critical hit. " : "";
+              break;
+            default:
+              break;
+          }
+          break;
+        default:
+          break;
+      }
+      if (mass) {
+        //see if is fairy
+        if (theBonus[1] === "Fairy") {
+          myOne.currentHP =
+            myOne.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : myOne.currentHP - parseInt(theMove[2]) * mon.stars;
+          myTwo.currentHP =
+            myTwo.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : myTwo.currentHP - parseInt(theMove[2]) * mon.stars;
+          myThree.currentHP =
+            myThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
+              ? 0
+              : myThree.currentHP - parseInt(theMove[2]) * mon.stars;
+          msg += `${theMove[2]} true damage was dealt to your team`;
+        } else {
+          if (theBonus[1] === "Normal" || theBonus[2] === "C") {
+            myOne.currentHP =
+              myOne.bonus && myOne.bonus.split(" ")[1] === "Ghost"
+                ? myOne.currentHP
+                : myOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myOne.dfs) <
+                  0
+                ? 0
+                : myOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myOne.dfs);
+            myTwo.currentHP =
+              myTwo.bonus && myTwo.bonus.split(" ")[1] === "Ghost"
+                ? myTwo.currentHP
+                : myTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myTwo.dfs) <
+                  0
+                ? 0
+                : myTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myTwo.dfs);
+            myThree.currentHP =
+              myThree.bonus && myThree.bonus.split(" ")[1] === "Ghost"
+                ? myThree.currentHP
+                : myThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myThree.dfs) <
+                  0
+                ? 0
+                : myThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myThree.dfs);
+            msg += `Your team was damaged`;
+          } else {
+            myOne.currentHP =
+              myOne.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, myOne.dfs) <
+              0
+                ? 0
+                : myOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myOne.dfs);
+            myTwo.currentHP =
+              myTwo.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, myTwo.dfs) <
+              0
+                ? 0
+                : myTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myTwo.dfs);
+            myThree.currentHP =
+              myThree.currentHP -
+                damageDealt(mon.stars, damage, mon.atk, myThree.dfs) <
+              0
+                ? 0
+                : myThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myThree.dfs);
+            msg += `Your team was damaged`;
+          }
+        }
+      } else {
+        if (theBonus[1] === "Fairy") {
+          if (myOne.currentHP > 0) {
+            myOne.currentHP =
+              myOne.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : myOne.currentHP - parseInt(theMove[2]) * mon.stars;
+          } else if (myTwo.currentHP > 0) {
+            myTwo.currentHP =
+              myTwo.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : myTwo.currentHP - parseInt(theMove[2]) * mon.stars;
+          } else if (myThree.currentHP > 0) {
+            myThree.currentHP =
+              myThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
+                ? 0
+                : myThree.currentHP - parseInt(theMove[2]) * mon.stars;
+          }
+          msg += `Your team was dealt ${theMove[2]} true damage`;
+        } else {
+          if (theBonus[1] === "Normal" || theBonus[2] === "C") {
+            if (myOne.currentHP > 0) {
+              myOne.currentHP =
+                myOne.bonus && myOne.bonus.split(" ")[1] === "Ghost"
+                  ? myOne.currentHP
+                  : myOne.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, myOne.dfs) <
+                    0
+                  ? 0
+                  : myOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myOne.dfs);
+              if (myOne.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  myOne.dfs
+                )} damage to ${myOne.name}`;
+            } else if (myTwo.currentHP > 0) {
+              myTwo.currentHP =
+                myTwo.bonus && myTwo.bonus.split(" ")[1] === "Ghost"
+                  ? myTwo.currentHP
+                  : myTwo.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, myTwo.dfs) <
+                    0
+                  ? 0
+                  : myTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myTwo.dfs);
+              if (myTwo.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  myTwo.dfs
+                )} damage to ${myTwo.name}`;
+            } else {
+              myThree.currentHP =
+                myThree.bonus && myThree.bonus.split(" ")[1] === "Ghost"
+                  ? myThree.currentHP
+                  : myThree.currentHP -
+                      damageDealt(mon.stars, damage, mon.atk, myThree.dfs) <
+                    0
+                  ? 0
+                  : myThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myThree.dfs);
+              if (myThree.bonus.split(" ")[1] === "Ghost") {
+                msg += "The move was ineffective";
+              } else
+                msg += `The move dealt ${damageDealt(
+                  mon.stars,
+                  damage,
+                  mon.atk,
+                  myThree.dfs
+                )} damage to ${myThree.name}`;
+            }
+          } else {
+            if (myOne.currentHP > 0) {
+              myOne.currentHP =
+                myOne.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myOne.dfs) <
+                0
+                  ? 0
+                  : myOne.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myOne.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                myOne.dfs
+              )} damage`;
+            } else if (myTwo.currentHP > 0) {
+              myTwo.currentHP =
+                myTwo.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myTwo.dfs) <
+                0
+                  ? 0
+                  : myTwo.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myTwo.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                myTwo.dfs
+              )} damage`;
+            } else if (myThree.currentHP > 0) {
+              myThree.currentHP =
+                myThree.currentHP -
+                  damageDealt(mon.stars, damage, mon.atk, myThree.dfs) <
+                0
+                  ? 0
+                  : myThree.currentHP -
+                    damageDealt(mon.stars, damage, mon.atk, myThree.dfs);
+              msg += `Enemy was dealt ${damageDealt(
+                mon.stars,
+                damage,
+                mon.atk,
+                myThree.dfs
+              )} damage`;
+            }
+          }
+        }
+      }
     }
+
+    setGameStats({
+      ...gameStats,
+      one: myOne,
+      two: myTwo,
+      three: myThree,
+      eone: theirOne,
+      etwo: theirTwo,
+      ethree: theirThree,
+      ap: side === "me" ? gameStats.ap - monMove.p : gameStats.ap,
+      eap: side !== "me" ? gameStats.eap - monMove.p : gameStats.eap,
+    });
+    return msg;
   };
 
   const continueGame = (m) => {
-    console.log(inAnimation);
-    let myMon, myMonMove, oMonMove, oMon;
+    let myMon,
+      myMonMove,
+      oMonMove,
+      oMon = {};
     const tackle = {
       name: "Tackle",
       effect: "O H 45",
@@ -549,8 +1182,10 @@ const Battle = ({
         ? 3
         : 0
     );
+    console.log(equeue, queue);
     while (equeue.length > 0) {
       const n = equeue.shift();
+
       if (n === 0) {
         if (gameStats.eone.currentHP > 0) oMon = gameStats.eone;
         else if (gameStats.etwo.currentHP > 0) oMon = gameStats.etwo;
@@ -583,7 +1218,7 @@ const Battle = ({
         }
       }
     }
-    if (!oMon) {
+    if (Object.keys(oMon).length === 0) {
       oMonMove = tackle;
       oMon =
         gameStats.eone.currentHP > 0
@@ -627,6 +1262,14 @@ const Battle = ({
               }, 3000);
             }
             setTimeout(() => {
+              setGameStats({
+                ...gameStats,
+                queue: queue,
+                equeue: equeue,
+                ap: gameStats.ap + 1 > 5 ? 5 : gameStats.ap + 1,
+                eap: gameStats.eap + 1 > 5 ? 5 : gameStats.eap + 1,
+                round: gameStats.round + 1,
+              });
               setInAnimation(false);
             }, 5000);
           }, 2000);
@@ -666,6 +1309,14 @@ const Battle = ({
               }, 3000);
             }
             setTimeout(() => {
+              setGameStats({
+                ...gameStats,
+                queue: queue,
+                equeue: equeue,
+                ap: gameStats.ap + 1 > 5 ? 5 : gameStats.ap + 1,
+                eap: gameStats.eap + 1 > 5 ? 5 : gameStats.eap + 1,
+                round: gameStats.round + 1,
+              });
               setInAnimation(false);
             }, 5000);
           }, 2000);
@@ -675,7 +1326,6 @@ const Battle = ({
   };
 
   const handleMove = (e) => {
-    setInAnimation(true);
     switch (e) {
       case "one":
         if (gameStats.ap >= gameStats.one.move.p) {
