@@ -5,9 +5,9 @@
     "req": [0]
   },
   "poison": {
-    "desc": "Every time a poison type pokémon attacks, there is a 20% chance of decreasing enemy defense by 50",
-    "effect": ["D O D 50 100"],
-    "req": [0]
+    "desc": "Poison pokémon increases the team's attack. 1 = 20, 3 = 60",
+    "effect": ["B T A 20 100", "B T A 60 100"],
+    "req": [1, 3]
   },
   "fire": {
     "desc": "Fire type pokémon have a chance to increase their attack by 20. 1 = 10%, 2 = 20%",
