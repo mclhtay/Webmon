@@ -754,6 +754,13 @@ ol {
   height: 100%;
   margin: auto;
 }
+.testtt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 .ranking-font {
   font-size: 1.5rem;
 }
@@ -768,6 +775,9 @@ ol {
 }
 .right {
   text-align: right;
+}
+.center {
+  text-align: center;
 }
 .battle-status-img {
   max-width: 20px;
@@ -789,10 +799,10 @@ ol {
   margin: 5% auto;
 }
 .first-member {
-  margin-right: 25%;
+  margin-left: 25%;
 }
 .first-member-enemy {
-  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .move-selection {
@@ -804,4 +814,9 @@ ol {
 }
 .block {
   display: block;
+}
+
+.battle-trait-img {
+  max-width: 50px;
+  max-height: 50px;
 }

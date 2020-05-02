@@ -751,7 +751,7 @@ export default {
         potential: [250, 300],
         master: true,
         type: ["normal"],
-        isSpecial: true,
+
         stats: {
           hp: 120,
           atk: 120,

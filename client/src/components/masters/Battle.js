@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { handleViewportChange } from "../../actions/utils";
@@ -11,7 +12,33 @@ import ap from "./ap.jpg";
 import apd from "./apd.jpg";
 import masters from "./masters.json";
 import pokemonArray from "../pokemons";
-
+import dragon from "./dragon.jpg";
+import fairy from "./fairy.jpg";
+import fighting from "./fighting.jpg";
+import fire from "./fire.jpg";
+import flying from "./flying.jpg";
+import ghost from "./ghost.jpg";
+import grass from "./grass.jpg";
+import normal from "./normal.jpg";
+import poison from "./poison.jpg";
+import steel from "./steel.jpg";
+import water from "./water.jpg";
+import star from "./star.jpg";
+import arceus from "./moves/arceus.gif";
+import bulbasaur from "./moves/bulbasaur.gif";
+import charizard from "./moves/charizard.gif";
+import dialga from "./moves/dialga.gif";
+import eevee from "./moves/eevee.gif";
+import giratina from "./moves/giratina.gif";
+import gyarados from "./moves/gyarados.gif";
+import lucario from "./moves/lucario.gif";
+import moltres from "./moves/moltres.gif";
+import palkia from "./moves/palkia.gif";
+import sylveon from "./moves/sylveon.gif";
+import zaciancrowned from "./moves/zacian-crowned.gif";
+import zacian from "./moves/zacian.gif";
+import zamazentacrowned from "./moves/zamazenta-crowned.gif";
+import zamazenta from "./moves/zamazenta.gif";
 const Battle = ({
   one,
   two,
@@ -118,6 +145,10 @@ const Battle = ({
     },
     eap: 3,
     round: 1,
+    activeTrait: [],
+    eactiveTrait: [],
+    queue: [],
+    equeue: equeue,
   });
   const [gameSwitch, setGameSwitch] = useState(false);
   useEffect(() => {
@@ -225,6 +256,7 @@ const Battle = ({
         }
       });
       setGameStats({
+        ...gameStats,
         one: {
           name: one.name,
           atk: one.baseStats[1] + atkB,
@@ -319,6 +351,8 @@ const Battle = ({
         },
         eap: 3,
         round: 1,
+        activeTrait: activeTrait,
+        eactiveTrait: eactiveTrait,
       });
     }
   }, [
@@ -336,6 +370,33 @@ const Battle = ({
     gameSwitch,
   ]);
 
+  useEffect(() => {
+    if (
+      gameStats.eone.hp === 0 &&
+      gameStats.etwo.hp === 0 &&
+      gameStats.ethree.hp === 0
+    ) {
+      handleViewportChange("master", "won");
+      console.log("Win");
+    } else if (
+      gameStats.one.hp === 0 &&
+      gameStats.two.hp === 0 &&
+      gameStats.three.hp === 0
+    ) {
+      handleViewportChange("master", "lost");
+      console.log("Lost");
+    }
+  }, [
+    gameStats.eone.currentHP,
+    gameStats.etwo.currentHP,
+    gameStats.ethree.currentHP,
+    gameStats.one.currentHP,
+    gameStats.two.currentHP,
+    gameStats.three.currentHP,
+  ]);
+
+  const [inAnimation, setInAnimation] = useState(false);
+
   if (loading) {
     return (
       <div>
@@ -349,21 +410,31 @@ const Battle = ({
     let bg = document.createElement("div");
     bg.classList.add("testt");
     let img = document.createElement("img");
+    img.classList.add("testtt");
     img.src = imgName + "?a=" + Math.random();
     bg.appendChild(img);
     document.getElementById("test").appendChild(bg);
     window.setTimeout(() => {
       document.getElementById("test").removeChild(bg);
-    }, 3000);
+    }, 2000);
   };
 
+  const genStars = (num) => {
+    return (
+      <span className="block">
+        {Array.from(Array(num), (_, i) => (
+          <img key={i} src={star} alt="action points" className="star" />
+        ))}
+      </span>
+    );
+  };
   const gameOn = () => {
     setGameSwitch(true);
   };
   const actionPoints = (num) => {
     if (num === 0) return <span>0</span>;
     return (
-      <span className="inline">
+      <span className="">
         {Array.from(Array(num), (_, i) => (
           <img key={i} src={ap} alt="action points" className="star" />
         ))}
@@ -371,8 +442,271 @@ const Battle = ({
     );
   };
 
+  const mapTraitToImg = {
+    dragon: dragon,
+    fairy: fairy,
+    fighting: fighting,
+    fire: fire,
+    flying: flying,
+    ghost: ghost,
+    grass: grass,
+    normal: normal,
+    poison: poison,
+    steel: steel,
+    water: water,
+  };
+  const mapMoveToImg = {
+    arceus: arceus,
+    bulbasaur: bulbasaur,
+    charizard: charizard,
+    dialga: dialga,
+    eevee: eevee,
+    giratina: giratina,
+    gyarados: gyarados,
+    lucario: lucario,
+    moltres: moltres,
+    palkia: palkia,
+    sylveon: sylveon,
+    "zacian-crowned": zaciancrowned,
+    zacian: zacian,
+    "zamazenta-crowned": zamazentacrowned,
+    zamazenta: zamazenta,
+  };
+
+  const createAlert = (msg) => {
+    const div = document.createElement("div");
+    div.classList.add("alert");
+    div.classList.add("alert-primary");
+    div.classList.add("testtt");
+    div.innerText = msg;
+    const p = document.getElementById("notifications");
+    p.appendChild(div);
+    setTimeout(() => {
+      p.removeChild(div);
+    }, 2000);
+  };
+
+  const changeStats = (mon, side, monMove) => {
+    if (side === "me") {
+      const theMove = monMove.effect.split(" ");
+      const theBonus = mon.bonus;
+      console.log(theMove, theBonus);
+    } else {
+      const theMove = monMove.effect.split(" ");
+      const theBonus = mon.bonus;
+      console.log(theMove, theBonus);
+    }
+  };
+
+  const continueGame = (m) => {
+    console.log(inAnimation);
+    let myMon, myMonMove, oMonMove, oMon;
+    const tackle = {
+      name: "Tackle",
+      effect: "O H 45",
+      desc: "Pokémon tackles the enemy",
+      p: 0,
+    };
+    if (m === "tackle") {
+      if (gameStats.one.currentHP > 0) {
+        myMon = gameStats.one;
+      } else if (gameStats.two.currentHP > 0) {
+        myMon = gameStats.two;
+      } else {
+        myMon = gameStats.three;
+      }
+      myMonMove = tackle;
+    } else {
+      if (m === gameStats.one.name) {
+        if (gameStats.ap < gameStats.one.move.p) {
+          return;
+        }
+        myMon = gameStats.one;
+        myMonMove = gameStats.one.move;
+      } else if (m === gameStats.two.name) {
+        if (gameStats.ap < gameStats.two.move.p) {
+          return;
+        }
+        myMon = gameStats.two;
+        myMonMove = gameStats.two.move;
+      } else {
+        if (gameStats.ap < gameStats.three.move.p) {
+          return;
+        }
+        myMonMove = gameStats.three.move;
+        myMon = gameStats.three;
+      }
+    }
+
+    let equeue = gameStats.equeue,
+      queue = gameStats.queue;
+    queue.push(
+      myMonMove === gameStats.one.move
+        ? 1
+        : myMonMove === gameStats.two.move
+        ? 2
+        : myMonMove === gameStats.three.move
+        ? 3
+        : 0
+    );
+    while (equeue.length > 0) {
+      const n = equeue.shift();
+      if (n === 0) {
+        if (gameStats.eone.currentHP > 0) oMon = gameStats.eone;
+        else if (gameStats.etwo.currentHP > 0) oMon = gameStats.etwo;
+        else oMon = gameStats.ethree;
+        oMonMove = tackle;
+        break;
+      } else if (n === 1) {
+        if (
+          gameStats.eone.currentHP > 0 &&
+          gameStats.eap >= gameStats.eone.move.p
+        ) {
+          oMonMove = gameStats.eone.move;
+          break;
+        }
+      } else if (n === 2) {
+        if (
+          gameStats.etwo.currentHP > 0 &&
+          gameStats.eap >= gameStats.etwo.move.p
+        ) {
+          oMonMove = gameStats.etwo.move;
+          break;
+        }
+      } else {
+        if (
+          gameStats.ethree.currentHP > 0 &&
+          gameStats.eap >= gameStats.ethree.move.p
+        ) {
+          oMonMove = gameStats.ethree.move;
+          break;
+        }
+      }
+    }
+    if (!oMon) {
+      oMonMove = tackle;
+      oMon =
+        gameStats.eone.currentHP > 0
+          ? gameStats.eone
+          : gameStats.etwo.currentHP > 0
+          ? gameStats.etwo
+          : gameStats.ethree;
+      equeue = [1, 2, 3];
+    }
+    if (myMon.spd >= oMon.spd) {
+      createAlert(
+        nickname +
+          "'s " +
+          myMon.name[0].toUpperCase() +
+          myMon.name.slice(1) +
+          " used " +
+          myMonMove.name
+      );
+
+      setTimeout(() => {
+        move(mapMoveToImg[myMon.name]);
+        setTimeout(() => {
+          const msg = changeStats(myMon, "me", myMonMove);
+          createAlert(msg);
+          setTimeout(() => {
+            if (oMon.currentHP > 0) {
+              createAlert(
+                enickname +
+                  "'s " +
+                  oMon.name[0].toUpperCase() +
+                  oMon.name.slice(1) +
+                  " used " +
+                  oMonMove.name
+              );
+              setTimeout(() => {
+                move(mapMoveToImg[oMon.name]);
+                setTimeout(() => {
+                  const msg = changeStats(oMon, "them", oMonMove);
+                  createAlert(msg);
+                }, 2000);
+              }, 3000);
+            }
+            setTimeout(() => {
+              setInAnimation(false);
+            }, 5000);
+          }, 2000);
+        }, 3000);
+      }, 3000);
+    } else {
+      createAlert(
+        enickname +
+          "'s " +
+          oMon.name[0].toUpperCase() +
+          oMon.name.slice(1) +
+          " used " +
+          oMonMove.name
+      );
+
+      setTimeout(() => {
+        move(mapMoveToImg[oMon.name]);
+        setTimeout(() => {
+          const msg = changeStats(oMon, "them", oMonMove);
+          createAlert(msg);
+          setTimeout(() => {
+            if (myMon.currentHP > 0) {
+              createAlert(
+                nickname +
+                  "'s " +
+                  myMon.name[0].toUpperCase() +
+                  myMon.name.slice(1) +
+                  " used " +
+                  myMonMove.name
+              );
+              setTimeout(() => {
+                move(mapMoveToImg[myMon.name]);
+                setTimeout(() => {
+                  const msg = changeStats(myMon, "me", myMonMove);
+                  createAlert(msg);
+                }, 2000);
+              }, 3000);
+            }
+            setTimeout(() => {
+              setInAnimation(false);
+            }, 5000);
+          }, 2000);
+        }, 3000);
+      }, 3000);
+    }
+  };
+
+  const handleMove = (e) => {
+    setInAnimation(true);
+    switch (e) {
+      case "one":
+        if (gameStats.ap >= gameStats.one.move.p) {
+          setInAnimation(true);
+          continueGame(gameStats.one.name);
+        }
+        break;
+      case "two":
+        if (gameStats.ap >= gameStats.two.move.p) {
+          setInAnimation(true);
+          continueGame(gameStats.two.name);
+        }
+        break;
+      case "three":
+        if (gameStats.ap >= gameStats.three.move.p) {
+          setInAnimation(true);
+          continueGame(gameStats.three.name);
+        }
+        break;
+      case "four":
+        setInAnimation(true);
+        continueGame("tackle");
+        break;
+      default:
+        console.log("default");
+    }
+  };
+
   return (
     <div>
+      <div id="test"></div>
       {!enickname && !loading && secondary === "battle" ? (
         <div>
           {" "}
@@ -403,7 +737,17 @@ const Battle = ({
             <h3 className="styled-font">{nickname}</h3>
             <div className="column left">
               <p>
-                <span className="block">{actionPoints(gameStats.ap)}</span>
+                <span className="block">
+                  {actionPoints(gameStats.ap)}
+                  {gameStats.activeTrait.map((x, y) => (
+                    <img
+                      src={mapTraitToImg[x.type]}
+                      alt={x.type}
+                      key={y}
+                      className="battle-trait-img"
+                    />
+                  ))}
+                </span>
                 {gameStats.two.name[0].toUpperCase() +
                   gameStats.two.name.slice(1)}
                 :
@@ -460,43 +804,75 @@ const Battle = ({
               </p>
             </div>
             <div className="column">
-              <img
-                className="team-member-sprite flip-img"
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  two.name +
-                  ".gif"
-                }
-                alt={two.name}
-              />
-              <img
-                className="team-member-sprite flip-img first-member"
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  one.name +
-                  ".gif"
-                }
-                alt={one.name}
-              />
-              <img
-                className="team-member-sprite flip-img"
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  three.name +
-                  ".gif"
-                }
-                alt={three.name}
-              />
+              <div>
+                {genStars(two.stars)}
+                <img
+                  className={
+                    gameStats.two.currentHP > 0
+                      ? "team-member-sprite flip-img"
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    two.name +
+                    ".gif"
+                  }
+                  alt={two.name}
+                />
+              </div>
+              <div className="first-member">
+                {genStars(one.stars)}
+                <img
+                  className={
+                    gameStats.one.currentHP > 0
+                      ? "team-member-sprite flip-img "
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    one.name +
+                    ".gif"
+                  }
+                  alt={one.name}
+                />
+              </div>
+              <div>
+                {genStars(three.stars)}
+                <img
+                  className={
+                    gameStats.three.currentHP > 0
+                      ? "team-member-sprite flip-img"
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    three.name +
+                    ".gif"
+                  }
+                  alt={three.name}
+                />
+              </div>
             </div>
           </div>
           <div className="col-lg-2 col-sm-2">
             <h4>Round {gameStats.round}</h4>
+            <div id="notifications" className="column"></div>
           </div>
           <div className="col-lg-5 col-sm-5">
             <h3 className="styled-font">{enickname}</h3>
             <div className="column right">
               <p>
-                <span className="block">{actionPoints(gameStats.eap)}</span>
+                <span className="block">
+                  {gameStats.eactiveTrait.map((x, y) => (
+                    <img
+                      src={mapTraitToImg[x.type]}
+                      alt={x.type}
+                      key={y}
+                      className="battle-trait-img"
+                    />
+                  ))}
+                  {actionPoints(gameStats.eap)}
+                </span>
                 HP: {gameStats.etwo.currentHP}/{gameStats.etwo.maxHP}
                 <span className="p0-20">
                   <img src={atk} alt="attack" className="battle-status-img" />{" "}
@@ -545,40 +921,69 @@ const Battle = ({
                 :{ethree.name[0].toUpperCase() + ethree.name.slice(1)}
               </p>
             </div>
-            <div className="column right">
-              <img
-                className="enemy-member-sprite"
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  etwo.name +
-                  ".gif"
-                }
-                alt={etwo.name}
-              />
-              <img
-                className="enemy-member-sprite  first-member-enemy"
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  eone.name +
-                  ".gif"
-                }
-                alt={eone.name}
-              />
-              <img
-                className="enemy-member-sprite "
-                src={
-                  "http://play.pokemonshowdown.com/sprites/ani/" +
-                  ethree.name +
-                  ".gif"
-                }
-                alt={ethree.name}
-              />
+            <div className="column center">
+              <div>
+                {genStars(etwo.stars)}
+                <img
+                  className={
+                    gameStats.etwo.currentHP > 0
+                      ? "enemy-member-sprite"
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    gameStats.etwo.name +
+                    ".gif"
+                  }
+                  alt={etwo.name}
+                />
+              </div>
+
+              <div className="first-member-enemy">
+                {genStars(eone.stars)}
+                <img
+                  className={
+                    gameStats.eone.currentHP > 0
+                      ? "enemy-member-sprite "
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    eone.name +
+                    ".gif"
+                  }
+                  alt={eone.name}
+                />
+              </div>
+              <div>
+                {genStars(ethree.stars)}
+                <img
+                  className={
+                    gameStats.ethree.currentHP > 0
+                      ? "enemy-member-sprite"
+                      : "blind"
+                  }
+                  src={
+                    "http://play.pokemonshowdown.com/sprites/ani/" +
+                    ethree.name +
+                    ".gif"
+                  }
+                  alt={ethree.name}
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="row move-selection" style={{ margin: "5% 0" }}>
-          <div className="card col-lg-3" style={{ width: "15rem" }}>
+        <div
+          className={inAnimation ? "blind" : "row move-selection"}
+          style={{ margin: "5% 0" }}
+        >
+          <div
+            className={gameStats.one.currentHP > 0 ? "card col-lg-3" : "blind"}
+            style={{ width: "15rem" }}
+            onClick={() => handleMove("one")}
+          >
             <div className="card-body">
               <div
                 className={
@@ -597,7 +1002,11 @@ const Battle = ({
               <p className="card-text">{gameStats.one.move.desc}</p>
             </div>
           </div>
-          <div className="card col-lg-3" style={{ width: "15rem" }}>
+          <div
+            onClick={() => handleMove("two")}
+            className={gameStats.two.currentHP > 0 ? "card col-lg-3" : "blind"}
+            style={{ width: "15rem" }}
+          >
             <div className="card-body">
               <div
                 className={
@@ -616,7 +1025,13 @@ const Battle = ({
               <p className="card-text">{gameStats.two.move.desc}</p>
             </div>
           </div>
-          <div className="card col-lg-3" style={{ width: "15rem" }}>
+          <div
+            onClick={() => handleMove("three")}
+            className={
+              gameStats.three.currentHP > 0 ? "card col-lg-3" : "blind"
+            }
+            style={{ width: "15rem" }}
+          >
             <div className="card-body">
               <div
                 className={
@@ -635,7 +1050,11 @@ const Battle = ({
               <p className="card-text">{gameStats.three.move.desc}</p>
             </div>
           </div>
-          <div className="card col-lg-3" style={{ width: "15rem" }}>
+          <div
+            className="card col-lg-3"
+            onClick={() => handleMove("four")}
+            style={{ width: "15rem" }}
+          >
             <div className="card-body">
               <h5 className="card-title">Tackle</h5>
               <h6 className="card-subtitle mb-2 text-muted">Power: 45</h6>
