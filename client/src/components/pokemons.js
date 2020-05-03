@@ -750,6 +750,7 @@ export default {
         event: 1,
         potential: [250, 300],
         master: true,
+        isSpecial: true,
         type: ["normal"],
 
         stats: {
