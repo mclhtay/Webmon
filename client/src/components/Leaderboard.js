@@ -26,14 +26,14 @@ const Leaderboard = ({
     handleViewportChange("main", "leaderboard");
   };
 
-  const eventPokemonName = "Zamazenta-Crowned";
+  const eventPokemonName = "Zacian-Crowned";
   const eventPokemonSprite =
     "http://play.pokemonshowdown.com/sprites/ani/" +
     eventPokemonName.toLowerCase() +
     ".gif";
   const seeBanned = () => {
     window.alert(
-      "Pokémons prohibited from entering the leaderboard: \n\tCharizard-megax\n\tMewtwo-megax\n\tMewtwo-megay"
+      "Pokémons prohibited from entering the leaderboard: \n\tCharizard-megax\n\tMewtwo-megax\n\tMewtwo-megay\n\tArceus"
     );
   };
   return (

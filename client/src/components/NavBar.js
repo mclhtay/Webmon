@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { handleViewportChange } from "../actions/utils";
+import { handleViewportChange, resetLDB } from "../actions/utils";
 const NavBar = ({
   user: { route, name, isAdmin },
   player: { nickname, coins, candies, cookies },
   handleViewportChange,
+  resetLDB,
 }) => {
   const handleSignout = (e) => {
     if (localStorage.getItem("webmon")) {
@@ -23,6 +24,9 @@ const NavBar = ({
     handleViewportChange("master", "main");
   };
 
+  const reset = () => {
+    resetLDB();
+  };
   return (
     <div className="game-nav">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -47,13 +51,22 @@ const NavBar = ({
             </li>
 
             {isAdmin && (
-              <li className="nav-item">
-                <i className="nav-link">
-                  <button onClick={admin} className="btn-sm btn btn-dark">
-                    Send Gift
-                  </button>
-                </i>
-              </li>
+              <Fragment>
+                <li className="nav-item">
+                  <i className="nav-link">
+                    <button onClick={admin} className="btn-sm btn btn-dark">
+                      Send Gift
+                    </button>
+                  </i>
+                </li>
+                <li>
+                  <i className="nav-link">
+                    <button onClick={reset} className="btn btn-sm btn-warning">
+                      LDB RESET
+                    </button>
+                  </i>
+                </li>
+              </Fragment>
             )}
             <li className="nav-item">
               <i className="nav-link">
@@ -95,6 +108,7 @@ NavBar.propTypes = {
   user: PropTypes.object.isRequired,
   player: PropTypes.object.isRequired,
   handleViewportChange: PropTypes.func.isRequired,
+  resetLDB: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -102,4 +116,6 @@ const mapStateToProps = (state) => ({
   player: state.player,
 });
 
-export default connect(mapStateToProps, { handleViewportChange })(NavBar);
+export default connect(mapStateToProps, { handleViewportChange, resetLDB })(
+  NavBar
+);

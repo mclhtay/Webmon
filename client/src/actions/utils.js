@@ -1,4 +1,5 @@
 import { ROUTE_CHANGE } from "./constants";
+import Axios from "axios";
 
 export const formAction = (newRoute) => (dispatch) => {
   try {
@@ -22,4 +23,8 @@ export const handleViewportChange = (viewport, specs = "") => (dispatch) => {
       type: "CLOSE_LEADERBOARD",
     });
   }
+};
+
+export const resetLDB = () => async (dispatch) => {
+  await Axios.put("/webmon/ldb/reset");
 };

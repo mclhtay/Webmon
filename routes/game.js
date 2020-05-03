@@ -7,7 +7,12 @@ const config = require("config");
 // /webmon
 
 const changeLeaderBoard = async (username, nickname, updatedBP, name) => {
-  const bannedList = ["mewtwo-megay", "mewtwo-megax", "charizard-megax"];
+  const bannedList = [
+    "mewtwo-megay",
+    "mewtwo-megax",
+    "charizard-megax",
+    "arceus",
+  ];
   const ll = bannedList.filter((x) => x === name);
   if (bannedList.filter((x) => x === name).length !== 0) {
     return;
@@ -402,6 +407,33 @@ router.put("/:username/catch", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+router.put("/ldb/reset", async (req, res) => {
+  await Leaderboard.findOneAndUpdate(
+    { phase: "Beta" },
+    {
+      first: {
+        username: "sjin85",
+        nickname: "Red",
+        BP: 1000,
+        pokemon: "charizard",
+      },
+      second: {
+        username: "carter",
+        nickname: "Blue",
+        BP: 900,
+        pokemon: "blastoise",
+      },
+      third: {
+        username: "mlchtay",
+        nickname: "Yellow",
+        BP: 700,
+        pokemon: "pikachu",
+      },
+    },
+    { new: true }
+  );
 });
 
 router.put("/:username/gift", async (req, res) => {
