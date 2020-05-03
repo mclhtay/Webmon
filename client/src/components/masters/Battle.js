@@ -157,6 +157,7 @@ const Battle = ({
     equeue: equeue,
   });
   const [gameSwitch, setGameSwitch] = useState(false);
+  const [special, setSpecial] = useState(false);
   useEffect(() => {
     if (loading && secondary === "battle" && viewport === "master") {
       initializeMaster(one, two, three, name, nickname, matched);
@@ -402,6 +403,21 @@ const Battle = ({
         <img src={Spinner} alt="loading" />
       </div>
     );
+  }
+
+  //summon arceus
+  if (gameStats.ap === 5 && special === false) {
+    const mons = [gameStats.one.name, gameStats.two.name, gameStats.three.name];
+    if (
+      mons.includes("palkia") &&
+      mons.includes("giratina") &&
+      mons.includes("dialga") &&
+      gameStats.one.currentHP > 0 &&
+      gameStats.two.currentHP > 0 &&
+      gameStats.three.currentHP > 0
+    ) {
+      setSpecial(true);
+    }
   }
 
   //replay one loop gif
@@ -1403,6 +1419,41 @@ const Battle = ({
     }
   };
 
+  const summonArceus = () => {
+    const stars = Math.floor(
+      (gameStats.one.stars + gameStats.two.stars + gameStats.three.stars) / 3
+    );
+    setGameStats({
+      ...gameStats,
+      one: {
+        name: "arceus",
+        atk: 120 * stars,
+        dfs: 120 * stars,
+        spd: 120 * stars,
+        stars: stars,
+        currentHP: 120 * stars,
+        maxHP: 120 * stars,
+        move: {
+          name: "Judgement",
+          effect: "M H 100",
+          desc: "Arceus attacks the enemy team and deals damage",
+          p: 0,
+        },
+        bonus: "D Normal",
+      },
+      two: {
+        ...gameStats.two,
+        currentHP: 0,
+      },
+      three: {
+        ...gameStats.three,
+        currentHP: 0,
+      },
+    });
+
+    setSpecial(false);
+  };
+
   return (
     <div>
       <div id="test"></div>
@@ -1431,7 +1482,7 @@ const Battle = ({
         </div>
       )}
 
-      <div className={gameSwitch ? "come-in" : "blind"}>
+      <div id="game" className={gameSwitch ? "come-in" : "blind"}>
         <div className="row">
           <div className="col-lg-5 col-sm-5">
             <h3 className="styled-font">{nickname}</h3>
@@ -1534,7 +1585,7 @@ const Battle = ({
                   }
                   src={
                     "http://play.pokemonshowdown.com/sprites/ani/" +
-                    one.name +
+                    gameStats.one.name +
                     ".gif"
                   }
                   alt={one.name}
@@ -1687,6 +1738,11 @@ const Battle = ({
           className={inAnimation ? "blind" : "row move-selection"}
           style={{ margin: "5% 0" }}
         >
+          <div className={special ? "come-in col-lg-12" : "blind"}>
+            <button className="btn btn-sm btn-primary" onClick={summonArceus}>
+              Summon Arceus
+            </button>
+          </div>
           <div
             className={gameStats.one.currentHP > 0 ? "card col-lg-3" : "blind"}
             style={{ width: "15rem" }}

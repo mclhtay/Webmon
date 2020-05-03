@@ -23,11 +23,15 @@ import spd from "./spd.jpg";
 import ap from "./ap.jpg";
 import Ranking from "./Ranking";
 import Battle from "./Battle";
+
+import { updateMaster } from "../../actions/master";
 const Master = ({
+  user: { name },
   viewport: { viewport, secondary },
   player: { pokemons },
   handleViewportChange,
-  master: { mpGain },
+  updateMaster,
+  master: { mpGain, eMP },
 }) => {
   const [team, setTeam] = useState({
     one: {
@@ -502,12 +506,16 @@ Master.propTypes = {
   player: PropTypes.object.isRequired,
   handleViewportChange: PropTypes.func.isRequired,
   master: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   viewport: state.viewport,
   player: state.player,
   master: state.master,
+  user: state.user,
 });
 
-export default connect(mapStateToProps, { handleViewportChange })(Master);
+export default connect(mapStateToProps, { handleViewportChange, updateMaster })(
+  Master
+);
