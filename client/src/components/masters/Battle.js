@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { handleViewportChange } from "../../actions/utils";
 import Spinner from "../spinner.gif";
-import { initializeMaster } from "../../actions/master";
+import { initializeMaster, updateMaster } from "../../actions/master";
 import atk from "./atk.jpg";
 import dfs from "./dfs.jpg";
 import spd from "./spd.jpg";
 import ap from "./ap.jpg";
-import apd from "./apd.jpg";
 import masters from "./masters.json";
 import pokemonArray from "../pokemons";
 import dragon from "./dragon.jpg";
@@ -39,6 +37,7 @@ import zaciancrowned from "./moves/zacian-crowned.gif";
 import zacian from "./moves/zacian.gif";
 import zamazentacrowned from "./moves/zamazenta-crowned.gif";
 import zamazenta from "./moves/zamazenta.gif";
+
 const Battle = ({
   one,
   two,
@@ -50,6 +49,7 @@ const Battle = ({
   master: { loading, eone, etwo, ethree, ematched, equeue, enickname, eMP },
   initializeMaster,
   handleViewportChange,
+  updateMaster,
 }) => {
   const [gameStats, setGameStats] = useState({
     one: {
@@ -290,7 +290,7 @@ const Battle = ({
           spd: two.baseStats[3] + spdB,
           currentHP: two.baseStats[0] + hpB,
           maxHP: two.baseStats[0] + hpB,
-          stars: one.stars,
+          stars: two.stars,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === two.name
           )[0].pokemon.move,
@@ -305,7 +305,7 @@ const Battle = ({
           dfs: three.baseStats[2] + dfsB,
           spd: three.baseStats[3] + spdB,
           currentHP: three.baseStats[0] + hpB,
-          stars: one.stars,
+          stars: three.stars,
           maxHP: three.baseStats[0] + hpB,
           move: pokemonArray.pokemons.filter(
             (x) => x.pokemon.name === three.name
@@ -373,33 +373,28 @@ const Battle = ({
       });
     }
   }, [loading, secondary, viewport, gameSwitch]);
-
-  useEffect(() => {
-    if (
-      gameStats.eone.hp === 0 &&
-      gameStats.etwo.hp === 0 &&
-      gameStats.ethree.hp === 0
-    ) {
-      handleViewportChange("master", "won");
-      console.log("Win");
-    } else if (
-      gameStats.one.hp === 0 &&
-      gameStats.two.hp === 0 &&
-      gameStats.three.hp === 0
-    ) {
-      handleViewportChange("master", "lost");
-      console.log("Lost");
-    }
-  }, [
-    gameStats.eone.currentHP,
-    gameStats.etwo.currentHP,
-    gameStats.ethree.currentHP,
-    gameStats.one.currentHP,
-    gameStats.two.currentHP,
-    gameStats.three.currentHP,
-  ]);
-
   const [inAnimation, setInAnimation] = useState(false);
+  useEffect(() => {
+    if (inAnimation === false) {
+      if (
+        gameStats.eone.currentHP === 0 &&
+        gameStats.etwo.currentHP === 0 &&
+        gameStats.ethree.currentHP === 0 &&
+        gameSwitch
+      ) {
+        updateMaster(eMP, name, gameStats.queue, "won");
+        handleViewportChange("master", "won");
+      } else if (
+        gameStats.one.currentHP === 0 &&
+        gameStats.two.currentHP === 0 &&
+        gameStats.three.currentHP === 0 &&
+        gameSwitch
+      ) {
+        updateMaster(eMP, name, gameStats.queue, "lost");
+        handleViewportChange("master", "lose");
+      }
+    }
+  }, [inAnimation]);
 
   if (loading) {
     return (
@@ -501,11 +496,14 @@ const Battle = ({
       theirOne = gameStats.eone,
       theirTwo = gameStats.etwo,
       theirThree = gameStats.ethree;
+
     let damage = 0;
     let msg = "";
     if (side === "me") {
       const theMove = monMove.effect.split(" ");
-      const theBonus = mon.bonus.split(" ");
+      const theBonus = mon.bonus
+        ? mon.bonus.split(" ")
+        : ["NO", "BONUS", "EXISTS", "OMG"];
       let mass = false;
       switch (theMove[0]) {
         case "T":
@@ -625,11 +623,13 @@ const Battle = ({
             theirThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
               ? 0
               : theirThree.currentHP - parseInt(theMove[2]) * mon.stars;
-          msg += `${theMove[2]} true damage was dealt to the enemy team`;
+          msg += `${
+            theMove[2] * mon.stars
+          } true damage was dealt to the enemy team`;
         } else {
           if (theBonus[1] === "Normal" || theBonus[2] === "C") {
             theirOne.currentHP =
-              theirOne.bonus.split(" ")[1] === "Ghost"
+              theirOne.bonus && theirOne.bonus.split(" ")[1] === "Ghost"
                 ? theirOne.currentHP
                 : theirOne.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirOne.dfs) <
@@ -638,7 +638,7 @@ const Battle = ({
                 : theirOne.currentHP -
                   damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
             theirTwo.currentHP =
-              theirTwo.bonus.split(" ")[1] === "Ghost"
+              theirTwo.bonus && theirTwo.bonus.split(" ")[1] === "Ghost"
                 ? theirTwo.currentHP
                 : theirTwo.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs) <
@@ -648,7 +648,9 @@ const Battle = ({
                   damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
 
             theirThree.currentHP =
-              theirThree.bonus && theirThree.bonus.split(" ")[1] === "Ghost"
+              theirThree.bonus &&
+              theirThree.bonus &&
+              theirThree.bonus.split(" ")[1] === "Ghost"
                 ? theirThree.currentHP
                 : theirThree.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
@@ -700,7 +702,7 @@ const Battle = ({
                 ? 0
                 : theirThree.currentHP - parseInt(theMove[2]) * mon.stars;
           }
-          msg += `The enemy was dealt ${theMove[2]} true damage`;
+          msg += `The enemy was dealt ${theMove[2] * mon.stars} true damage`;
         } else {
           if (theBonus[1] === "Normal" || theBonus[2] === "C") {
             if (theirOne.currentHP > 0) {
@@ -810,7 +812,9 @@ const Battle = ({
       }
     } else {
       const theMove = monMove.effect.split(" ");
-      const theBonus = mon.bonus;
+      const theBonus = mon.bonus
+        ? mon.bonus.split(" ")
+        : ["NO", "BONUS", "EXISTS", "OMG"];
 
       let mass = false;
       switch (theMove[0]) {
@@ -931,7 +935,7 @@ const Battle = ({
             myThree.currentHP - parseInt(theMove[2]) * mon.stars < 0
               ? 0
               : myThree.currentHP - parseInt(theMove[2]) * mon.stars;
-          msg += `${theMove[2]} true damage was dealt to your team`;
+          msg += `${theMove[2] * mon.stars} true damage was dealt to your team`;
         } else {
           if (theBonus[1] === "Normal" || theBonus[2] === "C") {
             myOne.currentHP =
@@ -1005,7 +1009,7 @@ const Battle = ({
                 ? 0
                 : myThree.currentHP - parseInt(theMove[2]) * mon.stars;
           }
-          msg += `Your team was dealt ${theMove[2]} true damage`;
+          msg += `Your team was dealt ${theMove[2] * mon.stars} true damage`;
         } else {
           if (theBonus[1] === "Normal" || theBonus[2] === "C") {
             if (myOne.currentHP > 0) {
@@ -1182,7 +1186,6 @@ const Battle = ({
         ? 3
         : 0
     );
-    console.log(equeue, queue);
     while (equeue.length > 0) {
       const n = equeue.shift();
 
@@ -1197,6 +1200,7 @@ const Battle = ({
           gameStats.eone.currentHP > 0 &&
           gameStats.eap >= gameStats.eone.move.p
         ) {
+          oMon = gameStats.eone;
           oMonMove = gameStats.eone.move;
           break;
         }
@@ -1205,6 +1209,7 @@ const Battle = ({
           gameStats.etwo.currentHP > 0 &&
           gameStats.eap >= gameStats.etwo.move.p
         ) {
+          oMon = gameStats.etwo;
           oMonMove = gameStats.etwo.move;
           break;
         }
@@ -1213,12 +1218,14 @@ const Battle = ({
           gameStats.ethree.currentHP > 0 &&
           gameStats.eap >= gameStats.ethree.move.p
         ) {
+          oMon = gameStats.ethree;
           oMonMove = gameStats.ethree.move;
           break;
         }
       }
     }
-    if (Object.keys(oMon).length === 0) {
+
+    if (!oMonMove) {
       oMonMove = tackle;
       oMon =
         gameStats.eone.currentHP > 0
@@ -1258,20 +1265,41 @@ const Battle = ({
                 setTimeout(() => {
                   const msg = changeStats(oMon, "them", oMonMove);
                   createAlert(msg);
+                  setTimeout(() => {
+                    setGameStats({
+                      ...gameStats,
+                      queue: queue,
+                      equeue: equeue,
+                      ap:
+                        gameStats.ap - myMonMove.p + 1 > 5
+                          ? 5
+                          : gameStats.ap - myMonMove.p + 1,
+                      eap:
+                        gameStats.eap - oMonMove.p + 1 > 5
+                          ? 5
+                          : gameStats.eap - oMonMove.p + 1,
+                      round: gameStats.round + 1,
+                    });
+                    setInAnimation(false);
+                  }, 2000);
                 }, 2000);
               }, 3000);
+            } else {
+              setTimeout(() => {
+                setGameStats({
+                  ...gameStats,
+                  queue: queue,
+                  equeue: equeue,
+                  ap:
+                    gameStats.ap - myMonMove.p + 1 > 5
+                      ? 5
+                      : gameStats.ap - myMonMove.p + 1,
+                  eap: gameStats.eap + 1 > 5 ? 5 : gameStats.eap + 1,
+                  round: gameStats.round + 1,
+                });
+                setInAnimation(false);
+              }, 2000);
             }
-            setTimeout(() => {
-              setGameStats({
-                ...gameStats,
-                queue: queue,
-                equeue: equeue,
-                ap: gameStats.ap + 1 > 5 ? 5 : gameStats.ap + 1,
-                eap: gameStats.eap + 1 > 5 ? 5 : gameStats.eap + 1,
-                round: gameStats.round + 1,
-              });
-              setInAnimation(false);
-            }, 5000);
           }, 2000);
         }, 3000);
       }, 3000);
@@ -1305,20 +1333,41 @@ const Battle = ({
                 setTimeout(() => {
                   const msg = changeStats(myMon, "me", myMonMove);
                   createAlert(msg);
+                  setTimeout(() => {
+                    setGameStats({
+                      ...gameStats,
+                      queue: queue,
+                      equeue: equeue,
+                      ap:
+                        gameStats.ap - myMonMove.p + 1 > 5
+                          ? 5
+                          : gameStats.ap - myMonMove.p + 1,
+                      eap:
+                        gameStats.eap - oMonMove.p + 1 > 5
+                          ? 5
+                          : gameStats.eap - oMonMove.p + 1,
+                      round: gameStats.round + 1,
+                    });
+                    setInAnimation(false);
+                  }, 2000);
                 }, 2000);
               }, 3000);
+            } else {
+              setTimeout(() => {
+                setGameStats({
+                  ...gameStats,
+                  queue: queue,
+                  equeue: equeue,
+                  eap:
+                    gameStats.eap - oMonMove.p + 1 > 5
+                      ? 5
+                      : gameStats.eap - oMonMove.p + 1,
+                  ap: gameStats.ap + 1 > 5 ? 5 : gameStats.ap + 1,
+                  round: gameStats.round + 1,
+                });
+                setInAnimation(false);
+              }, 2000);
             }
-            setTimeout(() => {
-              setGameStats({
-                ...gameStats,
-                queue: queue,
-                equeue: equeue,
-                ap: gameStats.ap + 1 > 5 ? 5 : gameStats.ap + 1,
-                eap: gameStats.eap + 1 > 5 ? 5 : gameStats.eap + 1,
-                round: gameStats.round + 1,
-              });
-              setInAnimation(false);
-            }, 5000);
           }, 2000);
         }, 3000);
       }, 3000);
@@ -1357,6 +1406,7 @@ const Battle = ({
   return (
     <div>
       <div id="test"></div>
+
       {!enickname && !loading && secondary === "battle" ? (
         <div>
           {" "}
@@ -1454,7 +1504,7 @@ const Battle = ({
               </p>
             </div>
             <div className="column">
-              <div>
+              <div className={gameStats.two.currentHP > 0 ? "" : "blind"}>
                 {genStars(two.stars)}
                 <img
                   className={
@@ -1470,7 +1520,11 @@ const Battle = ({
                   alt={two.name}
                 />
               </div>
-              <div className="first-member">
+              <div
+                className={
+                  gameStats.one.currentHP > 0 ? "first-member" : "blind"
+                }
+              >
                 {genStars(one.stars)}
                 <img
                   className={
@@ -1486,7 +1540,7 @@ const Battle = ({
                   alt={one.name}
                 />
               </div>
-              <div>
+              <div className={gameStats.three.currentHP > 0 ? "" : "blind"}>
                 {genStars(three.stars)}
                 <img
                   className={
@@ -1572,7 +1626,7 @@ const Battle = ({
               </p>
             </div>
             <div className="column center">
-              <div>
+              <div className={gameStats.etwo.currentHP > 0 ? "" : "blind"}>
                 {genStars(etwo.stars)}
                 <img
                   className={
@@ -1589,7 +1643,11 @@ const Battle = ({
                 />
               </div>
 
-              <div className="first-member-enemy">
+              <div
+                className={
+                  gameStats.eone.currentHP > 0 ? "first-member-enemy" : "blind"
+                }
+              >
                 {genStars(eone.stars)}
                 <img
                   className={
@@ -1605,7 +1663,7 @@ const Battle = ({
                   alt={eone.name}
                 />
               </div>
-              <div>
+              <div className={gameStats.ethree.currentHP > 0 ? "" : "blind"}>
                 {genStars(ethree.stars)}
                 <img
                   className={
@@ -1727,6 +1785,7 @@ Battle.propTypes = {
   player: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   initializeMaster: PropTypes.func.isRequired,
+  updateMaster: PropTypes.func.isRequired,
 };
 
 const mapStatToProps = (state) => ({
@@ -1739,4 +1798,5 @@ const mapStatToProps = (state) => ({
 export default connect(mapStatToProps, {
   handleViewportChange,
   initializeMaster,
+  updateMaster,
 })(Battle);

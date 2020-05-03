@@ -11,6 +11,7 @@ const initialState = {
     rank: [],
     loading: true,
   },
+  mpGain: 0,
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
           rank: action.content,
           loading: false,
         },
+      };
+    case "UPDATED_MASTER":
+      return {
+        ...initialState,
+        loading: false,
+        mpGain: action.mpGain,
       };
     default:
       return initialState;

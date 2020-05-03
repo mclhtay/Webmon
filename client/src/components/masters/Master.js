@@ -27,6 +27,7 @@ const Master = ({
   viewport: { viewport, secondary },
   player: { pokemons },
   handleViewportChange,
+  master: { mpGain },
 }) => {
   const [team, setTeam] = useState({
     one: {
@@ -481,6 +482,14 @@ const Master = ({
           {secondary === "battle" && (
             <Battle one={one} two={two} three={three} matched={matched} />
           )}
+          <div className={secondary === "won" ? "come-in" : "blind"}>
+            <h3 className="styled-font">Congratulations on the victory!</h3>
+            <p>MP Gain: {mpGain}</p>
+          </div>
+          <div className={secondary === "lose" ? "come-in" : "blind"}>
+            <h3 className="styled-font">You lost....</h3>
+            <p>MP: {mpGain}</p>
+          </div>
           {secondary === "ranking" && <Ranking />}
         </div>
       </div>
@@ -492,11 +501,13 @@ Master.propTypes = {
   viewport: PropTypes.object.isRequired,
   player: PropTypes.object.isRequired,
   handleViewportChange: PropTypes.func.isRequired,
+  master: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   viewport: state.viewport,
   player: state.player,
+  master: state.master,
 });
 
 export default connect(mapStateToProps, { handleViewportChange })(Master);

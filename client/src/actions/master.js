@@ -41,3 +41,19 @@ export const loadRanking = () => async (dispatch) => {
     content: res.data,
   });
 };
+
+export const updateMaster = (emp, username, queue, status) => async (
+  dispatch
+) => {
+  const body = {
+    queue: queue,
+    emp: emp,
+    status: status,
+  };
+  const res = await axios.put(`/webmon/master/${username}`, body);
+
+  dispatch({
+    type: "UPDATED_MASTER",
+    mpGain: res.data.data,
+  });
+};

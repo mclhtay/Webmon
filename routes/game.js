@@ -705,5 +705,30 @@ router.get("/master/ranking/load", async (req, res) => {
   const ranking = filteredMasters;
   res.send({ ranking });
 });
+router.put("/master/:username", async (req, res) => {
+  const master = await Master.findOne({ username: req.params.username });
+  let mpGain = 0;
+  if (req.body.status === "won") {
+    if (req.body.emp - master.MP >= 50) {
+      mpGain = 15;
+    } else {
+      mpGain = 10;
+    }
+  } else {
+    if (master.MP - req.body.emp > 50) {
+      mpGain = -15;
+    } else {
+      mpGain = -10;
+    }
+  }
 
+  const updatedMaster = await Master.findOneAndUpdate(
+    { username: req.params.username },
+    { $inc: { MP: mpGain }, action: req.body.queue },
+    { new: true }
+  );
+  res.send({
+    data: mpGain,
+  });
+});
 module.exports = router;
