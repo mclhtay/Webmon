@@ -664,9 +664,7 @@ const Battle = ({
                   damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
 
             theirThree.currentHP =
-              theirThree.bonus &&
-              theirThree.bonus &&
-              theirThree.bonus.split(" ")[1] === "Ghost"
+              theirThree.bonus && theirThree.bonus.split(" ")[1] === "Ghost"
                 ? theirThree.currentHP
                 : theirThree.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirThree.dfs) <
@@ -731,7 +729,7 @@ const Battle = ({
                   ? 0
                   : theirOne.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirOne.dfs);
-              if (theirOne.bonus.split(" ")[1] === "Ghost") {
+              if (theirOne.bonus && theirOne.bonus.split(" ")[1] === "Ghost") {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
@@ -750,7 +748,7 @@ const Battle = ({
                   ? 0
                   : theirTwo.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirTwo.dfs);
-              if (theirTwo.bonus.split(" ")[1] === "Ghost") {
+              if (theirTwo.bonus && theirTwo.bonus.split(" ")[1] === "Ghost") {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
@@ -769,7 +767,10 @@ const Battle = ({
                   ? 0
                   : theirThree.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, theirThree.dfs);
-              if (theirThree.bonus.split(" ")[1] === "Ghost") {
+              if (
+                theirThree.bonus &&
+                theirThree.bonus.split(" ")[1] === "Ghost"
+              ) {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
@@ -1038,7 +1039,7 @@ const Battle = ({
                   ? 0
                   : myOne.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, myOne.dfs);
-              if (myOne.bonus.split(" ")[1] === "Ghost") {
+              if (myOne.bonus && myOne.bonus.split(" ")[1] === "Ghost") {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
@@ -1057,7 +1058,7 @@ const Battle = ({
                   ? 0
                   : myTwo.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, myTwo.dfs);
-              if (myTwo.bonus.split(" ")[1] === "Ghost") {
+              if (myTwo.bonus && myTwo.bonus.split(" ")[1] === "Ghost") {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
@@ -1076,7 +1077,7 @@ const Battle = ({
                   ? 0
                   : myThree.currentHP -
                     damageDealt(mon.stars, damage, mon.atk, myThree.dfs);
-              if (myThree.bonus.split(" ")[1] === "Ghost") {
+              if (myThree.bonus && myThree.bonus.split(" ")[1] === "Ghost") {
                 msg += "The move was ineffective";
               } else
                 msg += `The move dealt ${damageDealt(
