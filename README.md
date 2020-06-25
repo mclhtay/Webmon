@@ -11,4 +11,5 @@ Catch your favourite pokémons and start your own journey to compete for the cro
 For a local copy please:
 
 1. clone the repo, then run `npm ci` to avoid version conflicts
-2. `npm run webmon` to start the ui and the api concurrently
+2. create a config folder under `webmon/` and have prepare a `default.json` if you want to run locally
+3. `npm run webmon` to start the ui and the api concurrently
