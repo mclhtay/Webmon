@@ -1,4 +1,0 @@
-{
-  "mongoCONNECT": "mongodb+srv://mclhtay:beatit123@cluster0-m0ssg.mongodb.net/test?retryWrites=true&w=majority",
-  "adminList": ["@gmcarter"]
-}
